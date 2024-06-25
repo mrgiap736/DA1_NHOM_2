@@ -6,6 +6,7 @@ namespace DAL.Entities;
 
 public partial class KhachHang
 {
+    [Key]
     public Guid MaKhachHang { get; set; }
 
     public string TenKhachHang { get; set; } = null!;

@@ -11,10 +11,6 @@ public partial class SanPham
 
     public string TenSanPham { get; set; } = null!;
 
-    public string HangSanXuat { get; set; } = null!;
-
-    public string? ThongSoKyThuat { get; set; } //Sửa
-
     public int  SoLuong { get; set; }
 
     public int GiaBan { get; set; }
@@ -22,6 +18,8 @@ public partial class SanPham
     public int TrangThai { get; set; }
 
     public byte[]? HinhAnh { get; set; } // Thêm thuộc tính HinhAnh
-
-    public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; } = new List<ChiTietHoaDon>();
+    public ChiTietSanPham ChiTietSanPham { get; set; }
+    public LoaiSanPham LoaiSanPham { get; set; }
+    public HangSanXuat HangSanXuat { get; set; }
+    public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
 }

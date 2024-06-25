@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities;
 
 public partial class ChiTietHoaDon
 {
-    public int MaChiTietHoaDon { get; set; }
-
-    public int? MaHoaDon { get; set; }
-
-    public string? MaSanPham { get; set; }
+    [Key]
+    public Guid MaChiTietHoaDon { get; set; }
 
     public int SoLuong { get; set; }
 
