@@ -1,4 +1,4 @@
-﻿using DAL.Entities;
+﻿using App.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Data
+namespace App.Data.Data
 {
     public class AppDBContext : DbContext
     {

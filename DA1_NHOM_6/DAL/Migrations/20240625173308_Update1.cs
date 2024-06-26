@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DAL.Migrations
+namespace App.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Update1 : Migration

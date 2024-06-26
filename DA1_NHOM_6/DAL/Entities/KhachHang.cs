@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DAL.Entities;
-
-public partial class KhachHang
+namespace App.Data.Entities
 {
-    [Key]
-    public Guid MaKhachHang { get; set; }
+    public class KhachHang
+    {
+        [Key]
+        public Guid MaKhachHang { get; set; }
 
-    public string TenKhachHang { get; set; } = null!;
+        public string TenKhachHang { get; set; } = null!;
 
-    [EmailAddress]
-    public string Email { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
-    [Phone]
-    public string SoDienThoai { get; set; } = null!;
+        [Phone]
+        public string SoDienThoai { get; set; } = null!;
 
-    public int? TichLuy { get; set; } //Sửa 
+        public int? TichLuy { get; set; } //Sửa 
 
-    public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
+        public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
+    }
+
 }
+

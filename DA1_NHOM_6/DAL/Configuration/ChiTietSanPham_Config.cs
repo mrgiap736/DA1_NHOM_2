@@ -1,4 +1,4 @@
-﻿using DAL.Entities;
+﻿using App.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Configuration
+namespace App.Data.Configuration
 {
     public class ChiTietSanPham_Config : IEntityTypeConfiguration<ChiTietSanPham>
     {

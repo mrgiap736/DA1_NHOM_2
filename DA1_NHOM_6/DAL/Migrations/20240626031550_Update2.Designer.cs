@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240625173308_Update1")]
-    partial class Update1
+    [Migration("20240626031550_Update2")]
+    partial class Update2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace App.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DAL.Entities.ChiTietHoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietHoaDon", b =>
                 {
                     b.Property<Guid>("MaChiTietHoaDon")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace App.Data.Migrations
                     b.ToTable("ChiTietHoaDon");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChiTietSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
                     b.Property<Guid>("MaSanPham")
                         .HasColumnType("uniqueidentifier");
@@ -71,7 +71,7 @@ namespace App.Data.Migrations
                     b.ToTable("ChiTietSanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HangSanXuat", b =>
+            modelBuilder.Entity("App.Data.Entities.HangSanXuat", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +89,7 @@ namespace App.Data.Migrations
                     b.ToTable("HangSanXuat");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
                 {
                     b.Property<Guid>("MaHoaDon")
                         .ValueGeneratedOnAdd()
@@ -125,7 +125,7 @@ namespace App.Data.Migrations
                     b.ToTable("HoaDon");
                 });
 
-            modelBuilder.Entity("DAL.Entities.KhachHang", b =>
+            modelBuilder.Entity("App.Data.Entities.KhachHang", b =>
                 {
                     b.Property<Guid>("MaKhachHang")
                         .ValueGeneratedOnAdd()
@@ -157,7 +157,7 @@ namespace App.Data.Migrations
                     b.ToTable("KhachHang");
                 });
 
-            modelBuilder.Entity("DAL.Entities.LoaiSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.LoaiSanPham", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,7 +172,7 @@ namespace App.Data.Migrations
                     b.ToTable("LoaiSanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.NhanVien", b =>
+            modelBuilder.Entity("App.Data.Entities.NhanVien", b =>
                 {
                     b.Property<Guid>("MaNhanVien")
                         .ValueGeneratedOnAdd()
@@ -216,7 +216,7 @@ namespace App.Data.Migrations
                     b.ToTable("NhanVien");
                 });
 
-            modelBuilder.Entity("DAL.Entities.SanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.SanPham", b =>
                 {
                     b.Property<Guid>("MaSanPham")
                         .ValueGeneratedOnAdd()
@@ -253,13 +253,13 @@ namespace App.Data.Migrations
                     b.ToTable("SanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChiTietHoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietHoaDon", b =>
                 {
-                    b.HasOne("DAL.Entities.HoaDon", "HoaDon")
+                    b.HasOne("App.Data.Entities.HoaDon", "HoaDon")
                         .WithMany("ChiTietHoaDons")
                         .HasForeignKey("HoaDonMaHoaDon");
 
-                    b.HasOne("DAL.Entities.SanPham", "SanPham")
+                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
                         .WithMany("ChiTietHoaDons")
                         .HasForeignKey("SanPhamMaSanPham");
 
@@ -268,24 +268,24 @@ namespace App.Data.Migrations
                     b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChiTietSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
-                    b.HasOne("DAL.Entities.SanPham", "SanPham")
+                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
                         .WithOne("ChiTietSanPham")
-                        .HasForeignKey("DAL.Entities.ChiTietSanPham", "MaSanPham")
+                        .HasForeignKey("App.Data.Entities.ChiTietSanPham", "MaSanPham")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
                 {
-                    b.HasOne("DAL.Entities.KhachHang", "KhachHang")
+                    b.HasOne("App.Data.Entities.KhachHang", "KhachHang")
                         .WithMany("HoaDons")
                         .HasForeignKey("KhachHangMaKhachHang");
 
-                    b.HasOne("DAL.Entities.NhanVien", "NhanVien")
+                    b.HasOne("App.Data.Entities.NhanVien", "NhanVien")
                         .WithMany("HoaDons")
                         .HasForeignKey("NhanVienMaNhanVien");
 
@@ -294,15 +294,15 @@ namespace App.Data.Migrations
                     b.Navigation("NhanVien");
                 });
 
-            modelBuilder.Entity("DAL.Entities.SanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.SanPham", b =>
                 {
-                    b.HasOne("DAL.Entities.HangSanXuat", "HangSanXuat")
+                    b.HasOne("App.Data.Entities.HangSanXuat", "HangSanXuat")
                         .WithMany("SanPhams")
                         .HasForeignKey("HangSanXuatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Entities.LoaiSanPham", "LoaiSanPham")
+                    b.HasOne("App.Data.Entities.LoaiSanPham", "LoaiSanPham")
                         .WithMany("SanPhams")
                         .HasForeignKey("LoaiSanPhamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -313,32 +313,32 @@ namespace App.Data.Migrations
                     b.Navigation("LoaiSanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HangSanXuat", b =>
+            modelBuilder.Entity("App.Data.Entities.HangSanXuat", b =>
                 {
                     b.Navigation("SanPhams");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
                 {
                     b.Navigation("ChiTietHoaDons");
                 });
 
-            modelBuilder.Entity("DAL.Entities.KhachHang", b =>
+            modelBuilder.Entity("App.Data.Entities.KhachHang", b =>
                 {
                     b.Navigation("HoaDons");
                 });
 
-            modelBuilder.Entity("DAL.Entities.LoaiSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.LoaiSanPham", b =>
                 {
                     b.Navigation("SanPhams");
                 });
 
-            modelBuilder.Entity("DAL.Entities.NhanVien", b =>
+            modelBuilder.Entity("App.Data.Entities.NhanVien", b =>
                 {
                     b.Navigation("HoaDons");
                 });
 
-            modelBuilder.Entity("DAL.Entities.SanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.SanPham", b =>
                 {
                     b.Navigation("ChiTietHoaDons");
 
