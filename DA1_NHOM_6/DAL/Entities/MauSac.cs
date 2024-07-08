@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace App.Data.Entities
 {
-    public class LoaiSanPham
+    public class MauSac
     {
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; }
-
-        public virtual ICollection<SanPham> SanPhams { get; set; }
+        public virtual ICollection<ChiTietSanPham> ChiTietSanPhams { get; set; }
     }
 }

@@ -14,6 +14,11 @@ namespace App.Data.Configuration
         public void Configure(EntityTypeBuilder<SanPham> builder)
         {
             builder.HasKey(x => x.MaSanPham);
+            builder.HasMany(x => x.ChiTietSanPhams).WithOne(x => x.SanPham).HasForeignKey(x => x.MaSanPham);
+           
+            builder.HasIndex(x => x.TenSanPham).IsUnique();
+
+          
         }
     }
 }

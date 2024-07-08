@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +8,39 @@ namespace App.Data.Entities
 {
     public class ChiTietSanPham
     {
-        [Key,ForeignKey("MaSanPham")]
+        public Guid Id { get; set; }
+
         public Guid MaSanPham {  get; set; }
-        public int? ChieuDai { get; set; }
-        public string? ChatLieu { get; set; }
-        public string? MauSac {  get; set; }
+
+        public double ChieuDai { get; set; }
+
+        public double CanNang {  get; set; }
+
+        public int GiaBan { get; set; }
+
+        public Guid MaLoaiRen { get; set; }
+
+        public Guid? MaChatLieu { get; set; }
+
+        public Guid MaMauSac { get; set; }
+
+        public int TrangThai { get; set; }
+
+        public byte[]? HinhAnh { get; set; } // Thêm thuộc tính HinhAnh
+
+        public Guid MaHangSanXuat { get; set; }
+
+        public HangSanXuat HangSanXuat { get; set; }
+
+        public ChatLieu? ChatLieu { get; set; }
+
+        public MauSac MauSac { get; set; }
+
+        public LoaiRen LoaiRen { get; set; }
+
         public SanPham SanPham { get; set; }
+
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
 
     }
 }

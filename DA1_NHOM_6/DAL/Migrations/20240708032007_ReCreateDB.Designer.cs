@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240625172812_CreateDB")]
-    partial class CreateDB
+    [Migration("20240708032007_ReCreateDB")]
+    partial class ReCreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,16 +25,22 @@ namespace App.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DAL.Entities.ChiTietHoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietHoaDon", b =>
                 {
                     b.Property<Guid>("MaChiTietHoaDon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ChiTietSanPhamId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("DonGia")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("HoaDonMaHoaDon")
+                    b.Property<Guid>("MaHoaDon")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaSanPham")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("SanPhamMaSanPham")
@@ -45,16 +51,19 @@ namespace App.Data.Migrations
 
                     b.HasKey("MaChiTietHoaDon");
 
-                    b.HasIndex("HoaDonMaHoaDon");
+                    b.HasIndex("ChiTietSanPhamId");
+
+                    b.HasIndex("MaHoaDon");
 
                     b.HasIndex("SanPhamMaSanPham");
 
                     b.ToTable("ChiTietHoaDon");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChiTietSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
-                    b.Property<Guid>("MaSanPham")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ChatLieu")
@@ -63,15 +72,34 @@ namespace App.Data.Migrations
                     b.Property<int?>("ChieuDai")
                         .HasColumnType("int");
 
+                    b.Property<int>("GiaBan")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("HinhAnh")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<Guid>("MaHangSanXuat")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaSanPham")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("MauSac")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MaSanPham");
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaHangSanXuat");
+
+                    b.HasIndex("MaSanPham");
 
                     b.ToTable("ChiTietSanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HangSanXuat", b =>
+            modelBuilder.Entity("App.Data.Entities.HangSanXuat", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +117,7 @@ namespace App.Data.Migrations
                     b.ToTable("HangSanXuat");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
                 {
                     b.Property<Guid>("MaHoaDon")
                         .ValueGeneratedOnAdd()
@@ -98,14 +126,14 @@ namespace App.Data.Migrations
                     b.Property<int?>("GiamGia")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("KhachHangMaKhachHang")
+                    b.Property<Guid>("MaKhachHang")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaNhanVien")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("NgayMua")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("NhanVienMaNhanVien")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TienKhachTra")
                         .HasColumnType("int");
@@ -118,14 +146,14 @@ namespace App.Data.Migrations
 
                     b.HasKey("MaHoaDon");
 
-                    b.HasIndex("KhachHangMaKhachHang");
+                    b.HasIndex("MaKhachHang");
 
-                    b.HasIndex("NhanVienMaNhanVien");
+                    b.HasIndex("MaNhanVien");
 
                     b.ToTable("HoaDon");
                 });
 
-            modelBuilder.Entity("DAL.Entities.KhachHang", b =>
+            modelBuilder.Entity("App.Data.Entities.KhachHang", b =>
                 {
                     b.Property<Guid>("MaKhachHang")
                         .ValueGeneratedOnAdd()
@@ -133,11 +161,11 @@ namespace App.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SoDienThoai")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TenKhachHang")
                         .IsRequired()
@@ -148,25 +176,16 @@ namespace App.Data.Migrations
 
                     b.HasKey("MaKhachHang");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("SoDienThoai")
+                        .IsUnique();
+
                     b.ToTable("KhachHang");
                 });
 
-            modelBuilder.Entity("DAL.Entities.LoaiSanPham", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LoaiSanPham");
-                });
-
-            modelBuilder.Entity("DAL.Entities.NhanVien", b =>
+            modelBuilder.Entity("App.Data.Entities.NhanVien", b =>
                 {
                     b.Property<Guid>("MaNhanVien")
                         .ValueGeneratedOnAdd()
@@ -178,7 +197,7 @@ namespace App.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MatKhau")
                         .IsRequired()
@@ -186,11 +205,11 @@ namespace App.Data.Migrations
 
                     b.Property<string>("SoDienThoai")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TaiKhoan")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TenNhanVien")
                         .IsRequired()
@@ -198,26 +217,27 @@ namespace App.Data.Migrations
 
                     b.HasKey("MaNhanVien");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("SoDienThoai")
+                        .IsUnique();
+
+                    b.HasIndex("TaiKhoan")
+                        .IsUnique();
+
                     b.ToTable("NhanVien");
                 });
 
-            modelBuilder.Entity("DAL.Entities.SanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.SanPham", b =>
                 {
                     b.Property<Guid>("MaSanPham")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("GiaBan")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("HangSanXuatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("HinhAnh")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<Guid>("LoaiSanPhamId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("LoaiSanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
@@ -226,26 +246,25 @@ namespace App.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TrangThai")
-                        .HasColumnType("int");
-
                     b.HasKey("MaSanPham");
-
-                    b.HasIndex("HangSanXuatId");
-
-                    b.HasIndex("LoaiSanPhamId");
 
                     b.ToTable("SanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChiTietHoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietHoaDon", b =>
                 {
-                    b.HasOne("DAL.Entities.HoaDon", "HoaDon")
+                    b.HasOne("App.Data.Entities.ChiTietSanPham", null)
                         .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("HoaDonMaHoaDon");
+                        .HasForeignKey("ChiTietSanPhamId");
 
-                    b.HasOne("DAL.Entities.SanPham", "SanPham")
+                    b.HasOne("App.Data.Entities.HoaDon", "HoaDon")
                         .WithMany("ChiTietHoaDons")
+                        .HasForeignKey("MaHoaDon")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
+                        .WithMany()
                         .HasForeignKey("SanPhamMaSanPham");
 
                     b.Navigation("HoaDon");
@@ -253,82 +272,72 @@ namespace App.Data.Migrations
                     b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChiTietSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
-                    b.HasOne("DAL.Entities.SanPham", "SanPham")
-                        .WithOne("ChiTietSanPham")
-                        .HasForeignKey("DAL.Entities.ChiTietSanPham", "MaSanPham")
+                    b.HasOne("App.Data.Entities.HangSanXuat", "HangSanXuat")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaHangSanXuat")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaSanPham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HangSanXuat");
 
                     b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("DAL.Entities.HoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
                 {
-                    b.HasOne("DAL.Entities.KhachHang", "KhachHang")
+                    b.HasOne("App.Data.Entities.KhachHang", "KhachHang")
                         .WithMany("HoaDons")
-                        .HasForeignKey("KhachHangMaKhachHang");
+                        .HasForeignKey("MaKhachHang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("DAL.Entities.NhanVien", "NhanVien")
+                    b.HasOne("App.Data.Entities.NhanVien", "NhanVien")
                         .WithMany("HoaDons")
-                        .HasForeignKey("NhanVienMaNhanVien");
+                        .HasForeignKey("MaNhanVien")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("KhachHang");
 
                     b.Navigation("NhanVien");
                 });
 
-            modelBuilder.Entity("DAL.Entities.SanPham", b =>
-                {
-                    b.HasOne("DAL.Entities.HangSanXuat", "HangSanXuat")
-                        .WithMany("SanPhams")
-                        .HasForeignKey("HangSanXuatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Entities.LoaiSanPham", "LoaiSanPham")
-                        .WithMany("SanPhams")
-                        .HasForeignKey("LoaiSanPhamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HangSanXuat");
-
-                    b.Navigation("LoaiSanPham");
-                });
-
-            modelBuilder.Entity("DAL.Entities.HangSanXuat", b =>
-                {
-                    b.Navigation("SanPhams");
-                });
-
-            modelBuilder.Entity("DAL.Entities.HoaDon", b =>
+            modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
                     b.Navigation("ChiTietHoaDons");
                 });
 
-            modelBuilder.Entity("DAL.Entities.KhachHang", b =>
+            modelBuilder.Entity("App.Data.Entities.HangSanXuat", b =>
                 {
-                    b.Navigation("HoaDons");
+                    b.Navigation("ChiTietSanPhams");
                 });
 
-            modelBuilder.Entity("DAL.Entities.LoaiSanPham", b =>
-                {
-                    b.Navigation("SanPhams");
-                });
-
-            modelBuilder.Entity("DAL.Entities.NhanVien", b =>
-                {
-                    b.Navigation("HoaDons");
-                });
-
-            modelBuilder.Entity("DAL.Entities.SanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
                 {
                     b.Navigation("ChiTietHoaDons");
+                });
 
-                    b.Navigation("ChiTietSanPham")
-                        .IsRequired();
+            modelBuilder.Entity("App.Data.Entities.KhachHang", b =>
+                {
+                    b.Navigation("HoaDons");
+                });
+
+            modelBuilder.Entity("App.Data.Entities.NhanVien", b =>
+                {
+                    b.Navigation("HoaDons");
+                });
+
+            modelBuilder.Entity("App.Data.Entities.SanPham", b =>
+                {
+                    b.Navigation("ChiTietSanPhams");
                 });
 #pragma warning restore 612, 618
         }

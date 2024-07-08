@@ -13,9 +13,13 @@ namespace App.Data.Entities
 
         public int DonGia { get; set; }
 
+        public Guid MaChiTietSanPham { get; set; }
+
+        public Guid MaHoaDon { get; set; }
+
         public virtual HoaDon? HoaDon { get; set; }
 
-        public virtual SanPham? SanPham { get; set; }
+        public virtual ChiTietSanPham? ChiTietSanPham { get; set; }
     }
 }
 

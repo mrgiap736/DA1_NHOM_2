@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240626031550_Update2")]
+    [Migration("20240708034918_Update2")]
     partial class Update2
     {
         /// <inheritdoc />
@@ -25,6 +25,21 @@ namespace App.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("App.Data.Entities.ChatLieu", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChatLieu");
+                });
+
             modelBuilder.Entity("App.Data.Entities.ChiTietHoaDon", b =>
                 {
                     b.Property<Guid>("MaChiTietHoaDon")
@@ -34,10 +49,10 @@ namespace App.Data.Migrations
                     b.Property<int>("DonGia")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("HoaDonMaHoaDon")
+                    b.Property<Guid>("MaChiTietSanPham")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("SanPhamMaSanPham")
+                    b.Property<Guid>("MaHoaDon")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SoLuong")
@@ -45,28 +60,52 @@ namespace App.Data.Migrations
 
                     b.HasKey("MaChiTietHoaDon");
 
-                    b.HasIndex("HoaDonMaHoaDon");
+                    b.HasIndex("MaChiTietSanPham");
 
-                    b.HasIndex("SanPhamMaSanPham");
+                    b.HasIndex("MaHoaDon");
 
                     b.ToTable("ChiTietHoaDon");
                 });
 
             modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
-                    b.Property<Guid>("MaSanPham")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ChatLieu")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ChieuDai")
                         .HasColumnType("int");
 
-                    b.Property<string>("MauSac")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GiaBan")
+                        .HasColumnType("int");
 
-                    b.HasKey("MaSanPham");
+                    b.Property<byte[]>("HinhAnh")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<Guid?>("MaChatLieu")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaHangSanXuat")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaMauSac")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaSanPham")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaChatLieu");
+
+                    b.HasIndex("MaHangSanXuat");
+
+                    b.HasIndex("MaMauSac");
+
+                    b.HasIndex("MaSanPham");
 
                     b.ToTable("ChiTietSanPham");
                 });
@@ -98,14 +137,14 @@ namespace App.Data.Migrations
                     b.Property<int?>("GiamGia")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("KhachHangMaKhachHang")
+                    b.Property<Guid>("MaKhachHang")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MaNhanVien")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("NgayMua")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("NhanVienMaNhanVien")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TienKhachTra")
                         .HasColumnType("int");
@@ -118,9 +157,9 @@ namespace App.Data.Migrations
 
                     b.HasKey("MaHoaDon");
 
-                    b.HasIndex("KhachHangMaKhachHang");
+                    b.HasIndex("MaKhachHang");
 
-                    b.HasIndex("NhanVienMaNhanVien");
+                    b.HasIndex("MaNhanVien");
 
                     b.ToTable("HoaDon");
                 });
@@ -157,7 +196,7 @@ namespace App.Data.Migrations
                     b.ToTable("KhachHang");
                 });
 
-            modelBuilder.Entity("App.Data.Entities.LoaiSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.MauSac", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,7 +208,7 @@ namespace App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoaiSanPham");
+                    b.ToTable("MauSac");
                 });
 
             modelBuilder.Entity("App.Data.Entities.NhanVien", b =>
@@ -222,59 +261,73 @@ namespace App.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("GiaBan")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("HangSanXuatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("HinhAnh")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<Guid>("LoaiSanPhamId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("LoaiSanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
                     b.Property<string>("TenSanPham")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TrangThai")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("MaSanPham");
 
-                    b.HasIndex("HangSanXuatId");
-
-                    b.HasIndex("LoaiSanPhamId");
+                    b.HasIndex("TenSanPham")
+                        .IsUnique();
 
                     b.ToTable("SanPham");
                 });
 
             modelBuilder.Entity("App.Data.Entities.ChiTietHoaDon", b =>
                 {
+                    b.HasOne("App.Data.Entities.ChiTietSanPham", "ChiTietSanPham")
+                        .WithMany("ChiTietHoaDons")
+                        .HasForeignKey("MaChiTietSanPham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("App.Data.Entities.HoaDon", "HoaDon")
                         .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("HoaDonMaHoaDon");
+                        .HasForeignKey("MaHoaDon")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
-                        .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("SanPhamMaSanPham");
+                    b.Navigation("ChiTietSanPham");
 
                     b.Navigation("HoaDon");
-
-                    b.Navigation("SanPham");
                 });
 
             modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
                 {
-                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
-                        .WithOne("ChiTietSanPham")
-                        .HasForeignKey("App.Data.Entities.ChiTietSanPham", "MaSanPham")
+                    b.HasOne("App.Data.Entities.ChatLieu", "ChatLieu")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaChatLieu");
+
+                    b.HasOne("App.Data.Entities.HangSanXuat", "HangSanXuat")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaHangSanXuat")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("App.Data.Entities.MauSac", "MauSac")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaMauSac")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Data.Entities.SanPham", "SanPham")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaSanPham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatLieu");
+
+                    b.Navigation("HangSanXuat");
+
+                    b.Navigation("MauSac");
 
                     b.Navigation("SanPham");
                 });
@@ -283,39 +336,34 @@ namespace App.Data.Migrations
                 {
                     b.HasOne("App.Data.Entities.KhachHang", "KhachHang")
                         .WithMany("HoaDons")
-                        .HasForeignKey("KhachHangMaKhachHang");
+                        .HasForeignKey("MaKhachHang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("App.Data.Entities.NhanVien", "NhanVien")
                         .WithMany("HoaDons")
-                        .HasForeignKey("NhanVienMaNhanVien");
+                        .HasForeignKey("MaNhanVien")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("KhachHang");
 
                     b.Navigation("NhanVien");
                 });
 
-            modelBuilder.Entity("App.Data.Entities.SanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.ChatLieu", b =>
                 {
-                    b.HasOne("App.Data.Entities.HangSanXuat", "HangSanXuat")
-                        .WithMany("SanPhams")
-                        .HasForeignKey("HangSanXuatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("ChiTietSanPhams");
+                });
 
-                    b.HasOne("App.Data.Entities.LoaiSanPham", "LoaiSanPham")
-                        .WithMany("SanPhams")
-                        .HasForeignKey("LoaiSanPhamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HangSanXuat");
-
-                    b.Navigation("LoaiSanPham");
+            modelBuilder.Entity("App.Data.Entities.ChiTietSanPham", b =>
+                {
+                    b.Navigation("ChiTietHoaDons");
                 });
 
             modelBuilder.Entity("App.Data.Entities.HangSanXuat", b =>
                 {
-                    b.Navigation("SanPhams");
+                    b.Navigation("ChiTietSanPhams");
                 });
 
             modelBuilder.Entity("App.Data.Entities.HoaDon", b =>
@@ -328,9 +376,9 @@ namespace App.Data.Migrations
                     b.Navigation("HoaDons");
                 });
 
-            modelBuilder.Entity("App.Data.Entities.LoaiSanPham", b =>
+            modelBuilder.Entity("App.Data.Entities.MauSac", b =>
                 {
-                    b.Navigation("SanPhams");
+                    b.Navigation("ChiTietSanPhams");
                 });
 
             modelBuilder.Entity("App.Data.Entities.NhanVien", b =>
@@ -340,10 +388,7 @@ namespace App.Data.Migrations
 
             modelBuilder.Entity("App.Data.Entities.SanPham", b =>
                 {
-                    b.Navigation("ChiTietHoaDons");
-
-                    b.Navigation("ChiTietSanPham")
-                        .IsRequired();
+                    b.Navigation("ChiTietSanPhams");
                 });
 #pragma warning restore 612, 618
         }

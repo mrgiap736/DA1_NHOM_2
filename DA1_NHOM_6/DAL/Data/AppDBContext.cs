@@ -25,10 +25,14 @@ namespace App.Data.Data
         public DbSet<ChiTietHoaDon> ChiTietHoaDon { get; set; }
         public DbSet<KhachHang> KhachHang { get; set; }
         public DbSet<NhanVien> NhanVien { get; set; }
+        public DbSet<ChiTietSanPham> ChiTietSanPham { get; set; }
+        public DbSet<HangSanXuat> HangSanXuat { get; set; }
+        public DbSet<MauSac> MauSac { get; set; }
+        public DbSet<ChatLieu> ChatLieu {  get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=MRG;Initial Catalog=DA1_NHOM_6;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source=MRG;Initial Catalog=DA1_NHOM_2;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
