@@ -29,6 +29,7 @@ namespace App.Data.Data
         public DbSet<HangSanXuat> HangSanXuat { get; set; }
         public DbSet<MauSac> MauSac { get; set; }
         public DbSet<ChatLieu> ChatLieu {  get; set; }
+        public DbSet<LoaiRen> LoaiRen { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
