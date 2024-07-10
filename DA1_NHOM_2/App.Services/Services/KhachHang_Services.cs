@@ -1,8 +1,8 @@
-﻿using A_DAL.Entities;
-using A_DAL.Repos;
+﻿using App.Data.Entities;
+using App.Data.Repos;
 
 
-namespace B_BUS.Services
+namespace App.Services.Services
 {
     public class KhachHang_Services
     {

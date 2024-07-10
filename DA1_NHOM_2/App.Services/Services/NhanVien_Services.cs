@@ -1,12 +1,12 @@
-﻿using A_DAL.Entities;
-using A_DAL.Repos;
+﻿using App.Data.Entities;
+using App.Data.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace B_BUS.Services
+namespace App.Services.Services
 {
     public class NhanVien_Services
     {
