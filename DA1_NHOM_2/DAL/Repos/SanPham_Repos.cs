@@ -1,6 +1,6 @@
-﻿using A_DAL.Data;
-using A_DAL.Entities;
-using A_DAL.IRepos;
+﻿using App.Data.Data;
+using App.Data.Entities;
+using App.Data.IRepos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,20 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace A_DAL.Repos
+namespace App.Data.Repos
 {
     public class SanPham_Repos : ISanPham_Repos
     {
-        SqlTheCtzContext context;
+        AppDBContext context;
 
         public SanPham_Repos()
         {
-            context = new SqlTheCtzContext();
+            context = new AppDBContext();
             
         }
-        public List<SanPham> GetAll()
+        public List<ChiTietSanPham> GetAll()
         {
-            return context.SanPhams.ToList();
+            return context.ChiTietSanPham.ToList();
         }
 
 		public bool AddSP(SanPham sp)
@@ -45,13 +45,13 @@ namespace A_DAL.Repos
 			context.SaveChanges();
 			return true;
 		}
-        public List<SanPham> GetFilteredData(string searchText, int filter1Index, int filter2Index)
+        public List<ChiTietSanPham> GetFilteredData(string searchText, int filter1Index, int filter2Index)
         {
             var filteredData = GetAll();
 
             if (!string.IsNullOrEmpty(searchText))
             {
-                filteredData = filteredData.Where(x => x.TenSanPham.ToLower().Contains(searchText.ToLower().Trim())).ToList();
+                filteredData = filteredData.Where(x => x.SanPham.TenSanPham.ToLower().Contains(searchText.ToLower().Trim())).ToList();
             }
 
             if (filter1Index > 0)
@@ -87,12 +87,12 @@ namespace A_DAL.Repos
             return filteredData;
         }
 
-        public List<SanPham> SearchByName(string name)
+        public List<ChiTietSanPham> SearchByName(string name)
         {
-            return context.SanPhams.Where(x => x.TenSanPham.ToLower().Contains(name.ToLower().Trim())).ToList();
+            return context.ChiTietSanPham.Where(x => x.SanPham.TenSanPham.ToLower().Contains(name.ToLower().Trim())).ToList();
         }
 
-        public List<SanPham> FilterByPrice(int index)
+        public List<ChiTietSanPham> FilterByPrice(int index)
         {
             int max = 0;
             int min = 0;
@@ -125,7 +125,7 @@ namespace A_DAL.Repos
                     min = 50000000;
                 }
 
-                return context.SanPhams.Where(x => x.GiaBan > min && x.GiaBan < max).ToList();
+                return context.ChiTietSanPham.Where(x => x.GiaBan > min && x.GiaBan < max).ToList();
             }
 
             return GetAll();
@@ -133,7 +133,7 @@ namespace A_DAL.Repos
       
 
 
-        public List<SanPham> LocTheoHang(int index)
+        public List<ChiTietSanPham> LocTheoHang(int index)
         {
             List<string> allManufacturers = GetAllManufacturers();
 
@@ -145,24 +145,24 @@ namespace A_DAL.Repos
             {
                 string selectedManufacturer = allManufacturers[index - 1];
 
-                return context.SanPhams.Where(x => x.HangSanXuat == selectedManufacturer).ToList();
+                return context.ChiTietSanPham.Where(x => x.HangSanXuat.Name == selectedManufacturer).ToList();
             }
 
-            return new List<SanPham>();
+            return new List<ChiTietSanPham>();
         }
 
 
         public List<string> GetAllManufacturers()
         {
-            return context.SanPhams
-                .Select(s => s.HangSanXuat)
+            return context.ChiTietSanPham
+                .Select(s => s.HangSanXuat.Name)
                 .Distinct()
                 .OrderBy(h => h) // Sắp xếp danh sách theo thứ tự bảng chữ cái
                 .ToList();
         }
 
 
-        public List<SanPham> FilterByTheFirm(int index)
+        public List<ChiTietSanPham> FilterByTheFirm(int index)
         {
             throw new NotImplementedException();
         }

@@ -1,21 +1,21 @@
-﻿using A_DAL.Data;
-using A_DAL.Entities;
-using A_DAL.IRepos;
+﻿using App.Data.Data;
+using App.Data.Entities;
+using App.Data.IRepos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace A_DAL.Repos
+namespace App.Data.Repos
 {
     public class NhanVien_Repos : INhanVien_Repos
     {
-        SqlTheCtzContext context;
+        AppDBContext context;
 
         public NhanVien_Repos()
         {
-            context = new SqlTheCtzContext();
+            context = new AppDBContext();
         }
 
         public bool AddNV(NhanVien nv)
@@ -27,7 +27,7 @@ namespace A_DAL.Repos
 
         public List<NhanVien> GetAll()
         {
-            return context.NhanViens.ToList();
+            return context.NhanVien.ToList();
         }
 
         public bool RemoveNV(NhanVien nv)

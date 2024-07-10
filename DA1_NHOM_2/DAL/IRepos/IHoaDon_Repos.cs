@@ -1,11 +1,11 @@
-﻿using A_DAL.Entities;
+﻿using App.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace A_DAL.IRepos
+namespace App.Data.IRepos
 {
 	public interface IHoaDon_Repos
 	{
