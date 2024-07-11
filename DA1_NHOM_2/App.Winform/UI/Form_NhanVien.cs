@@ -1,5 +1,5 @@
-﻿using A_DAL.Entities;
-using B_BUS.Services;
+﻿using App.Data.Entities;
+using App.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,13 +11,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace C_PRL.UI
+namespace App.Winform.UI
 {
     public partial class Form_NhanVien : Form
     {
         NhanVien_Services _service;
         List<NhanVien> _listNV = new();
-        string _idwhenclick;
+        Guid _idwhenclick;
         public Form_NhanVien()
         {
             InitializeComponent();
@@ -108,7 +108,7 @@ namespace C_PRL.UI
             {
                 var nv = new NhanVien
                 {
-                    MaNhanVien = txt_MaNV.Text,
+                    MaNhanVien = Guid.Parse(txt_MaNV.Text),
                     TenNhanVien = txt_TenNV.Text,
                     ChucVu = selectedValue,
                     TaiKhoan = txt_TaiKhoan.Text,
@@ -192,7 +192,7 @@ namespace C_PRL.UI
             {
                 var nv = new NhanVien
                 {
-                    MaNhanVien = txt_MaNV.Text,
+                    MaNhanVien = Guid.Parse(txt_MaNV.Text),
                     TenNhanVien = txt_TenNV.Text,
                     ChucVu = selectedValue, // Gán giá trị từ ComboBox Chức vụ
                     TaiKhoan = txt_TaiKhoan.Text,

@@ -1,6 +1,6 @@
-﻿namespace C_PRL.UI
+﻿namespace App.Winform.UI
 {
-	partial class Form_TrangChu
+	partial class Form_BanHang
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_TrangChu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_BanHang));
             pn_DSChucNang = new Panel();
             pn_DangXuat = new Panel();
             label3 = new Label();

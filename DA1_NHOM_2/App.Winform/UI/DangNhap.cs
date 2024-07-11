@@ -1,4 +1,4 @@
-﻿using B_BUS.Services;
+﻿using App.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace C_PRL.UI
+namespace App.Winform.UI
 {
     public partial class Form_DangNhap : Form
     {

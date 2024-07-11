@@ -33,7 +33,7 @@ namespace App.Data.Repos
 			return;
         }
 
-        public List<ChiTietHoaDon> GetAll(int mahd)
+        public List<ChiTietHoaDon> GetAll(Guid mahd)
 		{
 			return context.ChiTietHoaDon.Include(x => x.ChiTietSanPham).Where(x => x.MaHoaDon.Equals(mahd)).ToList();
 		}

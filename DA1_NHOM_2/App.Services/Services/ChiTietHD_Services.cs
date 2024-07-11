@@ -17,7 +17,7 @@ namespace App.Services.Services
              ctrp = new ChiTietHD_Repos();
         }
 
-        public List<ChiTietHoaDon> GetAllCTHoaDon(int mahd)
+        public List<ChiTietHoaDon> GetAllCTHoaDon(Guid mahd)
         {
             return ctrp.GetAll(mahd);
         }

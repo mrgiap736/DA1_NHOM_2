@@ -1,5 +1,5 @@
-﻿using A_DAL.Entities;
-using B_BUS.Services;
+﻿using App.Data.Entities;
+using App.Services.Services;
 using Microsoft.IdentityModel.Tokens;
 using OfficeOpenXml;
 using System;
@@ -7,7 +7,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace C_PRL.UI
+namespace App.Winform.UI
 {
     public partial class Form_SanPham : Form
     {

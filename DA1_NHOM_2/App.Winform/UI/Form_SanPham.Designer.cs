@@ -1,4 +1,4 @@
-﻿namespace C_PRL.UI
+﻿namespace App.Winform.UI
 {
     partial class Form_SanPham
     {

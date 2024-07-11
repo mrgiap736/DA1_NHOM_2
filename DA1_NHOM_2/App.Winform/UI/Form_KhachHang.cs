@@ -1,5 +1,5 @@
-﻿using A_DAL.Entities;
-using B_BUS.Services;
+﻿using App.Data.Entities;
+using App.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,13 +11,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace C_PRL.UI
+namespace App.Winform.UI
 {
     public partial class Form_KhachHang : Form
     {
         KhachHang_Services _service;
         List<KhachHang> _listKH = new();
-        int _idwhenclick;
+        Guid _idwhenclick;
         public Form_KhachHang(NhanVien nv)
         {
             InitializeComponent();
@@ -164,7 +164,7 @@ namespace C_PRL.UI
             }
             // Tạo đối tượng khách hàng mới để lưu thông tin sửa đổi
             var kh = new KhachHang();
-            kh.MaKhachHang = Convert.ToInt32(txt_MaKH.Text);
+            kh.MaKhachHang = Guid.Parse(txt_MaKH.Text);
             kh.TenKhachHang = txt_TenKH.Text;
             kh.SoDienThoai = txt_SĐT.Text;
             kh.TichLuy = diemtichluy;

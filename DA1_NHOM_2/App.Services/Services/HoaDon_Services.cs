@@ -28,12 +28,12 @@ namespace App.Services.Services
 			return hdrp.GetAll();
 		}
 
-		public void CapNhatHoaDon(int a, int b, int c, int d)
+		public void CapNhatHoaDon(Guid a, int b, int c, int d)
 		{
 			hdrp.Update(a, b, c, d);
 		}
 
-		public HoaDon GetHD(int id)
+		public HoaDon GetHD(Guid id)
 		{
 			return hdrp.Get(id);
 		}

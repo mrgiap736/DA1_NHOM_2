@@ -1,7 +1,7 @@
-﻿using A_DAL.Data;
-using A_DAL.Entities;
-using A_DAL.Repos;
-using B_BUS.Services;
+﻿using App.Data.Data;
+using App.Data.Entities;
+using App.Data.Repos;
+using App.Services.Services;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
@@ -22,16 +22,16 @@ using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
-namespace C_PRL.UI
+namespace App.Winform.UI
 {
-    public partial class Form_TrangChu : Form
+    public partial class Form_BanHang : Form
     {
         BanHang_Services bhsv;
         HoaDon_Services hdsv;
         KhachHang_Services khsv;
         ChiTietHD_Services ctsv;
 
-        public Form_TrangChu(NhanVien? nv)
+        public Form_BanHang(NhanVien? nv)
         {
 
             InitializeComponent();
@@ -377,7 +377,7 @@ namespace C_PRL.UI
                 if (item.TrangThai == 0)
                 {
                     string trangthai = "Chưa thanh toán";
-                    dtg_HoaDonCho.Rows.Add(item.MaHoaDon, item.MaKhachHangNavigation.TenKhachHang, trangthai, item.TongTien, item.TienKhachTra, item.GiamGia);
+                    dtg_HoaDonCho.Rows.Add(item.MaHoaDon, item.KhachHang.TenKhachHang, trangthai, item.TongTien, item.TienKhachTra, item.GiamGia);
                 }
             }
 
@@ -464,7 +464,7 @@ namespace C_PRL.UI
             }
             else
             {
-                idUpdate = Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[0].Value);
+                idUpdate = Guid.Parse(dtg_HoaDonCho.Rows[rowIndex].Cells[0].Value.ToString());
 
                 tbx_TienKhachTra.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[4].Value.ToString();
                 tbx_Giamgia.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[5].Value.ToString();
@@ -605,7 +605,7 @@ namespace C_PRL.UI
 
         //Hàm tìm kiếm khách hàng
         //Lấy mã khách hàng để tạo hóa đơn  
-        int maKH = 0;
+        Guid maKH;
         public void SearchCustomer()
         {
             kHang = bhsv.GetKhachHang(tbx_SDTkh.Text);
@@ -623,7 +623,7 @@ namespace C_PRL.UI
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn 
-        public bool ValidateTaoHD(int makh, string tienkhachtra, int tongtien)
+        public bool ValidateTaoHD(Guid makh, string tienkhachtra, int tongtien)
         {
             bool check = true;
             //
@@ -632,11 +632,11 @@ namespace C_PRL.UI
                 MessageBox.Show("Không có sản phẩm nào được chọn !");
                 check = false;
             }
-            else if (makh == 0)
-            {
-                MessageBox.Show("Không tìm thấy khách hàng !");
-                check = false;
-            }
+            //else if (makh == 0)  ///cần sửa
+            //{
+            //    MessageBox.Show("Không tìm thấy khách hàng !");
+            //    check = false;
+            //}
             else if (tbx_TienKhachTra.Text == "")
             {          
                 MessageBox.Show("Chưa nhập số tiền khách trả !");
@@ -665,7 +665,7 @@ namespace C_PRL.UI
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn chờ
-        public bool ValidateTaoHDCho(int makh)
+        public bool ValidateTaoHDCho(Guid makh)
         {
             bool check = true;
             //
@@ -674,11 +674,11 @@ namespace C_PRL.UI
                 MessageBox.Show("Không có sản phẩm nào được chọn !");
                 check = false;
             }
-            else if (makh == 0)
-            {
-                MessageBox.Show("Không tìm thấy khách hàng !");
-                check = false;
-            }
+            //else if (makh == 0) ///cần sửa
+            //{
+            //    MessageBox.Show("Không tìm thấy khách hàng !");
+            //    check = false;
+            //}
             //
             return check;
         }
@@ -687,8 +687,8 @@ namespace C_PRL.UI
         public void ThanhToan()
         {
             //Lấy dữ liệu
-            int makhachhang = maKH;
-            string manhanvien = nvien.MaNhanVien;
+            Guid makhachhang = maKH;
+            Guid manhanvien = nvien.MaNhanVien;
             DateTime ngaymua = DateTime.Now;
 
             int tongtien = TinhTongTien();
@@ -716,7 +716,16 @@ namespace C_PRL.UI
                     //Check xem khách đủ điểm để giảm giá hay không
                     if (CheckGiamGia())
                     {
-                        HoaDon hd = new HoaDon(makhachhang, manhanvien, ngaymua, tongtien, tienkhachtra, giamgia, trangthai);
+                        HoaDon hd = new HoaDon
+                        {
+                            MaKhachHang = makhachhang,
+                            MaNhanVien = manhanvien,
+                            NgayMua = ngaymua,
+                            TongTien = tongtien,
+                            TienKhachTra = tienkhachtra,
+                            GiamGia = giamgia,
+                            TrangThai = trangthai
+                        };
                         hdsv.TaoHoaDon(hd);
                         AddHDChiTiet(hd.MaHoaDon);
                         MessageBox.Show("Thanh toán thành công");
@@ -805,8 +814,8 @@ namespace C_PRL.UI
         //Hàm tạo hóa đơn chờ (Tạo hóa đơn)
         public void TaoHoaDonCho()
         {
-            int makhachhang = maKH;
-            string manhanvien = nvien.MaNhanVien;
+            Guid makhachhang = maKH;
+            Guid manhanvien = nvien.MaNhanVien;
             DateTime ngaymua = DateTime.Now;
 
             int tongtien = TinhTongTien();
@@ -829,7 +838,16 @@ namespace C_PRL.UI
                 }
                 else
                 {
-                    HoaDon hd = new HoaDon(makhachhang, manhanvien, ngaymua, tongtien, tienkhachtra, giamgia, trangthai);
+                    HoaDon hd = new HoaDon
+                    {
+                        MaKhachHang = makhachhang,
+                        MaNhanVien = manhanvien,
+                        NgayMua = ngaymua,
+                        TongTien = tongtien,
+                        TienKhachTra = tienkhachtra,
+                        GiamGia = giamgia,
+                        TrangThai = trangthai
+                    };
                     hdsv.TaoHoaDon(hd);
                     AddHDChiTiet(hd.MaHoaDon);
                 }
@@ -842,7 +860,7 @@ namespace C_PRL.UI
         }
 
         //Hàm tạo chi tiết hóa đơn (được gọi sau khi tạo hóa đơn)
-        public void AddHDChiTiet(int mahd)
+        public void AddHDChiTiet(Guid mahd)
         {
             foreach (DataGridViewRow item in dtg_GioHang.Rows)
             {
@@ -850,7 +868,7 @@ namespace C_PRL.UI
                 {
                     ChiTietHoaDon ctHoaDon = new ChiTietHoaDon();
                     ctHoaDon.MaHoaDon = mahd;
-                    ctHoaDon.MaSanPham = item.Cells[0].Value.ToString();
+                    ctHoaDon.MaChiTietSanPham = Guid.Parse(item.Cells[0].Value.ToString());
                     ctHoaDon.SoLuong = Convert.ToInt32(item.Cells[3].Value);
                     ctHoaDon.DonGia = Convert.ToInt32(item.Cells[4].Value.ToString().Replace(",", ""));
 
@@ -870,7 +888,7 @@ namespace C_PRL.UI
                 {
                     if (row.Cells[0].Value != null)
                     {
-                        if (item.MaSanPham == row.Cells[0].Value.ToString())
+                        if (item.MaChiTietSanPham == Guid.Parse(row.Cells[0].Value.ToString()))
                         {
                             // Cập nhật số lượng
                             item.SoLuong = Convert.ToInt32(row.Cells[3].Value);
@@ -896,7 +914,7 @@ namespace C_PRL.UI
                     bool foundInOrder = false;
                     foreach (var item in ctsv.GetAllCTHoaDon(idUpdate))
                     {
-                        if (item.MaSanPham == row.Cells[0].Value.ToString())
+                        if (item.MaChiTietSanPham == Guid.Parse(row.Cells[0].Value.ToString()))
                         {
                             foundInOrder = true;
                             break;
@@ -907,7 +925,7 @@ namespace C_PRL.UI
                     {
                         ChiTietHoaDon ctHoaDon = new ChiTietHoaDon();
                         ctHoaDon.MaHoaDon = idUpdate;
-                        ctHoaDon.MaSanPham = row.Cells[0].Value.ToString();
+                        ctHoaDon.MaChiTietSanPham = Guid.Parse(row.Cells[0].Value.ToString());
                         ctHoaDon.SoLuong = Convert.ToInt32(row.Cells[3].Value);
                         ctHoaDon.DonGia = Convert.ToInt32(row.Cells[4].Value.ToString().Replace(",", ""));
 
@@ -918,7 +936,7 @@ namespace C_PRL.UI
         }
 
         //Hàm in hóa đơn vật lý 
-        private void InHoaDon(int mahd)
+        private void InHoaDon(Guid mahd)
         {
             // Tạo một tài liệu PDF mới
             iTextSharp.text.Document document = new iTextSharp.text.Document();
@@ -1174,7 +1192,7 @@ namespace C_PRL.UI
 
 
         //Nút thanh toán
-        int idUpdate;
+        Guid idUpdate;
         private void pn_buttonThanhToan_Click(object sender, EventArgs e)
         {
             ThanhToan();

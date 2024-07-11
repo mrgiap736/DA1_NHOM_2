@@ -30,7 +30,7 @@ namespace App.Data.Repos
 			return context.HoaDon.Where(x => x.TrangThai.Equals(tt)).ToList();
         }
 
-        public HoaDon Get(int id)
+        public HoaDon Get(Guid id)
         {
 			return context.HoaDon.SingleOrDefault(x => x.MaHoaDon.Equals(id));
         }
@@ -45,7 +45,7 @@ namespace App.Data.Repos
 			return context.HoaDon.Where(x => x.KhachHang.TenKhachHang.ToLower().Contains(name.Trim().ToLower())).ToList();
 		}
 
-		public void Update(int a, int b, int c, int d)
+		public void Update(Guid a, int b, int c, int d)
 		{
 			var hoadonUp = context.HoaDon.Find(a);
 

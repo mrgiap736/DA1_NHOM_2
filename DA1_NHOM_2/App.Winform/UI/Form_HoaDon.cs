@@ -1,5 +1,5 @@
-﻿using A_DAL.Entities;
-using B_BUS.Services;
+﻿using App.Data.Entities;
+using App.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace C_PRL.UI
+namespace App.Winform.UI
 {
     public partial class Form_HoaDon : Form
     {
@@ -82,7 +82,7 @@ namespace C_PRL.UI
             int stt = 1;
             foreach (HoaDon item in data)
             {
-                dtg_DSHoaDon.Rows.Add(stt++, item.MaHoaDon, item.MaKhachHangNavigation.TenKhachHang, item.MaNhanVienNavigation.TenNhanVien, AddThousandSeparators(item.TongTien), AddThousandSeparators(item.TienKhachTra), AddThousandSeparators(Convert.ToInt32(item.GiamGia) * 10000), (item.TrangThai == 0) ? "Chưa thanh toán" : "Đã thanh toán", item.NgayMua);
+                dtg_DSHoaDon.Rows.Add(stt++, item.MaHoaDon, item.KhachHang.TenKhachHang, item.NhanVien.TenNhanVien, AddThousandSeparators(item.TongTien), AddThousandSeparators(item.TienKhachTra), AddThousandSeparators(Convert.ToInt32(item.GiamGia) * 10000), (item.TrangThai == 0) ? "Chưa thanh toán" : "Đã thanh toán", item.NgayMua);
             }
 
 
@@ -127,11 +127,11 @@ namespace C_PRL.UI
             //}
             //else
             //{
-            int mahd = Convert.ToInt32(dtg_DSHoaDon.Rows[rowIndex].Cells[1].Value);
+            Guid mahd = Guid.Parse(dtg_DSHoaDon.Rows[rowIndex].Cells[1].Value.ToString());
             int stt = 1;
             foreach (ChiTietHoaDon item in ctsv.GetAllCTHoaDon(mahd))
             {
-                dtg_DSHoaDonCT.Rows.Add(stt++, item.MaChiTietHoaDon, item.MaHoaDon, item.MaSanPhamNavigation.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
+                dtg_DSHoaDonCT.Rows.Add(stt++, item.MaChiTietHoaDon, item.MaHoaDon, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
             }
             //}
         }

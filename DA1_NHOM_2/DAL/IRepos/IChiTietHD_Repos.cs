@@ -9,7 +9,7 @@ namespace App.Data.IRepos
 {
 	public interface IChiTietHD_Repos
 	{
-		public List<ChiTietHoaDon> GetAll(int mahd);
+		public List<ChiTietHoaDon> GetAll(Guid mahd);
 
 		public void Create(ChiTietHoaDon cthd);
 
