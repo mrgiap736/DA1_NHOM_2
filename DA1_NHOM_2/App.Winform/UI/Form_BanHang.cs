@@ -61,19 +61,19 @@ namespace App.Winform.UI
 
         private void PhanQuyen_NhanVien(NhanVien nvien)
         {
-            if (nvien.ChucVu.Equals("Nhân viên"))
-            {
-                pn_NhanVien.Click -= pn_NhanVien_Click;
+            //if (nvien.ChucVu.Equals("Nhân viên")) //cần sửa
+            //{
+            //    pn_NhanVien.Click -= pn_NhanVien_Click;
 
-                foreach (Control item in pn_NhanVien.Controls)
-                {
-                    item.Click -= pn_NhanVien_Click;
+            //    foreach (Control item in pn_NhanVien.Controls)
+            //    {
+            //        item.Click -= pn_NhanVien_Click;
 
-                    item.Click += NotClick;
-                }
+            //        item.Click += NotClick;
+            //    }
 
 
-            }
+            //}
         }
         //Su kien thong bao nhan vien k dc phep su dung chuc nang
         private void NotClick(object sender, EventArgs e)
@@ -109,6 +109,7 @@ namespace App.Winform.UI
             pn_NhanVien.BackColor = Color.FromArgb(45, 149, 150);
             pn_SanPham.BackColor = Color.FromArgb(45, 149, 150);
             pn_BanHang.BackColor = Color.FromArgb(38, 80, 115);
+            pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
 
         }
 
@@ -129,6 +130,7 @@ namespace App.Winform.UI
             pn_NhanVien.BackColor = Color.FromArgb(45, 149, 150);
             pn_SanPham.BackColor = Color.FromArgb(45, 149, 150);
             pn_BanHang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
         }
 
         private void pn_SanPham_Click(object sender, EventArgs e)
@@ -148,6 +150,7 @@ namespace App.Winform.UI
             pn_NhanVien.BackColor = Color.FromArgb(45, 149, 150);
             pn_SanPham.BackColor = Color.FromArgb(38, 80, 115);
             pn_BanHang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
         }
 
         private void pn_KhachHang_Click(object sender, EventArgs e)
@@ -167,6 +170,7 @@ namespace App.Winform.UI
             pn_NhanVien.BackColor = Color.FromArgb(45, 149, 150);
             pn_SanPham.BackColor = Color.FromArgb(45, 149, 150);
             pn_BanHang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
         }
 
         private void pn_NhanVien_Click(object sender, EventArgs e)
@@ -186,6 +190,27 @@ namespace App.Winform.UI
             pn_NhanVien.BackColor = Color.FromArgb(38, 80, 115);
             pn_SanPham.BackColor = Color.FromArgb(45, 149, 150);
             pn_BanHang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
+        }
+
+        private void pn_ThongKe_Click(object sender, EventArgs e)
+        {
+            lb_TenChucNang.Text = "THỐNG KÊ";
+            pn_Form_BanHang.Controls.Clear();
+
+            Form_ThongKe form = new Form_ThongKe();
+
+            foreach (var item in form.GetCtrl())
+            {
+                pn_Form_BanHang.Controls.Add(item);
+            }
+
+            pn_HoaDon.BackColor = Color.FromArgb(45, 149, 150);
+            pn_KhachHang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_NhanVien.BackColor = Color.FromArgb(45, 149, 150);
+            pn_SanPham.BackColor = Color.FromArgb(45, 149, 150);
+            pn_BanHang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_ThongKe.BackColor = Color.FromArgb(38, 80, 115);
         }
         #endregion
 
@@ -204,7 +229,7 @@ namespace App.Winform.UI
             }
             else lb_NameNV.Text = nvien.TenNhanVien;
 
-            LoadGrid(bhsv.GetAllSanPham());
+            //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
 
             tbx_TienKhachTra.Click += tbx_Click;
             tbx_Giamgia.Click += tbx_Click;
@@ -807,7 +832,7 @@ namespace App.Winform.UI
 
 
                 dtg_GioHang.Rows.Clear();
-                LoadGrid(bhsv.GetAllSanPham());
+                //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
             }
         }
 
@@ -854,7 +879,7 @@ namespace App.Winform.UI
 
                 //
 
-                LoadGrid(bhsv.GetAllSanPham());
+                //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
                 ClearInput();
             }
         }
@@ -1187,7 +1212,7 @@ namespace App.Winform.UI
         //Nút cập nhật
         private void pn_BtnCapNhat_Click(object sender, EventArgs e)
         {
-            LoadGrid(bhsv.GetAllSanPham());
+            //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
         }
 
 
@@ -1416,7 +1441,7 @@ namespace App.Winform.UI
 
         private void label12_Click(object sender, EventArgs e)
         {
-            LoadGrid(bhsv.GetAllSanPham());
+            //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
         }
     }
 }

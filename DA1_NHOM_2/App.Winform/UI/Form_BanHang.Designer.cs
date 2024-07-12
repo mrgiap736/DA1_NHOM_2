@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_BanHang));
             pn_DSChucNang = new Panel();
+            pn_ThongKe = new Panel();
+            label13 = new Label();
+            panel13 = new Panel();
             pn_DangXuat = new Panel();
             label3 = new Label();
             panel12 = new Panel();
@@ -78,6 +81,7 @@
             panel1 = new Panel();
             dtg_GioHang = new DataGridView();
             grb_Thanhtoan = new GroupBox();
+            label12 = new Label();
             label11 = new Label();
             pn_buttonThanhToan = new Panel();
             pn_iconThanhtoan = new Panel();
@@ -102,8 +106,8 @@
             cbx_Filter1 = new ComboBox();
             label1 = new Label();
             dtg_DSsanpham = new DataGridView();
-            label12 = new Label();
             pn_DSChucNang.SuspendLayout();
+            pn_ThongKe.SuspendLayout();
             pn_DangXuat.SuspendLayout();
             pn_NhanVien.SuspendLayout();
             pn_KhachHang.SuspendLayout();
@@ -129,6 +133,7 @@
             // pn_DSChucNang
             // 
             pn_DSChucNang.BackColor = Color.FromArgb(45, 149, 150);
+            pn_DSChucNang.Controls.Add(pn_ThongKe);
             pn_DSChucNang.Controls.Add(pn_DangXuat);
             pn_DSChucNang.Controls.Add(pn_NhanVien);
             pn_DSChucNang.Controls.Add(pn_KhachHang);
@@ -142,6 +147,39 @@
             pn_DSChucNang.Name = "pn_DSChucNang";
             pn_DSChucNang.Size = new Size(215, 972);
             pn_DSChucNang.TabIndex = 0;
+            // 
+            // pn_ThongKe
+            // 
+            pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
+            pn_ThongKe.Controls.Add(label13);
+            pn_ThongKe.Controls.Add(panel13);
+            pn_ThongKe.Location = new Point(0, 468);
+            pn_ThongKe.Name = "pn_ThongKe";
+            pn_ThongKe.Size = new Size(215, 57);
+            pn_ThongKe.TabIndex = 6;
+            pn_ThongKe.Click += pn_ThongKe_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 14F);
+            label13.Location = new Point(63, 12);
+            label13.Name = "label13";
+            label13.Size = new Size(115, 32);
+            label13.TabIndex = 4;
+            label13.Text = "Thống kê";
+            label13.Click += pn_ThongKe_Click;
+            // 
+            // panel13
+            // 
+            panel13.BackColor = Color.Transparent;
+            panel13.BackgroundImage = (Image)resources.GetObject("panel13.BackgroundImage");
+            panel13.BackgroundImageLayout = ImageLayout.Stretch;
+            panel13.Location = new Point(3, 3);
+            panel13.Name = "panel13";
+            panel13.Size = new Size(54, 50);
+            panel13.TabIndex = 3;
+            panel13.Click += pn_ThongKe_Click;
             // 
             // pn_DangXuat
             // 
@@ -158,7 +196,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Font = new Font("Segoe UI", 14F);
             label3.Location = new Point(63, 12);
             label3.Name = "label3";
             label3.Size = new Size(123, 32);
@@ -191,7 +229,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label7.Font = new Font("Segoe UI", 14F);
             label7.Location = new Point(63, 12);
             label7.Name = "label7";
             label7.Size = new Size(124, 32);
@@ -224,7 +262,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Font = new Font("Segoe UI", 14F);
             label6.Location = new Point(63, 12);
             label6.Name = "label6";
             label6.Size = new Size(140, 32);
@@ -257,7 +295,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.Font = new Font("Segoe UI", 14F);
             label5.Location = new Point(63, 12);
             label5.Name = "label5";
             label5.Size = new Size(121, 32);
@@ -290,7 +328,7 @@
             // lb_cn2
             // 
             lb_cn2.AutoSize = true;
-            lb_cn2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_cn2.Font = new Font("Segoe UI", 14F);
             lb_cn2.Location = new Point(63, 12);
             lb_cn2.Name = "lb_cn2";
             lb_cn2.Size = new Size(106, 32);
@@ -323,7 +361,7 @@
             // lb_cn1
             // 
             lb_cn1.AutoSize = true;
-            lb_cn1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_cn1.Font = new Font("Segoe UI", 14F);
             lb_cn1.Location = new Point(63, 12);
             lb_cn1.Name = "lb_cn1";
             lb_cn1.Size = new Size(115, 32);
@@ -382,7 +420,7 @@
             // 
             lb_TenChucNang.AutoSize = true;
             lb_TenChucNang.BackColor = Color.Transparent;
-            lb_TenChucNang.Font = new Font("Segoe UI", 17F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_TenChucNang.Font = new Font("Segoe UI", 17F);
             lb_TenChucNang.ForeColor = Color.White;
             lb_TenChucNang.Location = new Point(743, 9);
             lb_TenChucNang.Name = "lb_TenChucNang";
@@ -420,7 +458,6 @@
             dtg_HoaDonCho.Name = "dtg_HoaDonCho";
             dtg_HoaDonCho.ReadOnly = true;
             dtg_HoaDonCho.RowHeadersWidth = 51;
-            dtg_HoaDonCho.RowTemplate.Height = 29;
             dtg_HoaDonCho.Size = new Size(337, 356);
             dtg_HoaDonCho.TabIndex = 0;
             dtg_HoaDonCho.CellClick += dtg_HoaDonCho_CellClick;
@@ -503,7 +540,7 @@
             // lb_gh1
             // 
             lb_gh1.AutoSize = true;
-            lb_gh1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_gh1.Font = new Font("Segoe UI", 11F);
             lb_gh1.Location = new Point(1106, 26);
             lb_gh1.Name = "lb_gh1";
             lb_gh1.Size = new Size(114, 25);
@@ -646,7 +683,6 @@
             dtg_GioHang.Location = new Point(6, 26);
             dtg_GioHang.Name = "dtg_GioHang";
             dtg_GioHang.RowHeadersWidth = 51;
-            dtg_GioHang.RowTemplate.Height = 29;
             dtg_GioHang.Size = new Size(995, 246);
             dtg_GioHang.TabIndex = 0;
             dtg_GioHang.CellClick += dtg_GioHang_CellClick;
@@ -677,10 +713,19 @@
             grb_Thanhtoan.TabStop = false;
             grb_Thanhtoan.Text = "Thanh toán";
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(402, 146);
+            label12.Name = "label12";
+            label12.Size = new Size(182, 20);
+            label12.TabIndex = 16;
+            label12.Text = "(Tối đa 70% tổng giá tiền)";
+            // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Font = new Font("Segoe UI", 9F);
             label11.Location = new Point(254, 146);
             label11.Name = "label11";
             label11.Size = new Size(45, 20);
@@ -713,7 +758,7 @@
             // lb_Thanhtoan
             // 
             lb_Thanhtoan.AutoSize = true;
-            lb_Thanhtoan.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lb_Thanhtoan.Font = new Font("Segoe UI", 12F);
             lb_Thanhtoan.Location = new Point(58, 10);
             lb_Thanhtoan.Name = "lb_Thanhtoan";
             lb_Thanhtoan.Size = new Size(110, 28);
@@ -912,21 +957,11 @@
             dtg_DSsanpham.Name = "dtg_DSsanpham";
             dtg_DSsanpham.ReadOnly = true;
             dtg_DSsanpham.RowHeadersWidth = 51;
-            dtg_DSsanpham.RowTemplate.Height = 29;
             dtg_DSsanpham.Size = new Size(995, 424);
             dtg_DSsanpham.TabIndex = 0;
             dtg_DSsanpham.CellClick += dtg_DSsanpham_CellClick;
             // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(402, 146);
-            label12.Name = "label12";
-            label12.Size = new Size(182, 20);
-            label12.TabIndex = 16;
-            label12.Text = "(Tối đa 70% tổng giá tiền)";
-            // 
-            // Form_TrangChu
+            // Form_BanHang
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -939,13 +974,15 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MaximumSize = new Size(1920, 1080);
-            Name = "Form_TrangChu";
+            Name = "Form_BanHang";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form_TrangChu";
             Load += Form_TrangChu_Load;
             pn_DSChucNang.ResumeLayout(false);
             pn_DSChucNang.PerformLayout();
+            pn_ThongKe.ResumeLayout(false);
+            pn_ThongKe.PerformLayout();
             pn_DangXuat.ResumeLayout(false);
             pn_DangXuat.PerformLayout();
             pn_NhanVien.ResumeLayout(false);
@@ -1061,5 +1098,8 @@
         private Label label3;
         private Panel panel12;
         private Label label12;
+        private Panel pn_ThongKe;
+        private Label label13;
+        private Panel panel13;
     }
 }

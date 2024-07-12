@@ -12,6 +12,8 @@ namespace App.Data.Entities
 
         public Guid MaSanPham {  get; set; }
 
+        public int SoLuong { get; set; }
+
         public double ChieuDai { get; set; }
 
         public double CanNang {  get; set; }

@@ -27,7 +27,7 @@ namespace App.Winform.UI
 
             if (loginsv.GetUS_PW(us, pw) != null)
             {
-                Form_TrangChu tt = new Form_TrangChu(loginsv.GetUS_PW(us, pw));
+                Form_BanHang tt = new Form_BanHang(loginsv.GetUS_PW(us, pw));
 
                 this.Hide();
 

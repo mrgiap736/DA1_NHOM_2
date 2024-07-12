@@ -258,7 +258,7 @@ namespace App.Winform.UI
             }
             var obj = _listNV[index];
             _idwhenclick = obj.MaNhanVien;
-            txt_MaNV.Text = obj.MaNhanVien;
+            txt_MaNV.Text = obj.MaNhanVien.ToString();
             txt_TenNV.Text = obj.TenNhanVien;
             Cmb_ChucVu.Text = obj.ChucVu;
             txt_TaiKhoan.Text = obj.TaiKhoan;

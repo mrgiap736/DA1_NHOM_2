@@ -9,9 +9,7 @@ namespace App.Data.Entities
         [Key]
         public Guid MaSanPham { get; set; }
 
-        public string TenSanPham { get; set; } = null!;
-
-        public int SoLuong { get; set; }   
+        public string TenSanPham { get; set; } = null!;   
 
         public string LoaiSanPham { get; set; }
 

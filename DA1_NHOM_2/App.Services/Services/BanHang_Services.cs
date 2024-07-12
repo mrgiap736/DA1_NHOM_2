@@ -19,24 +19,24 @@ namespace App.Services.Services
             khrp = new KhachHang_Repos();
         }
 
-        public List<SanPham> GetAllSanPham()
+        public List<ChiTietSanPham> GetAllSanPham()
         {
             return sprp.GetAll();
         }
 
-        public List<SanPham> GetSPByName(string name)
+        public List<ChiTietSanPham> GetSPByName(string name)
         {
             return sprp.SearchByName(name);
         }
 
-        public List<SanPham> GetSPByPrice(int index)
+        public List<ChiTietSanPham> GetSPByPrice(int index)
         {
             return sprp.FilterByPrice(index);
         }
-        public List<SanPham> GetSPByFirm(int index)
+        public List<ChiTietSanPham> GetSPByFirm(int index)
         {
             return sprp.LocTheoHang(index);
-        }public List<SanPham> LocALL(string searchText, int filter1Index, int filter2Index)
+        }public List<ChiTietSanPham> LocALL(string searchText, int filter1Index, int filter2Index)
         {
             return sprp.GetFilteredData( searchText,  filter1Index,  filter2Index);
         }

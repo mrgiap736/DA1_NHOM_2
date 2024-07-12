@@ -12,7 +12,7 @@ namespace App.Winform.UI
     public partial class Form_SanPham : Form
     {
         SanPham_Services _service;
-        List<SanPham> _listSP = new();
+        List<ChiTietSanPham> _listSP = new();
         string _idwhenclick;
         public Form_SanPham(NhanVien nv)
         {
@@ -60,25 +60,40 @@ namespace App.Winform.UI
         public void LoadGird(string search)
         {
             dtgView.Rows.Clear();
-            dtgView.ColumnCount = 9;
+            dtgView.ColumnCount = 13;
             dtgView.Columns[0].Name = "STT";
-            dtgView.Columns[1].Name = "Mã Sản Phẩm";
-            dtgView.Columns[2].Name = "Tên Sản Phẩm";
-            dtgView.Columns[3].Name = "Hàng Sản Phẩm";
-            dtgView.Columns[4].Name = "Thông Số Kỹ Thuật";
-            dtgView.Columns[5].Name = "Giá Nhập";
-            dtgView.Columns[6].Name = "Giá Bán";
-            dtgView.Columns[7].Name = "Trạng Thái";
-            dtgView.Columns[8].Name = "Hình Ảnh";
+            dtgView.Columns[1].Name = "Tên Sản Phẩm";
+            dtgView.Columns[2].Name = "Số lượng";
+            dtgView.Columns[3].Name = "Loại sản phẩm";
+            dtgView.Columns[4].Name = "Giá bán";
+            dtgView.Columns[5].Name = "Chiều dài";
+            dtgView.Columns[6].Name = "Cân nặng";
+            dtgView.Columns[7].Name = "Chất liệu";
+            dtgView.Columns[8].Name = "Màu sắc";
+            dtgView.Columns[9].Name = "Loại ren";
+            dtgView.Columns[10].Name = "Hãng sản xuất";
+            dtgView.Columns[11].Name = "Trạng thái";
+            dtgView.Columns[12].Name = "Mã sản phẩm ct";
+            dtgView.Columns[12].Visible = false;
 
             _listSP = _service.GetAll(txt_Search.Text);
             foreach (var sp in _listSP)
             {
                 int stt = _listSP.IndexOf(sp) + 1;
-                string giaNhapFormatted = sp.GiaNhap.ToString("#,##0");
                 string giaBanFormatted = sp.GiaBan.ToString("#,##0");
-                dtgView.Rows.Add(stt, sp.MaSanPham, sp.TenSanPham, sp.HangSanXuat, sp.ThongSoKyThuat,
-                    giaNhapFormatted, giaBanFormatted, sp.TrangThai,sp.HinhAnh);
+                dtgView.Rows.Add(stt, sp.SanPham.TenSanPham,
+                    sp.SoLuong,
+                    sp.SanPham.LoaiSanPham,
+                    giaBanFormatted,
+                    sp.ChieuDai,
+                    sp.CanNang,
+                    sp.ChatLieu.Name,
+                    sp.MauSac.Name,
+                    sp.LoaiRen.Name,
+                    sp.HangSanXuat.Name,
+                    sp.TrangThai,
+                    sp.Id
+                    );
             }
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
@@ -100,290 +115,290 @@ namespace App.Winform.UI
 
         private void pn_ThemSP_Click(object sender, EventArgs e)
         {
-            // Kiểm tra dữ liệu nhập vào
-            if (string.IsNullOrWhiteSpace(txt_MaSanPham.Text) || string.IsNullOrWhiteSpace(txt_TenSanPham.Text) ||
-                string.IsNullOrWhiteSpace(txt_HangSanPham.Text) || string.IsNullOrWhiteSpace(txt_ThongSoKyThuat.Text))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (ptb_Anh.Image == null)
-            {
-                MessageBox.Show("Vui lòng tải ảnh sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (txt_MaSanPham.Text.Length < 3 || txt_MaSanPham.Text.Length > 10)
-            {
-                MessageBox.Show("Mã sản phẩm phải có ít nhất 3 và tối đa 10 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra dữ liệu nhập vào //cần sửa
+            //if (string.IsNullOrWhiteSpace(txt_MaSanPham.Text) || string.IsNullOrWhiteSpace(txt_TenSanPham.Text) ||
+            //    string.IsNullOrWhiteSpace(txt_HangSanPham.Text) || string.IsNullOrWhiteSpace(txt_ThongSoKyThuat.Text))
+            //{
+            //    MessageBox.Show("Vui lòng nhập đầy đủ thông tin sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //if (ptb_Anh.Image == null)
+            //{
+            //    MessageBox.Show("Vui lòng tải ảnh sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //if (txt_MaSanPham.Text.Length < 3 || txt_MaSanPham.Text.Length > 10)
+            //{
+            //    MessageBox.Show("Mã sản phẩm phải có ít nhất 3 và tối đa 10 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra độ dài tên sản phẩm
-            if (txt_TenSanPham.Text.Length > 50)
-            {
-                MessageBox.Show("Tên sản phẩm chỉ được phép nhập tối đa 50 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra độ dài tên sản phẩm
+            //if (txt_TenSanPham.Text.Length > 50)
+            //{
+            //    MessageBox.Show("Tên sản phẩm chỉ được phép nhập tối đa 50 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra độ dài hãng sản xuất
-            if (txt_HangSanPham.Text.Length > 20)
-            {
-                MessageBox.Show("Hãng sản xuất chỉ được phép nhập tối đa 20 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra độ dài hãng sản xuất
+            //if (txt_HangSanPham.Text.Length > 20)
+            //{
+            //    MessageBox.Show("Hãng sản xuất chỉ được phép nhập tối đa 20 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra độ dài thông số kỹ thuật
-            if (txt_ThongSoKyThuat.Text.Length > 200)
-            {
-                MessageBox.Show("Thông số kỹ thuật chỉ được phép nhập tối đa 200 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Kiểm tra giá nhập và giá bán có phải số không
-            if (!int.TryParse(txt_GiaNhap.Text.Replace(",", ""), out int giaNhap) ||
-                !int.TryParse(txt_GiaBan.Text.Replace(",", ""), out int giaBan))
-            {
-                MessageBox.Show("Giá nhập và giá bán phải là số.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra độ dài thông số kỹ thuật
+            //if (txt_ThongSoKyThuat.Text.Length > 200)
+            //{
+            //    MessageBox.Show("Thông số kỹ thuật chỉ được phép nhập tối đa 200 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //// Kiểm tra giá nhập và giá bán có phải số không
+            //if (!int.TryParse(txt_GiaNhap.Text.Replace(",", ""), out int giaNhap) ||
+            //    !int.TryParse(txt_GiaBan.Text.Replace(",", ""), out int giaBan))
+            //{
+            //    MessageBox.Show("Giá nhập và giá bán phải là số.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
 
-            // Kiểm tra giá nhập và giá bán có lớn hơn hoặc bằng 1,000 không
-            if (giaNhap < 1000 || giaBan < 1000)
-            {
-                MessageBox.Show(
-                    "Giá nhập và giá bán phải lớn hơn hoặc bằng 1,000.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Kiểm tra xem mã sản phẩm đã tồn tại hay chưa
-            foreach (var existingSP in _listSP)
-            {
-                if (existingSP.MaSanPham == txt_MaSanPham.Text)
-                {
-                    MessageBox.Show(
-                        text: "Mã sản phẩm đã bị trùng, vui lòng nhập mã sản phẩm khác.",
-                        caption: "Thông báo",
-                        buttons: MessageBoxButtons.OK,
-                        icon: MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-            // Kiểm tra xem mã sản phẩm có chứa ký tự đặc biệt hay không
-            string maSanPham = txt_MaSanPham.Text;
-            if (!Regex.IsMatch(maSanPham, @"^[a-zA-Z0-9]+$"))
-            {
-                MessageBox.Show("Mã sản phẩm không được chứa ký tự đặc biệt.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra giá nhập và giá bán có lớn hơn hoặc bằng 1,000 không
+            //if (giaNhap < 1000 || giaBan < 1000)
+            //{
+            //    MessageBox.Show(
+            //        "Giá nhập và giá bán phải lớn hơn hoặc bằng 1,000.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //// Kiểm tra xem mã sản phẩm đã tồn tại hay chưa
+            //foreach (var existingSP in _listSP)
+            //{
+            //    if (existingSP.MaSanPham == txt_MaSanPham.Text)
+            //    {
+            //        MessageBox.Show(
+            //            text: "Mã sản phẩm đã bị trùng, vui lòng nhập mã sản phẩm khác.",
+            //            caption: "Thông báo",
+            //            buttons: MessageBoxButtons.OK,
+            //            icon: MessageBoxIcon.Warning);
+            //        return;
+            //    }
+            //}
+            //// Kiểm tra xem mã sản phẩm có chứa ký tự đặc biệt hay không
+            //string maSanPham = txt_MaSanPham.Text;
+            //if (!Regex.IsMatch(maSanPham, @"^[a-zA-Z0-9]+$"))
+            //{
+            //    MessageBox.Show("Mã sản phẩm không được chứa ký tự đặc biệt.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Chuẩn bị dữ liệu hình ảnh
-            byte[] imageData = null;
-            if (ptb_Anh.Image != null)
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    try
-                    {
-                        ptb_Anh.Image.Save(ms, ptb_Anh.Image.RawFormat);
-                        ptb_Anh.BackgroundImage = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi khi lưu ảnh ");
-                    }
-                    imageData = ms.ToArray();
-                }
-            }
-            var sp = new SanPham();
-            sp.MaSanPham = txt_MaSanPham.Text;
-            sp.TenSanPham = txt_TenSanPham.Text;
-            sp.HangSanXuat = txt_HangSanPham.Text;
-            sp.ThongSoKyThuat = txt_ThongSoKyThuat.Text;
-            sp.GiaNhap = giaNhap;
-            sp.GiaBan = giaBan;
-            sp.HinhAnh = imageData;
+            //// Chuẩn bị dữ liệu hình ảnh
+            //byte[] imageData = null;
+            //if (ptb_Anh.Image != null)
+            //{
+            //    using (MemoryStream ms = new MemoryStream())
+            //    {
+            //        try
+            //        {
+            //            ptb_Anh.Image.Save(ms, ptb_Anh.Image.RawFormat);
+            //            ptb_Anh.BackgroundImage = null;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show("Lỗi khi lưu ảnh ");
+            //        }
+            //        imageData = ms.ToArray();
+            //    }
+            //}
+            //var sp = new SanPham();
+            //sp.MaSanPham = txt_MaSanPham.Text;
+            //sp.TenSanPham = txt_TenSanPham.Text;
+            //sp.HangSanXuat = txt_HangSanPham.Text;
+            //sp.ThongSoKyThuat = txt_ThongSoKyThuat.Text;
+            //sp.GiaNhap = giaNhap;
+            //sp.GiaBan = giaBan;
+            //sp.HinhAnh = imageData;
 
-            // Kiểm tra trạng thái sản phẩm
-            if (rd_ConHang.Checked)
-            {
-                sp.TrangThai = 1;
-            }
-            else if (rd_HetHang.Checked)
-            {
-                sp.TrangThai = 0;
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng chọn trạng thái sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra trạng thái sản phẩm
+            //if (rd_ConHang.Checked)
+            //{
+            //    sp.TrangThai = 1;
+            //}
+            //else if (rd_HetHang.Checked)
+            //{
+            //    sp.TrangThai = 0;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Vui lòng chọn trạng thái sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Hiển thị hộp thoại xác nhận
-            var option = MessageBox.Show("Xác nhận muốn thêm sản phẩm?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (option == DialogResult.Yes)
-            {
-                // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
-                MessageBox.Show(_service.Add(sp));
-                // Tải lại danh sách sản phẩm sau khi thêm thành công
-                LoadGird(null);
-            }
-            else
-            {
-                return;
-            }
+            //// Hiển thị hộp thoại xác nhận
+            //var option = MessageBox.Show("Xác nhận muốn thêm sản phẩm?", "Xác nhận",
+            //    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (option == DialogResult.Yes)
+            //{
+            //    // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
+            //    MessageBox.Show(_service.Add(sp));
+            //    // Tải lại danh sách sản phẩm sau khi thêm thành công
+            //    LoadGird(null);
+            //}
+            //else
+            //{
+            //    return;
+            //}
         }
 
 
 
         private void pn_UpdateSP_Click(object sender, EventArgs e)
         {
-            // Kiểm tra đã chọn sản phẩm để cập nhật chưa
-            if (_idwhenclick == null)
-            {
-                MessageBox.Show("Vui lòng chọn sản phẩm muốn cập nhật.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra đã chọn sản phẩm để cập nhật chưa  //cần sửa
+            //if (_idwhenclick == null)
+            //{
+            //    MessageBox.Show("Vui lòng chọn sản phẩm muốn cập nhật.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra dữ liệu nhập vào và các điều kiện khác
-            if (string.IsNullOrWhiteSpace(txt_MaSanPham.Text) ||
-                string.IsNullOrWhiteSpace(txt_TenSanPham.Text) ||
-                string.IsNullOrWhiteSpace(txt_HangSanPham.Text) ||
-                string.IsNullOrWhiteSpace(txt_ThongSoKyThuat.Text))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (txt_MaSanPham.Text.Length < 3 || txt_MaSanPham.Text.Length > 10)
-            {
-                MessageBox.Show("Mã sản phẩm phải có ít nhất 3 và tối đa 10 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra dữ liệu nhập vào và các điều kiện khác
+            //if (string.IsNullOrWhiteSpace(txt_MaSanPham.Text) ||
+            //    string.IsNullOrWhiteSpace(txt_TenSanPham.Text) ||
+            //    string.IsNullOrWhiteSpace(txt_HangSanPham.Text) ||
+            //    string.IsNullOrWhiteSpace(txt_ThongSoKyThuat.Text))
+            //{
+            //    MessageBox.Show("Vui lòng nhập đầy đủ thông tin sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //if (txt_MaSanPham.Text.Length < 3 || txt_MaSanPham.Text.Length > 10)
+            //{
+            //    MessageBox.Show("Mã sản phẩm phải có ít nhất 3 và tối đa 10 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra độ dài tên sản phẩm
-            if (txt_TenSanPham.Text.Length > 50)
-            {
-                MessageBox.Show("Tên sản phẩm chỉ được phép nhập tối đa 50 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra độ dài tên sản phẩm
+            //if (txt_TenSanPham.Text.Length > 50)
+            //{
+            //    MessageBox.Show("Tên sản phẩm chỉ được phép nhập tối đa 50 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra độ dài hãng sản xuất
-            if (txt_HangSanPham.Text.Length > 20)
-            {
-                MessageBox.Show("Hãng sản xuất chỉ được phép nhập tối đa 20 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra độ dài hãng sản xuất
+            //if (txt_HangSanPham.Text.Length > 20)
+            //{
+            //    MessageBox.Show("Hãng sản xuất chỉ được phép nhập tối đa 20 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra độ dài thông số kỹ thuật
-            if (txt_ThongSoKyThuat.Text.Length > 200)
-            {
-                MessageBox.Show("Thông số kỹ thuật chỉ được phép nhập tối đa 200 ký tự.",
-                                "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            // Kiểm tra giá nhập và giá bán có phải số không
-            if (!int.TryParse(txt_GiaNhap.Text.Replace(",", ""), out int giaNhap) ||
-                !int.TryParse(txt_GiaBan.Text.Replace(",", ""), out int giaBan))
-            {
-                MessageBox.Show("Giá nhập và giá bán phải là số.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra độ dài thông số kỹ thuật
+            //if (txt_ThongSoKyThuat.Text.Length > 200)
+            //{
+            //    MessageBox.Show("Thông số kỹ thuật chỉ được phép nhập tối đa 200 ký tự.",
+            //                    "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //// Kiểm tra giá nhập và giá bán có phải số không
+            //if (!int.TryParse(txt_GiaNhap.Text.Replace(",", ""), out int giaNhap) ||
+            //    !int.TryParse(txt_GiaBan.Text.Replace(",", ""), out int giaBan))
+            //{
+            //    MessageBox.Show("Giá nhập và giá bán phải là số.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra giá nhập và giá bán có lớn hơn hoặc bằng 1,000 không
-            if (giaNhap < 1000 || giaBan < 1000)
-            {
-                MessageBox.Show("Giá nhập và giá bán phải lớn hơn hoặc bằng 1,000.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra giá nhập và giá bán có lớn hơn hoặc bằng 1,000 không
+            //if (giaNhap < 1000 || giaBan < 1000)
+            //{
+            //    MessageBox.Show("Giá nhập và giá bán phải lớn hơn hoặc bằng 1,000.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Kiểm tra xem mã sản phẩm có chứa ký tự đặc biệt hay không
-            string maSanPham = txt_MaSanPham.Text;
-            if (!Regex.IsMatch(maSanPham, @"^[a-zA-Z0-9]+$"))
-            {
-                MessageBox.Show("Mã sản phẩm không được chứa ký tự đặc biệt.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra xem mã sản phẩm có chứa ký tự đặc biệt hay không
+            //string maSanPham = txt_MaSanPham.Text;
+            //if (!Regex.IsMatch(maSanPham, @"^[a-zA-Z0-9]+$"))
+            //{
+            //    MessageBox.Show("Mã sản phẩm không được chứa ký tự đặc biệt.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            byte[] imageData = null;
-            // Kiểm tra xem người dùng đã chọn ảnh mới hay chưa
-            if (ptb_Anh.Image != null && !IsDefaultImage(ptb_Anh.Image))
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
+            //byte[] imageData = null;
+            //// Kiểm tra xem người dùng đã chọn ảnh mới hay chưa
+            //if (ptb_Anh.Image != null && !IsDefaultImage(ptb_Anh.Image))
+            //{
+            //    using (MemoryStream ms = new MemoryStream())
+            //    {
 
 
-                    try
-                    {
-                        ptb_Anh.Image.Save(ms, ptb_Anh.Image.RawFormat);
-                        ptb_Anh.BackgroundImage = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi khi lưu ảnh ");
-                    }
+            //        try
+            //        {
+            //            ptb_Anh.Image.Save(ms, ptb_Anh.Image.RawFormat);
+            //            ptb_Anh.BackgroundImage = null;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show("Lỗi khi lưu ảnh ");
+            //        }
 
-                    imageData = ms.ToArray();
+            //        imageData = ms.ToArray();
                     
 
-                }
-            }
-            else
-            {
-                // Nếu không chọn ảnh mới, giữ nguyên ảnh cũ từ dữ liệu sản phẩm
-                // Thay vì gán giá trị null cho imageData, hãy lấy dữ liệu ảnh từ cơ sở dữ liệu hoặc dịch vụ của bạn
-                // Ví dụ: imageData = _service.GetImageData(_idwhenclick);
-                // hoặc imageData = GetImageDataFromDatabase(_idwhenclick);
-            }
+            //    }
+            //}
+            //else
+            //{
+            //    // Nếu không chọn ảnh mới, giữ nguyên ảnh cũ từ dữ liệu sản phẩm
+            //    // Thay vì gán giá trị null cho imageData, hãy lấy dữ liệu ảnh từ cơ sở dữ liệu hoặc dịch vụ của bạn
+            //    // Ví dụ: imageData = _service.GetImageData(_idwhenclick);
+            //    // hoặc imageData = GetImageDataFromDatabase(_idwhenclick);
+            //}
 
-            var sp = new SanPham();
-            sp.MaSanPham = _idwhenclick;
-            sp.TenSanPham = txt_TenSanPham.Text;
-            sp.HangSanXuat = txt_HangSanPham.Text;
-            sp.ThongSoKyThuat = txt_ThongSoKyThuat.Text;
-            sp.GiaNhap = giaNhap;
-            sp.GiaBan = giaBan;
+            //var sp = new SanPham();
+            //sp.MaSanPham = _idwhenclick;
+            //sp.TenSanPham = txt_TenSanPham.Text;
+            //sp.HangSanXuat = txt_HangSanPham.Text;
+            //sp.ThongSoKyThuat = txt_ThongSoKyThuat.Text;
+            //sp.GiaNhap = giaNhap;
+            //sp.GiaBan = giaBan;
 
-            // Chỉ gán dữ liệu hình ảnh nếu có dữ liệu hình ảnh mới
-            if (imageData != null)
-            {
-                sp.HinhAnh = imageData;
-            }
+            //// Chỉ gán dữ liệu hình ảnh nếu có dữ liệu hình ảnh mới
+            //if (imageData != null)
+            //{
+            //    sp.HinhAnh = imageData;
+            //}
 
-            // Kiểm tra trạng thái sản phẩm
-            if (rd_ConHang.Checked)
-            {
-                sp.TrangThai = 1;
-            }
-            else if (rd_HetHang.Checked)
-            {
-                sp.TrangThai = 0;
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng chọn trạng thái sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra trạng thái sản phẩm
+            //if (rd_ConHang.Checked)
+            //{
+            //    sp.TrangThai = 1;
+            //}
+            //else if (rd_HetHang.Checked)
+            //{
+            //    sp.TrangThai = 0;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Vui lòng chọn trạng thái sản phẩm.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            // Hiển thị hộp thoại xác nhận
-            var option = MessageBox.Show("Xác nhận muốn cập nhật sản phẩm?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (option == DialogResult.Yes)
-            {
-                // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
-                MessageBox.Show(_service.Update(sp));
-                // Tải lại danh sách sản phẩm sau khi thêm thành công
-                LoadGird(null);
-            }
-            else
-            {
-                return;
-            }
+            //// Hiển thị hộp thoại xác nhận
+            //var option = MessageBox.Show("Xác nhận muốn cập nhật sản phẩm?", "Xác nhận",
+            //    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (option == DialogResult.Yes)
+            //{
+            //    // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
+            //    MessageBox.Show(_service.Update(sp));
+            //    // Tải lại danh sách sản phẩm sau khi thêm thành công
+            //    LoadGird(null);
+            //}
+            //else
+            //{
+            //    return;
+            //}
         }
 
 
@@ -400,25 +415,25 @@ namespace App.Winform.UI
 
         private void pn_XoaSP_Click(object sender, EventArgs e)
         {
-            // Kiểm tra xem có sản phẩm được chọn hay không
-            if (string.IsNullOrEmpty(_idwhenclick))
-            {
-                MessageBox.Show("Vui lòng chọn sản phẩm muốn xoá.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //// Kiểm tra xem có sản phẩm được chọn hay không
+            //if (string.IsNullOrEmpty(_idwhenclick))
+            //{
+            //    MessageBox.Show("Vui lòng chọn sản phẩm muốn xoá.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            var sp = new SanPham();
-            sp.MaSanPham = _idwhenclick;
-            var option = MessageBox.Show("Xác nhận muốn xoá sản phẩm?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (option == DialogResult.Yes)
-            {
-                MessageBox.Show(_service.Remove(sp));
-                LoadGird(null);
-            }
-            else
-            {
-                return;
-            }
+            //var sp = new SanPham();
+            //sp.MaSanPham = _idwhenclick;
+            //var option = MessageBox.Show("Xác nhận muốn xoá sản phẩm?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (option == DialogResult.Yes)
+            //{
+            //    MessageBox.Show(_service.Remove(sp));
+            //    LoadGird(null);
+            //}
+            //else
+            //{
+            //    return;
+            //}
         }
 
 
@@ -430,47 +445,47 @@ namespace App.Winform.UI
 
         private void dtgView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int index = e.RowIndex;
-            if (index < 0 || index >= _listSP.Count)
-            {
-                return;
-            }
-            var obj = _listSP[index];
-            _idwhenclick = obj.MaSanPham;
-            txt_MaSanPham.Text = obj.MaSanPham;
-            txt_TenSanPham.Text = obj.TenSanPham;
-            txt_HangSanPham.Text = obj.HangSanXuat;
-            txt_ThongSoKyThuat.Text = obj.ThongSoKyThuat;
-            txt_GiaNhap.Text = obj.GiaNhap.ToString();
-            txt_GiaBan.Text = obj.GiaBan.ToString();
+            //int index = e.RowIndex; //cần sửa
+            //if (index < 0 || index >= _listSP.Count)
+            //{
+            //    return;
+            //}
+            //var obj = _listSP[index];
+            //_idwhenclick = obj.MaSanPham;
+            //txt_MaSanPham.Text = obj.MaSanPham;
+            //txt_TenSanPham.Text = obj.TenSanPham;
+            //txt_HangSanPham.Text = obj.HangSanXuat;
+            //txt_ThongSoKyThuat.Text = obj.ThongSoKyThuat;
+            //txt_GiaNhap.Text = obj.GiaNhap.ToString();
+            //txt_GiaBan.Text = obj.GiaBan.ToString();
 
-            // Kiểm tra xem dữ liệu VARBINARY có tồn tại không
-            if (obj.HinhAnh != null && obj.HinhAnh.Length > 0)
-            {
-                // Chuyển đổi dữ liệu byte thành hình ảnh
-                using (MemoryStream ms = new MemoryStream(obj.HinhAnh))
-                {
-                    ptb_Anh.Image = Image.FromStream(ms);
-                    ptb_Anh.BackgroundImage = null;
-                }
-            }
-            else
-            {
-                // Nếu không có hình ảnh, gán hình mặc định hoặc hiển thị một thông báo khác
-                ptb_Anh.Image = null; // Gán hình mặc định
-                                      // Hoặc hiển thị một thông báo khác
-                MessageBox.Show("Không có hình ảnh.");
-            }
+            //// Kiểm tra xem dữ liệu VARBINARY có tồn tại không
+            //if (obj.HinhAnh != null && obj.HinhAnh.Length > 0)
+            //{
+            //    // Chuyển đổi dữ liệu byte thành hình ảnh
+            //    using (MemoryStream ms = new MemoryStream(obj.HinhAnh))
+            //    {
+            //        ptb_Anh.Image = Image.FromStream(ms);
+            //        ptb_Anh.BackgroundImage = null;
+            //    }
+            //}
+            //else
+            //{
+            //    // Nếu không có hình ảnh, gán hình mặc định hoặc hiển thị một thông báo khác
+            //    ptb_Anh.Image = null; // Gán hình mặc định
+            //                          // Hoặc hiển thị một thông báo khác
+            //    MessageBox.Show("Không có hình ảnh.");
+            //}
 
 
-            if (obj.TrangThai == 1)
-            {
-                rd_ConHang.Checked = true;
-            }
-            else if (obj.TrangThai == 0)
-            {
-                rd_HetHang.Checked = true;
-            }
+            //if (obj.TrangThai == 1)
+            //{
+            //    rd_ConHang.Checked = true;
+            //}
+            //else if (obj.TrangThai == 0)
+            //{
+            //    rd_HetHang.Checked = true;
+            //}
         }
 
 
@@ -540,56 +555,56 @@ namespace App.Winform.UI
         }
         private void ExportToExcel(List<SanPham> data)
         {
-            using (ExcelPackage excelPackage = new ExcelPackage())
-            {
-                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Danh sách sản phẩm");
+            //using (ExcelPackage excelPackage = new ExcelPackage()) //cần sửa
+            //{
+            //    ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("Danh sách sản phẩm");
 
-                worksheet.Cells[1, 1].Value = "Mã Sản Phẩm";
-                worksheet.Cells[1, 2].Value = "Tên Sản Phẩm";
-                worksheet.Cells[1, 3].Value = "Hãng Sản Xuất";
-                worksheet.Cells[1, 4].Value = "Thông Số Kỹ Thuật";
-                worksheet.Cells[1, 5].Value = "Giá Nhập";
-                worksheet.Cells[1, 6].Value = "Giá Bán";
-                worksheet.Cells[1, 7].Value = "Trạng Thái";
+            //    worksheet.Cells[1, 1].Value = "Mã Sản Phẩm";
+            //    worksheet.Cells[1, 2].Value = "Tên Sản Phẩm";
+            //    worksheet.Cells[1, 3].Value = "Hãng Sản Xuất";
+            //    worksheet.Cells[1, 4].Value = "Thông Số Kỹ Thuật";
+            //    worksheet.Cells[1, 5].Value = "Giá Nhập";
+            //    worksheet.Cells[1, 6].Value = "Giá Bán";
+            //    worksheet.Cells[1, 7].Value = "Trạng Thái";
 
-                int row = 2;
-                foreach (var sp in data)
-                {
-                    worksheet.Cells[row, 1].Value = sp.MaSanPham;
-                    worksheet.Cells[row, 2].Value = sp.TenSanPham;
-                    worksheet.Cells[row, 3].Value = sp.HangSanXuat;
-                    worksheet.Cells[row, 4].Value = sp.ThongSoKyThuat;
-                    worksheet.Cells[row, 5].Value = sp.GiaNhap;
-                    worksheet.Cells[row, 6].Value = sp.GiaBan;
-                    worksheet.Cells[row, 7].Value = sp.TrangThai == 1 ? "Còn hàng" : "Hết hàng";
+            //    int row = 2;
+            //    foreach (var sp in data)
+            //    {
+            //        worksheet.Cells[row, 1].Value = sp.MaSanPham;
+            //        worksheet.Cells[row, 2].Value = sp.TenSanPham;
+            //        worksheet.Cells[row, 3].Value = sp.HangSanXuat;
+            //        worksheet.Cells[row, 4].Value = sp.ThongSoKyThuat;
+            //        worksheet.Cells[row, 5].Value = sp.GiaNhap;
+            //        worksheet.Cells[row, 6].Value = sp.GiaBan;
+            //        worksheet.Cells[row, 7].Value = sp.TrangThai == 1 ? "Còn hàng" : "Hết hàng";
 
-                    row++;
-                }
+            //        row++;
+            //    }
 
-                // Lưu file Excel
-                using (var stream = new MemoryStream())
-                {
-                    excelPackage.SaveAs(stream);
-                    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
-                    saveFileDialog.FilterIndex = 1;
-                    saveFileDialog.RestoreDirectory = true;
+            //    // Lưu file Excel
+            //    using (var stream = new MemoryStream())
+            //    {
+            //        excelPackage.SaveAs(stream);
+            //        SaveFileDialog saveFileDialog = new SaveFileDialog();
+            //        saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            //        saveFileDialog.FilterIndex = 1;
+            //        saveFileDialog.RestoreDirectory = true;
 
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        if (Path.GetExtension(saveFileDialog.FileName).ToLower() != ".xlsx")
-                        {
-                            MessageBox.Show("Chỉ chấp nhận định dạng .xlsx cho tệp tin!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create);
-                            stream.WriteTo(fs);
-                            fs.Close();
-                        }
-                    }
-                }
-            }
+            //        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            //        {
+            //            if (Path.GetExtension(saveFileDialog.FileName).ToLower() != ".xlsx")
+            //            {
+            //                MessageBox.Show("Chỉ chấp nhận định dạng .xlsx cho tệp tin!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            }
+            //            else
+            //            {
+            //                FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create);
+            //                stream.WriteTo(fs);
+            //                fs.Close();
+            //            }
+            //        }
+            //    }
+            //}
         }
 
 
@@ -600,7 +615,7 @@ namespace App.Winform.UI
 
         private void pn_XuatExcel_Click(object sender, EventArgs e)
         {
-            ExportToExcel(_listSP);
+            //ExportToExcel(_listSP); //cần sửa
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
