@@ -73,5 +73,25 @@ namespace App.Services.Services
 			}
 		}
 
+		public List<HangSanXuat> GetAllHangSanXuat()
+		{
+			return _repos.GetAllHangSanXuat();
+		}
+
+		public List<MauSac> GetAllMauSac()
+		{
+			return _repos.GetAllMauSac();
+		}
+
+		public List<ChatLieu> GetAllChatLieu()
+		{
+			return _repos.GetAllChatLieu();
+		}
+
+		public List<LoaiRen> GetAllLoaiRen()
+		{
+			return _repos.GetAllLoaiRen();
+		}
+
     }
 }

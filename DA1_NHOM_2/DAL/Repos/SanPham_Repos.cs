@@ -166,5 +166,25 @@ namespace App.Data.Repos
         {
             throw new NotImplementedException();
         }
+
+        public List<LoaiRen> GetAllLoaiRen()
+        {
+            return context.LoaiRen.ToList();
+        }
+
+        public List<HangSanXuat> GetAllHangSanXuat()
+        {
+            return context.HangSanXuat.ToList();
+        }
+
+        public List<MauSac> GetAllMauSac()
+        {
+            return context.MauSac.ToList();
+        }
+
+        public List<ChatLieu> GetAllChatLieu()
+        {
+            return context.ChatLieu.ToList();
+        }
     }
 }

@@ -17,5 +17,10 @@ namespace App.Data.IRepos
 		public List<ChiTietSanPham> FilterByPrice(int index);
 		public List<ChiTietSanPham> FilterByTheFirm(int index);
 
+		public List<LoaiRen> GetAllLoaiRen();
+		public List<HangSanXuat> GetAllHangSanXuat();
+		public List<MauSac> GetAllMauSac();
+		public List<ChatLieu> GetAllChatLieu();
+
     }
 }

@@ -22,13 +22,16 @@ namespace App.Winform.UI
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ///123///////2113232
             PhanQuyen_NhanVien(nv);
+
+            LoadComboBox();
+
+            cbx_FillHangSX.SelectedItem = "Tất cả";
+            cbx_FillMauSac.SelectedItem = "Tất cả";
+            cbx_FillChatLieu.SelectedItem = "Tất cả";
+            cbx_FillLoaiRen.SelectedItem = "Tất cả";
+
         }
         
-
-        private void Form_SanPham_Load(object sender, EventArgs e)
-        {
-            
-        }
 
         private void PhanQuyen_NhanVien(NhanVien nv)
         {
@@ -101,16 +104,54 @@ namespace App.Winform.UI
 
         private void pn_LamMoi_Click(object sender, EventArgs e)
         {
-            txt_MaSanPham.Text = "";
+            txt_SoLuong.Text = "";
             txt_TenSanPham.Text = "";
-            txt_HangSanPham.Text = "";
-            txt_ThongSoKyThuat.Text = "";
-            txt_GiaNhap.Text = "";
+            txt_LoaiSp.Text = "";
+            txt_ChieuDai.Text = "";
+            txt_CanNang.Text = "";
             txt_GiaBan.Text = "";
 
-            rd_ConHang.Checked = false;
-            rd_HetHang.Checked = false;
+            cbx_HangSX.Text = "";
+            cbx_LoaiRen.Text = "";
+            cbx_ChatLieu.Text = "";
+            cbx_MauSac.Text = "";
+            cbx_TrangThai.Text = "Còn hàng";
+
+            txt_Search.Text = "";
+            cbx_FillChatLieu.Text = "Tất cả";
+            cbx_FillMauSac.Text = "Tất cả";
+            cbx_FillLoaiRen.Text = "Tất cả";
+            cbx_FillHangSX.Text = "Tất cả";
+
             ptb_Anh.Image = null;
+        }
+
+        private void LoadComboBox()
+        {
+            cbx_HangSX.Items.Clear();
+            cbx_MauSac.Items.Clear();
+            cbx_ChatLieu.Items.Clear();
+            cbx_LoaiRen.Items.Clear();
+
+            foreach (var item in _service.GetAllHangSanXuat())
+            {
+                cbx_HangSX.Items.Add(item.Name);
+            }
+
+            foreach (var item in _service.GetAllMauSac())
+            {
+                cbx_MauSac.Items.Add(item.Name);
+            }
+
+            foreach (var item in _service.GetAllLoaiRen())
+            {
+                cbx_LoaiRen.Items.Add(item.Name);
+            }
+
+            foreach (var item in _service.GetAllChatLieu())
+            {
+                cbx_ChatLieu.Items.Add(item.Name);
+            }
         }
 
         private void pn_ThemSP_Click(object sender, EventArgs e)
@@ -666,45 +707,6 @@ namespace App.Winform.UI
         private void label12_Click(object sender, EventArgs e)
         {
             pn_XuatExcel_Click(sender, e);
-        }
-
-        private void txt_GiaNhap_TextChanged(object sender, EventArgs e)
-        {
-            // Kiểm tra xem chuỗi có độ dài lớn hơn 0 không
-            if (txt_GiaNhap.Text.Length > 0)
-            {
-                // Lọc chuỗi chỉ giữ lại ký tự số và dấu "."
-                string input = Regex.Replace(txt_GiaNhap.Text, "[^0-9.]", "");
-
-                // Kiểm tra xem sau khi lọc, chuỗi có độ dài lớn hơn 0 không
-                if (input.Length > 0)
-                {
-                    // Kiểm tra xem chuỗi chỉ có duy nhất một dấu "."
-                    if (input.Count(c => c == '.') <= 1)
-                    {
-                        // Chuyển đổi chuỗi thành số nguyên
-                        if (decimal.TryParse(input, out decimal giaNhap))
-                        {
-                            // Định dạng số tiền và hiển thị lại trong textbox
-                            txt_GiaNhap.Text = giaNhap.ToString("#,##0");
-                            // Di chuyển con trỏ về cuối textbox để người dùng có thể tiếp tục nhập
-                            txt_GiaNhap.SelectionStart = txt_GiaNhap.Text.Length;
-                        }
-                        else
-                        {
-                            // Nếu người dùng nhập không phải là số, xóa ký tự vừa nhập và hiển thị thông báo
-                            txt_GiaNhap.Text = txt_GiaNhap.Text.Substring(0, txt_GiaNhap.Text.Length - 1);
-                            MessageBox.Show("Vui lòng nhập số nguyên.");
-                        }
-                    }
-                    else
-                    {
-                        // Nếu chuỗi chứa nhiều hơn một dấu ".", xóa ký tự vừa nhập và hiển thị thông báo
-                        txt_GiaNhap.Text = txt_GiaNhap.Text.Substring(0, txt_GiaNhap.Text.Length - 1);
-                        MessageBox.Show("Số tiền không hợp lệ.");
-                    }
-                }
-            }
         }
 
         private void txt_GiaBan_TextChanged(object sender, EventArgs e)

@@ -977,7 +977,7 @@
             Name = "Form_BanHang";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form_TrangChu";
+            Text = "Form_BanHang";
             Load += Form_TrangChu_Load;
             pn_DSChucNang.ResumeLayout(false);
             pn_DSChucNang.PerformLayout();

@@ -61,19 +61,24 @@ namespace App.Winform.UI
 
         private void PhanQuyen_NhanVien(NhanVien nvien)
         {
-            //if (nvien.ChucVu.Equals("Nhân viên")) //cần sửa
-            //{
-            //    pn_NhanVien.Click -= pn_NhanVien_Click;
+            if (nvien.ChucVu.Equals("Nhân viên"))
+            {
+                pn_NhanVien.Click -= pn_NhanVien_Click;
 
-            //    foreach (Control item in pn_NhanVien.Controls)
-            //    {
-            //        item.Click -= pn_NhanVien_Click;
+                foreach (Control item in pn_NhanVien.Controls)
+                {
+                    item.Click -= pn_NhanVien_Click;
 
-            //        item.Click += NotClick;
-            //    }
+                    item.Click += NotClick;
+                }
 
+                pn_DSChucNang.Controls.Remove(pn_NhanVien);
+                pn_DSChucNang.Controls.Remove(pn_SanPham);
+                pn_DSChucNang.Controls.Remove(pn_ThongKe);
 
-            //}
+                pn_KhachHang.Location = new Point(0, 279);
+             
+            }
         }
         //Su kien thong bao nhan vien k dc phep su dung chuc nang
         private void NotClick(object sender, EventArgs e)
@@ -229,7 +234,7 @@ namespace App.Winform.UI
             }
             else lb_NameNV.Text = nvien.TenNhanVien;
 
-            //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
+            LoadGrid(bhsv.GetAllSanPham());
 
             tbx_TienKhachTra.Click += tbx_Click;
             tbx_Giamgia.Click += tbx_Click;
@@ -315,7 +320,7 @@ namespace App.Winform.UI
             dtg_HoaDonCho.Rows.Clear();
 
             //Tạo cột cho ds sản phẩm 
-            dtg_DSsanpham.ColumnCount = 7;
+            dtg_DSsanpham.ColumnCount = 9;
 
             dtg_DSsanpham.Columns[0].Name = "stt";
             dtg_DSsanpham.Columns[0].HeaderText = "STT";
@@ -324,21 +329,44 @@ namespace App.Winform.UI
             dtg_DSsanpham.Columns[1].Name = "ten";
             dtg_DSsanpham.Columns[1].HeaderText = "Tên sản phẩm";
 
-            dtg_DSsanpham.Columns[2].Name = "hang";
-            dtg_DSsanpham.Columns[2].HeaderText = "Hãng sản xuất";
+            dtg_DSsanpham.Columns[2].Name = "loaisp";
+            dtg_DSsanpham.Columns[2].HeaderText = "Loại sản phẩm";
 
-            dtg_DSsanpham.Columns[3].Name = "thongso";
-            dtg_DSsanpham.Columns[3].HeaderText = "Thông số kĩ thuật";
+            dtg_DSsanpham.Columns[3].Name = "soluong";
+            dtg_DSsanpham.Columns[3].HeaderText = "Số lượng";
 
             dtg_DSsanpham.Columns[4].Name = "gia";
             dtg_DSsanpham.Columns[4].HeaderText = "Giá bán";
 
-            dtg_DSsanpham.Columns[5].Name = "trangthai";
-            dtg_DSsanpham.Columns[5].HeaderText = "Trạng thái";
+            dtg_DSsanpham.Columns[5].Name = "mausac";
+            dtg_DSsanpham.Columns[5].HeaderText = "Màu";
 
-            dtg_DSsanpham.Columns[6].Name = "Id";
-            dtg_DSsanpham.Columns[6].Visible = false;
+            dtg_DSsanpham.Columns[6].Name = "chatlieu";
+            dtg_DSsanpham.Columns[6].HeaderText = "Chất liệu";
+
+            dtg_DSsanpham.Columns[7].Name = "hangsx";
+            dtg_DSsanpham.Columns[7].HeaderText = "Hãng";
+
+            dtg_DSsanpham.Columns[8].Name = "Id";
+            dtg_DSsanpham.Columns[8].Visible = false;
             dtg_DSsanpham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            //Thêm dữ liệu vào ds sản phẩm
+            //stt
+            int stt = 1;
+            foreach (var item in data)
+            {
+                dtg_DSsanpham.Rows.Add(stt++, 
+                    item.SanPham.TenSanPham, 
+                    item.SanPham.LoaiSanPham, 
+                    item.SoLuong, item.GiaBan, 
+                    item.MauSac.Name, 
+                    item.ChatLieu.name,
+                    item.HangSanXuat.Name,
+                    item.Id
+                    );
+            }
+
 
             //Tạo cột cho giỏ hàng
             dtg_GioHang.ColumnCount = 5;
@@ -362,6 +390,8 @@ namespace App.Winform.UI
             dtg_GioHang.Columns[4].Name = "dongia";
             dtg_GioHang.Columns[4].HeaderText = "Đơn giá";
             dtg_GioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            
 
             //Tạo cột cho hóa đơn chờ 
             dtg_HoaDonCho.ColumnCount = 6;
@@ -387,13 +417,7 @@ namespace App.Winform.UI
             dtg_HoaDonCho.Columns[5].Visible = false;
             dtg_HoaDonCho.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            //Thêm dữ liệu vào ds sản phẩm
-            //stt
-            int stt = 1;
-            foreach (var item in data)
-            {
-                dtg_DSsanpham.Rows.Add(stt++, item.TenSanPham, item.HangSanXuat, item.ThongSoKyThuat, item.GiaBan, item.TrangThai == 1 ? "Còn hàng" : "Hết hàng", item.MaSanPham);
-            }
+            
 
 
             //Thêm dữ liệu vào hóa đơn chờ 
@@ -440,7 +464,7 @@ namespace App.Winform.UI
                         }
                         else
                         {
-                            string id = dtg_DSsanpham.Rows[rowIndex].Cells[6].Value.ToString();
+                            string id = dtg_DSsanpham.Rows[rowIndex].Cells[8].Value.ToString();
                             string name = dtg_DSsanpham.Rows[rowIndex].Cells[1].Value.ToString();
                             string dongia = dtg_DSsanpham.Rows[rowIndex].Cells[4].Value.ToString();
                             int soluong = 1;
@@ -832,7 +856,7 @@ namespace App.Winform.UI
 
 
                 dtg_GioHang.Rows.Clear();
-                //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
+                LoadGrid(bhsv.GetAllSanPham());
             }
         }
 
@@ -879,7 +903,7 @@ namespace App.Winform.UI
 
                 //
 
-                //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
+                LoadGrid(bhsv.GetAllSanPham());
                 ClearInput();
             }
         }
@@ -1212,7 +1236,7 @@ namespace App.Winform.UI
         //Nút cập nhật
         private void pn_BtnCapNhat_Click(object sender, EventArgs e)
         {
-            //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
+            LoadGrid(bhsv.GetAllSanPham());
         }
 
 
@@ -1441,7 +1465,7 @@ namespace App.Winform.UI
 
         private void label12_Click(object sender, EventArgs e)
         {
-            //LoadGrid(bhsv.GetAllSanPham()); //cần sửa
+            LoadGrid(bhsv.GetAllSanPham()); 
         }
     }
 }
