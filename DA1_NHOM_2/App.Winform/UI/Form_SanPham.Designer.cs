@@ -161,6 +161,7 @@
             cbx_FillLoaiRen.Name = "cbx_FillLoaiRen";
             cbx_FillLoaiRen.Size = new Size(151, 28);
             cbx_FillLoaiRen.TabIndex = 36;
+            cbx_FillLoaiRen.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // cbx_FillMauSac
             // 
@@ -171,6 +172,7 @@
             cbx_FillMauSac.Name = "cbx_FillMauSac";
             cbx_FillMauSac.Size = new Size(151, 28);
             cbx_FillMauSac.TabIndex = 35;
+            cbx_FillMauSac.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // label19
             // 
@@ -191,6 +193,7 @@
             cbx_FillChatLieu.Name = "cbx_FillChatLieu";
             cbx_FillChatLieu.Size = new Size(151, 28);
             cbx_FillChatLieu.TabIndex = 34;
+            cbx_FillChatLieu.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // label18
             // 
@@ -221,13 +224,14 @@
             cbx_FillHangSX.Name = "cbx_FillHangSX";
             cbx_FillHangSX.Size = new Size(151, 28);
             cbx_FillHangSX.TabIndex = 17;
+            cbx_FillHangSX.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // txt_Search
             // 
             txt_Search.Font = new Font("Segoe UI", 10F);
             txt_Search.Location = new Point(174, 50);
             txt_Search.Name = "txt_Search";
-            txt_Search.PlaceholderText = "Mời nhập tên sản phẩm cần tìm?";
+            txt_Search.PlaceholderText = " Mời nhập tên sản phẩm cần tìm?";
             txt_Search.Size = new Size(276, 30);
             txt_Search.TabIndex = 16;
             txt_Search.TextChanged += txt_Search_TextChanged;
@@ -493,10 +497,12 @@
             // 
             cbx_TrangThai.DropDownStyle = ComboBoxStyle.DropDownList;
             cbx_TrangThai.FormattingEnabled = true;
+            cbx_TrangThai.Items.AddRange(new object[] { "Còn hàng", "Hết hàng" });
             cbx_TrangThai.Location = new Point(576, 288);
             cbx_TrangThai.Name = "cbx_TrangThai";
             cbx_TrangThai.Size = new Size(193, 28);
             cbx_TrangThai.TabIndex = 32;
+            cbx_TrangThai.SelectedIndexChanged += cbx_TrangThai_SelectedIndexChanged;
             // 
             // label17
             // 
@@ -617,6 +623,8 @@
             txt_SoLuong.Name = "txt_SoLuong";
             txt_SoLuong.Size = new Size(249, 30);
             txt_SoLuong.TabIndex = 18;
+            txt_SoLuong.TextChanged += txt_SoLuong_TextChanged;
+            txt_SoLuong.KeyPress += txt_SoLuong_KeyPress;
             // 
             // label1
             // 

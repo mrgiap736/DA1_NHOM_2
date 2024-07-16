@@ -10,7 +10,9 @@ namespace App.Data.IRepos
     public interface ISanPham_Repos
     {
         public List<ChiTietSanPham> GetAll();
+		public List<SanPham> GetAllSP();
 		public bool AddSP(SanPham sp);
+		public bool AddCTSP(ChiTietSanPham ctsp);
 		public bool UpdateSP(SanPham sp);
 		public bool RemoveSP(SanPham sp);
 		public List<ChiTietSanPham> SearchByName(string name);

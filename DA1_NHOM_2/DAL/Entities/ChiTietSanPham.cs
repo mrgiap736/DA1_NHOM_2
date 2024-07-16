@@ -26,7 +26,7 @@ namespace App.Data.Entities
 
         public Guid MaMauSac { get; set; }
 
-        public int TrangThai { get; set; }
+        public string TrangThai { get; set; }
 
         public byte[]? HinhAnh { get; set; } // Thêm thuộc tính HinhAnh
 

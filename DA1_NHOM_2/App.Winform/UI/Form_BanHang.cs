@@ -77,7 +77,7 @@ namespace App.Winform.UI
                 pn_DSChucNang.Controls.Remove(pn_ThongKe);
 
                 pn_KhachHang.Location = new Point(0, 279);
-             
+
             }
         }
         //Su kien thong bao nhan vien k dc phep su dung chuc nang
@@ -221,7 +221,7 @@ namespace App.Winform.UI
 
 
         #region Load data
-        private void Form_TrangChu_Load(object sender, EventArgs e)
+        private void Form_BanHang_Load(object sender, EventArgs e)
         {
             //Phân quyền chức năng trước khi thao tác
             PhanQuyen_NhanVien(nvien);
@@ -314,7 +314,7 @@ namespace App.Winform.UI
             }
         }
 
-        public void LoadGrid(dynamic data)
+        public void LoadGrid(dynamic? data)
         {
             dtg_DSsanpham.Rows.Clear();
             dtg_HoaDonCho.Rows.Clear();
@@ -354,17 +354,21 @@ namespace App.Winform.UI
             //Thêm dữ liệu vào ds sản phẩm
             //stt
             int stt = 1;
-            foreach (var item in data)
+            if(data != null)
             {
-                dtg_DSsanpham.Rows.Add(stt++, 
-                    item.SanPham.TenSanPham, 
-                    item.SanPham.LoaiSanPham, 
-                    item.SoLuong, item.GiaBan, 
-                    item.MauSac.Name, 
-                    item.ChatLieu.name,
-                    item.HangSanXuat.Name,
-                    item.Id
-                    );
+                foreach (var item in data)
+                {
+                    dtg_DSsanpham.Rows.Add(stt++,
+                        item.SanPham.TenSanPham,
+                        item.SanPham.LoaiSanPham,
+                        item.SoLuong, item.GiaBan,
+                        item.MauSac.Name,
+                        item.ChatLieu.Name,
+                        item.HangSanXuat.Name,
+                        item.Id
+                        );
+                }
+
             }
 
 
@@ -391,7 +395,7 @@ namespace App.Winform.UI
             dtg_GioHang.Columns[4].HeaderText = "Đơn giá";
             dtg_GioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            
+
 
             //Tạo cột cho hóa đơn chờ 
             dtg_HoaDonCho.ColumnCount = 6;
@@ -417,7 +421,7 @@ namespace App.Winform.UI
             dtg_HoaDonCho.Columns[5].Visible = false;
             dtg_HoaDonCho.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            
+
 
 
             //Thêm dữ liệu vào hóa đơn chờ 
@@ -584,7 +588,7 @@ namespace App.Winform.UI
             {
                 SauKhiGiamGia = kq - (10000 * giamgia);
 
-                if (SauKhiGiamGia < (kq /100 * 70))
+                if (SauKhiGiamGia < (kq / 100 * 70))
                 {
                     SauKhiGiamGia = kq / 100 * 30;
                     tbx_Giamgia.Text = $"{kq / 100 * 70 / 10000}";
@@ -687,11 +691,11 @@ namespace App.Winform.UI
             //    check = false;
             //}
             else if (tbx_TienKhachTra.Text == "")
-            {          
+            {
                 MessageBox.Show("Chưa nhập số tiền khách trả !");
                 check = false;
             }
-            else if(tbx_Giamgia.Text == "")
+            else if (tbx_Giamgia.Text == "")
             {
                 MessageBox.Show("Chưa nhập số điểm giảm giá !");
                 check = false;
@@ -810,13 +814,13 @@ namespace App.Winform.UI
                         MessageBox.Show("Khách hàng không đủ điểm tích lũy !");
                         return;
                     }
-                    
-                    
+
+
                 }
                 else
                 {
 
-                    if(CheckGiamGia())
+                    if (CheckGiamGia())
                     {
                         //Thanh toán hóa đơn chờ
                         hdsv.CapNhatHoaDon(idUpdate, tienkhachtra, giamgia, tongtien);
@@ -1465,7 +1469,8 @@ namespace App.Winform.UI
 
         private void label12_Click(object sender, EventArgs e)
         {
-            LoadGrid(bhsv.GetAllSanPham()); 
+            LoadGrid(bhsv.GetAllSanPham());
         }
+
     }
 }

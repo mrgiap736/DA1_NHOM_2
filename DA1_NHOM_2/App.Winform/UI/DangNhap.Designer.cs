@@ -61,12 +61,12 @@
             // btn_DangNhap
             // 
             btn_DangNhap.BackColor = Color.FromArgb(255, 128, 0);
-            btn_DangNhap.Font = new Font("Times New Roman", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_DangNhap.Font = new Font("Times New Roman", 11F);
             btn_DangNhap.ForeColor = Color.White;
             btn_DangNhap.Location = new Point(187, 180);
             btn_DangNhap.Name = "btn_DangNhap";
             btn_DangNhap.Size = new Size(110, 40);
-            btn_DangNhap.TabIndex = 2;
+            btn_DangNhap.TabIndex = 3;
             btn_DangNhap.Text = "Đăng nhập";
             btn_DangNhap.UseVisualStyleBackColor = false;
             btn_DangNhap.Click += btn_DangNhap_Click;
@@ -79,7 +79,7 @@
             tbx_pass.PasswordChar = '*';
             tbx_pass.PlaceholderText = "Nhập mật khẩu";
             tbx_pass.Size = new Size(305, 27);
-            tbx_pass.TabIndex = 4;
+            tbx_pass.TabIndex = 2;
             tbx_pass.KeyDown += Form_DangNhap_KeyDown;
             // 
             // label2

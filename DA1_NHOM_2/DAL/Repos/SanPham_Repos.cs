@@ -21,7 +21,17 @@ namespace App.Data.Repos
         }
         public List<ChiTietSanPham> GetAll()
         {
-            return context.ChiTietSanPham.ToList();
+            return context.ChiTietSanPham
+                .Include(x => x.SanPham)
+                .Include(x => x.MauSac)
+                .Include(x => x.HangSanXuat)
+                .Include(x => x.ChatLieu)
+                .Include(x => x.LoaiRen).ToList();
+        }
+
+        public List<SanPham> GetAllSP()
+        {
+            return context.SanPham.ToList();
         }
 
 		public bool AddSP(SanPham sp)
@@ -30,6 +40,13 @@ namespace App.Data.Repos
 			context.SaveChanges();
 			return true;
 		}
+
+        public bool AddCTSP(ChiTietSanPham ctsp)
+        {
+            context.ChiTietSanPham.Add(ctsp);
+            context.SaveChanges();
+            return true;
+        }
 
 
 		public bool RemoveSP(SanPham sp)
