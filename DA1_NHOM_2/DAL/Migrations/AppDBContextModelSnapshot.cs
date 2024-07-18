@@ -146,7 +146,7 @@ namespace App.Data.Migrations
                     b.Property<int?>("GiamGia")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("MaKhachHang")
+                    b.Property<Guid?>("MaKhachHang")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MaNhanVien")
@@ -365,9 +365,7 @@ namespace App.Data.Migrations
                 {
                     b.HasOne("App.Data.Entities.KhachHang", "KhachHang")
                         .WithMany("HoaDons")
-                        .HasForeignKey("MaKhachHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaKhachHang");
 
                     b.HasOne("App.Data.Entities.NhanVien", "NhanVien")
                         .WithMany("HoaDons")

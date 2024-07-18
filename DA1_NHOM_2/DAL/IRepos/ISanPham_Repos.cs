@@ -13,8 +13,8 @@ namespace App.Data.IRepos
 		public List<SanPham> GetAllSP();
 		public bool AddSP(SanPham sp);
 		public bool AddCTSP(ChiTietSanPham ctsp);
-		public bool UpdateSP(SanPham sp);
-		public bool RemoveSP(SanPham sp);
+		public bool UpdateCTSP(ChiTietSanPham sp);
+		public bool RemoveCTSP(ChiTietSanPham ctsp);
 		public List<ChiTietSanPham> SearchByName(string name);
 		public List<ChiTietSanPham> FilterByPrice(int index);
 		public List<ChiTietSanPham> FilterByTheFirm(int index);

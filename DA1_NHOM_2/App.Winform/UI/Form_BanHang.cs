@@ -354,7 +354,7 @@ namespace App.Winform.UI
             //Thêm dữ liệu vào ds sản phẩm
             //stt
             int stt = 1;
-            if(data != null)
+            if (data != null)
             {
                 foreach (var item in data)
                 {
@@ -461,7 +461,7 @@ namespace App.Winform.UI
                     }
                     else
                     {
-                        if (dtg_DSsanpham.Rows[rowIndex].Cells[5].Value == "Hết hàng")
+                        if (Convert.ToInt32(dtg_DSsanpham.Rows[rowIndex].Cells[3].Value) == 0)
                         {
                             MessageBox.Show("Sản phẩm đang hết hàng !");
                             return;
@@ -570,7 +570,7 @@ namespace App.Winform.UI
 
         #region Các hàm xử lý logic 
         //Hàm tính tổng tiền sau khi giam gia
-        public int TinhTongTien()
+        public int TinhTongTien() //cần sửa
         {
 
             int kq = 0;
@@ -600,7 +600,7 @@ namespace App.Winform.UI
 
         }
 
-        private int TinhTongTienKhongGiamGia()
+        private int TinhTongTienKhongGiamGia() //cần sửa
         {
             int kq = 0;
             foreach (DataGridViewRow item in dtg_GioHang.Rows)
@@ -658,7 +658,7 @@ namespace App.Winform.UI
 
         //Hàm tìm kiếm khách hàng
         //Lấy mã khách hàng để tạo hóa đơn  
-        Guid maKH;
+        Guid? maKH;
         public void SearchCustomer()
         {
             kHang = bhsv.GetKhachHang(tbx_SDTkh.Text);
@@ -676,7 +676,7 @@ namespace App.Winform.UI
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn 
-        public bool ValidateTaoHD(Guid makh, string tienkhachtra, int tongtien)
+        public bool ValidateTaoHD(Guid? makh, string tienkhachtra, int tongtien)
         {
             bool check = true;
             //
@@ -718,7 +718,7 @@ namespace App.Winform.UI
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn chờ
-        public bool ValidateTaoHDCho(Guid makh)
+        public bool ValidateTaoHDCho(Guid? makh)
         {
             bool check = true;
             //
@@ -740,7 +740,7 @@ namespace App.Winform.UI
         public void ThanhToan()
         {
             //Lấy dữ liệu
-            Guid makhachhang = maKH;
+            Guid? makhachhang = maKH;
             Guid manhanvien = nvien.MaNhanVien;
             DateTime ngaymua = DateTime.Now;
 
@@ -766,98 +766,68 @@ namespace App.Winform.UI
 
                 if (check)
                 {
-                    //Check xem khách đủ điểm để giảm giá hay không
-                    if (CheckGiamGia())
+                    HoaDon hd = new HoaDon
                     {
-                        HoaDon hd = new HoaDon
-                        {
-                            MaKhachHang = makhachhang,
-                            MaNhanVien = manhanvien,
-                            NgayMua = ngaymua,
-                            TongTien = tongtien,
-                            TienKhachTra = tienkhachtra,
-                            GiamGia = giamgia,
-                            TrangThai = trangthai
-                        };
-                        hdsv.TaoHoaDon(hd);
-                        AddHDChiTiet(hd.MaHoaDon);
-                        MessageBox.Show("Thanh toán thành công");
+                        MaKhachHang = makhachhang,
+                        MaNhanVien = manhanvien,
+                        NgayMua = ngaymua,
+                        TongTien = tongtien,
+                        TienKhachTra = tienkhachtra,
+                        GiamGia = giamgia,
+                        TrangThai = trangthai
+                    };
+                    hdsv.TaoHoaDon(hd);
+                    AddHDChiTiet(hd.MaHoaDon);
+                    MessageBox.Show("Thanh toán thành công");
 
-
+                    if(kHang != null)
+                    {
                         //cập nhật tích lũy cho khách hàng
                         int? tichluymoi;
 
-                        if (tbx_Giamgia.Text == "0" || tbx_Giamgia.Text == null)
-                        {
-                            //nếu khách hàng mua không giảm giá thì tích lũy
-                            tichluymoi = kHang.TichLuy + tongtien / 100000;
-                            kHang.TichLuy = tichluymoi;
 
-                        }
-                        else
-                        {
-                            //nếu khách hàng mua với giảm giá thì không tích lũy và trừ bớt điểm tích lũy đang có
-                            tichluymoi = kHang.TichLuy - Convert.ToInt32(tbx_Giamgia.Text);
-                            kHang.TichLuy = tichluymoi;
-                        }
+                        tichluymoi = kHang.TichLuy + 1;
+                        kHang.TichLuy = tichluymoi;
+
 
                         khsv.Update(kHang);
-
-                        //In hoa don cho khach
-                        InHoaDon(hd.MaHoaDon);
-
-                        //Xoa du lieu input
-                        ClearInput();
                     }
-                    else
-                    {
-                        MessageBox.Show("Khách hàng không đủ điểm tích lũy !");
-                        return;
-                    }
+                    
 
+                    //In hoa don cho khach
+                    InHoaDon(hd.MaHoaDon);
+
+                    //Xoa du lieu input
+                    ClearInput();
 
                 }
                 else
                 {
 
-                    if (CheckGiamGia())
-                    {
-                        //Thanh toán hóa đơn chờ
-                        hdsv.CapNhatHoaDon(idUpdate, tienkhachtra, giamgia, tongtien);
-                        UpdateHDChiTiet();
-                        MessageBox.Show("Thanh toán thành công");
+                    //Thanh toán hóa đơn chờ
+                    hdsv.CapNhatHoaDon(idUpdate, tienkhachtra, giamgia, tongtien);
+                    UpdateHDChiTiet();
+                    MessageBox.Show("Thanh toán thành công");
 
+                    if (kHang != null)
+                    {
                         //cập nhật tích lũy cho khách hàng
                         int? tichluymoi;
-                        if (tbx_Giamgia.Text == "0" || tbx_Giamgia.Text == null)
-                        {
-                            //nếu khách hàng mua không giảm giá thì tích lũy
-                            tichluymoi = kHang.TichLuy + tongtien / 100000;
-                            kHang.TichLuy = tichluymoi;
 
-                        }
-                        else
-                        {
-                            //nếu khách hàng mua với giảm giá thì không tích lũy và trừ bớt điểm tích lũy đang có
-                            tichluymoi = kHang.TichLuy - Convert.ToInt32(tbx_Giamgia.Text);
-                            kHang.TichLuy = tichluymoi;
-                        }
+
+                        tichluymoi = kHang.TichLuy + 1;
+                        kHang.TichLuy = tichluymoi;
+
 
                         khsv.Update(kHang);
-
-                        //In hoa don cho khach
-                        InHoaDon(idUpdate);
-
-                        //Xoa du lieu input
-                        ClearInput();
                     }
-                    else
-                    {
-                        MessageBox.Show("Khách hàng không đủ điểm tích lũy !");
-                        return;
-                    }
+
+                    //In hoa don cho khach
+                    InHoaDon(idUpdate);
+
+                    //Xoa du lieu input
+                    ClearInput();
                 }
-
 
                 dtg_GioHang.Rows.Clear();
                 LoadGrid(bhsv.GetAllSanPham());
@@ -867,7 +837,7 @@ namespace App.Winform.UI
         //Hàm tạo hóa đơn chờ (Tạo hóa đơn)
         public void TaoHoaDonCho()
         {
-            Guid makhachhang = maKH;
+            Guid? makhachhang = maKH;
             Guid manhanvien = nvien.MaNhanVien;
             DateTime ngaymua = DateTime.Now;
 
@@ -1147,7 +1117,7 @@ namespace App.Winform.UI
                 MessageBox.Show("Hoá đơn đã được lưu thành công vào tệp PDF.");
 
                 // Mở tệp PDF sau khi lưu
-                Process.Start(@"E:\Dự án 1\SumatraPDF\SumatraPDF.exe", fileName);
+                Process.Start(@"E:\PRO131_NEW\SumatraPDF\SumatraPDF.exe", fileName);
             }
             catch (Exception ex)
             {
@@ -1190,16 +1160,6 @@ namespace App.Winform.UI
             }
 
             return table;
-        }
-
-        //Hàm check giảm giá 
-        private bool CheckGiamGia()
-        {
-            if (Convert.ToInt32(tbx_Giamgia.Text) > kHang.TichLuy)
-            {
-                return false;
-            }
-            else return true;
         }
 
 

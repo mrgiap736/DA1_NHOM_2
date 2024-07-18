@@ -28,18 +28,16 @@ namespace App.Winform.UI
             if (loginsv.GetUS_PW(us, pw) != null)
             {
                 Form_BanHang tt = new Form_BanHang(loginsv.GetUS_PW(us, pw));
-
                 this.Hide();
-
                 tt.Show();
 
-
-
+                tt.FormClosed += (s, args) => this.Close();
             }
             else
             {
                 MessageBox.Show("Đăng nhập thất bại !");
             }
+
         }
 
         private void Form_DangNhap_KeyDown(object sender, KeyEventArgs e)

@@ -49,16 +49,16 @@ namespace App.Data.Repos
         }
 
 
-		public bool RemoveSP(SanPham sp)
+		public bool RemoveCTSP(ChiTietSanPham ctsp)
 		{
-			context.Remove(sp);
+			context.Remove(ctsp);
 			context.SaveChanges();
 			return true;
 		}
 
-		public bool UpdateSP(SanPham sp)
+		public bool UpdateCTSP(ChiTietSanPham ctsp)
 		{
-			context.Update(sp);
+			context.Update(ctsp);
 			context.SaveChanges();
 			return true;
 		}

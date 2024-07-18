@@ -37,41 +37,45 @@ namespace App.Services.Services
             }
         }
 
-        public string Update(SanPham sp)
+        public string Update(ChiTietSanPham ctsp)
         {
-            //var clone = _repos.GetAll().FirstOrDefault(x => x.MaSanPham == sp.MaSanPham); //cần sửa
-            //clone.MaSanPham = sp.MaSanPham;
-            //clone.TenSanPham = sp.TenSanPham;
-            //clone.HangSanXuat = sp.HangSanXuat;
-            //clone.ThongSoKyThuat = sp.ThongSoKyThuat;
-            //clone.GiaNhap = sp.GiaNhap;
-            //clone.GiaBan = sp.GiaBan;
-            //clone.TrangThai = sp.TrangThai;///
-            //clone.HinhAnh = sp.HinhAnh;
-            //if (_repos.UpdateSP(clone) == true)
-            //{
-            //	return "Update sản phẩm thành công";
-            //}
-            //else
-            //{
-            //	return "Update sản phẩm thất bại";
-            //}
+            var clone = _repos.GetAll().FirstOrDefault(x => x.Id == ctsp.Id); //Chưa sửa được mã sp
+            if(clone != null)
+            {
+                clone.MaHangSanXuat = ctsp.MaHangSanXuat;
+                clone.MaChatLieu = ctsp.MaChatLieu;
+                clone.MaLoaiRen = ctsp.MaLoaiRen;
+                clone.SoLuong = ctsp.SoLuong;
+                clone.ChieuDai = ctsp.ChieuDai;
+                clone.CanNang = ctsp.CanNang;
+                clone.GiaBan = ctsp.GiaBan;
+                clone.TrangThai = ctsp.TrangThai;///
+                clone.HinhAnh = ctsp.HinhAnh;
+                if (_repos.UpdateCTSP(clone) == true)
+                {
+                    return "Update sản phẩm thành công";
+                }
+                else
+                {
+                    return "Update sản phẩm thất bại";
+                }
+            }
 
-            return null;
+            return "Không tìm thấy sản phẩm";
+            
         }
 
-        public string Remove(SanPham sp)
+        public string Remove(ChiTietSanPham ctsp)
         {
-            //var clone = _repos.GetAll().FirstOrDefault(x => x.MaSanPham == sp.MaSanPham); //cần sửa
-            //if (_repos.RemoveSP(clone) == true)
-            //{
-            //	return "Đã xoá sản phẩm ";
-            //}
-            //else
-            //{
-            //	return "Xoá sản phẩm thất bại";
-            //}
-            return null;
+            var clone = _repos.GetAll().FirstOrDefault(x => x.Id == ctsp.Id); //cần sửa
+            if (_repos.RemoveCTSP(clone) == true)
+            {
+                return "Đã xoá sản phẩm ";
+            }
+            else
+            {
+                return "Xoá sản phẩm thất bại";
+            }
         }
 
         public List<ChiTietSanPham> GetAll()
@@ -147,7 +151,8 @@ namespace App.Services.Services
             Func<ChiTietSanPham, bool> dk1 = null,
             Func<ChiTietSanPham, bool> dk2 = null,
             Func<ChiTietSanPham, bool> dk3 = null,
-            Func<ChiTietSanPham, bool> dk4 = null
+            Func<ChiTietSanPham, bool> dk4 = null,
+            Func<ChiTietSanPham, bool> dk5 = null
             )
         {
             var query = lst.AsQueryable();
@@ -170,6 +175,11 @@ namespace App.Services.Services
             if (dk4 != null)
             {
                 query = query.Where(dk4).AsQueryable();
+            }
+
+            if (dk5 != null)
+            {
+                query = query.Where(dk5).AsQueryable();
             }
 
             return query.ToList();

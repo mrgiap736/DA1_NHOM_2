@@ -285,7 +285,6 @@
             pn_XuatExcel.Size = new Size(248, 49);
             pn_XuatExcel.TabIndex = 1;
             pn_XuatExcel.Click += pn_XuatExcel_Click;
-            pn_XuatExcel.Paint += pn_XuatExcel_Paint;
             // 
             // label12
             // 
@@ -297,7 +296,7 @@
             label12.Size = new Size(111, 28);
             label12.TabIndex = 5;
             label12.Text = "Xuất Excel";
-            label12.Click += label12_Click;
+            label12.Click += pn_XuatExcel_Click;
             // 
             // pictureBox5
             // 
@@ -310,7 +309,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 5;
             pictureBox5.TabStop = false;
-            pictureBox5.Click += pictureBox5_Click;
+            pictureBox5.Click += pn_XuatExcel_Click;
             // 
             // pn_XoaSP
             // 
@@ -334,7 +333,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click_1;
+            pictureBox1.Click += pn_XoaSP_Click;
             // 
             // label11
             // 
@@ -346,7 +345,7 @@
             label11.Size = new Size(147, 28);
             label11.TabIndex = 3;
             label11.Text = "Xoá Sản Phẩm";
-            label11.Click += label11_Click;
+            label11.Click += pn_XoaSP_Click;
             // 
             // pn_UpdateSP
             // 
@@ -371,7 +370,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 5;
             pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
+            pictureBox2.Click += pn_UpdateSP_Click;
             // 
             // label10
             // 
@@ -383,7 +382,7 @@
             label10.Size = new Size(179, 28);
             label10.TabIndex = 2;
             label10.Text = "Update Sản Phẩm";
-            label10.Click += label10_Click;
+            label10.Click += pn_UpdateSP_Click;
             // 
             // pn_ThemSP
             // 
@@ -408,7 +407,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 6;
             pictureBox3.TabStop = false;
-            pictureBox3.Click += pictureBox3_Click;
+            pictureBox3.Click += pn_ThemSP_Click;
             // 
             // label9
             // 
@@ -420,7 +419,7 @@
             label9.Size = new Size(164, 28);
             label9.TabIndex = 1;
             label9.Text = "Thêm Sản Phẩm";
-            label9.Click += label9_Click;
+            label9.Click += pn_ThemSP_Click;
             // 
             // pn_LamMoi
             // 
@@ -447,7 +446,7 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 7;
             pictureBox4.TabStop = false;
-            pictureBox4.Click += pictureBox4_Click;
+            pictureBox4.Click += pn_LamMoi_Click;
             // 
             // label8
             // 
@@ -459,7 +458,7 @@
             label8.Size = new Size(95, 28);
             label8.TabIndex = 0;
             label8.Text = "Làm Mới";
-            label8.Click += label8_Click;
+            label8.Click += pn_LamMoi_Click;
             // 
             // groupBox1
             // 

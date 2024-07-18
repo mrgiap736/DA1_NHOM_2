@@ -19,15 +19,15 @@ namespace App.Data.Entities
 
         public int TrangThai { get; set; }
 
-        public Guid MaKhachHang { get; set; }
+        public Guid? MaKhachHang { get; set; }
 
         public Guid MaNhanVien {  get; set; }
 
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; } = new List<ChiTietHoaDon>();
 
-        public virtual KhachHang? KhachHang { get; set; }
+        public KhachHang? KhachHang { get; set; }
 
-        public virtual NhanVien? NhanVien { get; set; }
+        public NhanVien? NhanVien { get; set; }
     }
 }
 
