@@ -25,7 +25,7 @@ namespace App.Data.Repos
 			return;
 		}
 
-        public List<HoaDon> FilByTT(int tt)
+        public List<HoaDon> FilByTT(string tt)
         {
 			return context.HoaDon.Where(x => x.TrangThai.Equals(tt)).ToList();
         }
@@ -45,14 +45,14 @@ namespace App.Data.Repos
 			return context.HoaDon.Where(x => x.KhachHang.TenKhachHang.ToLower().Contains(name.Trim().ToLower())).ToList();
 		}
 
-		public void Update(Guid a, int b, int c, int d)
+		public void Update(HoaDon hd)
 		{
-			var hoadonUp = context.HoaDon.Find(a);
+			var hoadonUp = context.HoaDon.Find(hd.MaHoaDon);
 
-			hoadonUp.TienKhachTra = b;
-			hoadonUp.GiamGia = c;
-			hoadonUp.TongTien = d;
-			hoadonUp.TrangThai = 1;
+			hoadonUp.TienKhachTra = hd.TienKhachTra;
+			hoadonUp.GiamGia = hd.GiamGia;
+			hoadonUp.TongTien = hd.TongTien;
+			hoadonUp.TrangThai = hd.TrangThai;
 
 			context.HoaDon.Update(hoadonUp);
 			context.SaveChanges();

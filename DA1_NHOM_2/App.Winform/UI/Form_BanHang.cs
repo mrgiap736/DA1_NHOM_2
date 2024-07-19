@@ -302,7 +302,7 @@ namespace App.Winform.UI
             cbx_Filter2.SelectedIndex = 0;
         }
 
-        private void LoadGioHang(dynamic data)
+        private void LoadGioHang(dynamic data) //note
         {
             //Xóa dữ liệu trước khi thêm
             dtg_GioHang.Rows.Clear();
@@ -310,7 +310,7 @@ namespace App.Winform.UI
             foreach (var item in data)
             {
                 int sttGH = dtg_GioHang.Rows.Count;
-                dtg_GioHang.Rows.Add(item.MaSanPhamNavigation.MaSanPham, sttGH++, item.MaSanPhamNavigation.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
+                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
             }
         }
 
@@ -402,7 +402,7 @@ namespace App.Winform.UI
 
             dtg_HoaDonCho.Columns[0].Name = "Id";
             dtg_HoaDonCho.Columns[0].HeaderText = "Mã";
-            dtg_HoaDonCho.Columns[0].Width = 40;
+            dtg_HoaDonCho.Columns[0].Visible = false;
 
             dtg_HoaDonCho.Columns[1].Name = "NameKH";
             dtg_HoaDonCho.Columns[1].HeaderText = "Tên khách hàng";
@@ -427,11 +427,17 @@ namespace App.Winform.UI
             //Thêm dữ liệu vào hóa đơn chờ 
             foreach (var item in hdsv.GetAllHoaDon())
             {
-                if (item.TrangThai == 0)
+                string tenkh = "";
+                if (item.KhachHang != null)
                 {
-                    string trangthai = "Chưa thanh toán";
-                    dtg_HoaDonCho.Rows.Add(item.MaHoaDon, item.KhachHang.TenKhachHang, trangthai, item.TongTien, item.TienKhachTra, item.GiamGia);
+                    tenkh = item.KhachHang.TenKhachHang;
                 }
+
+                if(item.TrangThai == "Chưa thanh toán")
+                {
+                    dtg_HoaDonCho.Rows.Add(item.MaHoaDon, tenkh, item.TrangThai, item.TongTien, item.TienKhachTra, item.GiamGia);
+                }
+                
             }
 
         }
@@ -530,10 +536,18 @@ namespace App.Winform.UI
 
                 //Lấy dữ liệu khách hàng từ tên khách hàng
                 kHang = khsv.Search_KH_By_Name(nameKH_search);
+                string sdtKH = "";
+                string nameKH = "";
+                if(kHang != null)
+                {
+                    sdtKH = kHang.SoDienThoai;
+                    nameKH = kHang.TenKhachHang;
+                }
 
-                tbx_SDTkh.Text = kHang.SoDienThoai;
-                lb_TenKH.Text = kHang.TenKhachHang;
-                lb_TichLuy.Text = kHang.TichLuy.ToString();
+
+                tbx_SDTkh.Text = sdtKH;
+                lb_TenKH.Text = nameKH;
+                //lb_TichLuy.Text = kHang.TichLuy.ToString();
 
 
                 int tienthua = Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[4].Value) - Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value);
@@ -746,7 +760,7 @@ namespace App.Winform.UI
 
             int tongtien = TinhTongTien();
 
-            int trangthai = 1;
+            string trangthai = "Đã thanh toán";
 
             if (!ValidateTaoHD(makhachhang, tbx_TienKhachTra.Text.Replace(",", ""), tongtien))
             {
@@ -780,7 +794,7 @@ namespace App.Winform.UI
                     AddHDChiTiet(hd.MaHoaDon);
                     MessageBox.Show("Thanh toán thành công");
 
-                    if(kHang != null)
+                    if (kHang != null)
                     {
                         //cập nhật tích lũy cho khách hàng
                         int? tichluymoi;
@@ -792,7 +806,7 @@ namespace App.Winform.UI
 
                         khsv.Update(kHang);
                     }
-                    
+
 
                     //In hoa don cho khach
                     InHoaDon(hd.MaHoaDon);
@@ -803,9 +817,14 @@ namespace App.Winform.UI
                 }
                 else
                 {
-
+                    HoaDon hd = new HoaDon();
+                    hd.MaHoaDon = idUpdate;
+                    hd.TienKhachTra = tienkhachtra;
+                    hd.GiamGia = giamgia;
+                    hd.TongTien = tongtien;
+                    hd.TrangThai = "Đã thanh toán";
                     //Thanh toán hóa đơn chờ
-                    hdsv.CapNhatHoaDon(idUpdate, tienkhachtra, giamgia, tongtien);
+                    hdsv.CapNhatHoaDon(hd);
                     UpdateHDChiTiet();
                     MessageBox.Show("Thanh toán thành công");
 
@@ -847,7 +866,7 @@ namespace App.Winform.UI
 
             int giamgia = 0;
 
-            int trangthai = 0;
+            string trangthai = "Chưa thanh toán";
 
             if (!ValidateTaoHDCho(makhachhang))
             {
@@ -882,6 +901,15 @@ namespace App.Winform.UI
             }
         }
 
+        //Hủy hóa đơn
+        private void pn_HuyHD_Click(object sender, EventArgs e)
+        {
+            HoaDon hdonUpdate = hdsv.GetHD(idUpdate);
+            hdonUpdate.TrangThai = "Đã hủy";
+
+            hdsv.CapNhatHoaDon(hdonUpdate);
+        }
+
         //Hàm tạo chi tiết hóa đơn (được gọi sau khi tạo hóa đơn)
         public void AddHDChiTiet(Guid mahd)
         {
@@ -898,6 +926,8 @@ namespace App.Winform.UI
                     ctsv.TaoChiTietHoaDon(ctHoaDon);
                 }
             }
+
+            LoadGrid(bhsv.GetAllSanPham());
         }
 
         //Hàm update chi tiết hóa đơn (được gọi sau khi thanh toán hóa đơn chờ)
@@ -1432,5 +1462,6 @@ namespace App.Winform.UI
             LoadGrid(bhsv.GetAllSanPham());
         }
 
+        
     }
 }

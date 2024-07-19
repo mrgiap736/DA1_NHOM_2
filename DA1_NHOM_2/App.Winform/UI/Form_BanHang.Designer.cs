@@ -81,6 +81,7 @@
             panel1 = new Panel();
             dtg_GioHang = new DataGridView();
             grb_Thanhtoan = new GroupBox();
+            pn_HuyHD = new Panel();
             label12 = new Label();
             label11 = new Label();
             pn_buttonThanhToan = new Panel();
@@ -691,6 +692,7 @@
             // 
             // grb_Thanhtoan
             // 
+            grb_Thanhtoan.Controls.Add(pn_HuyHD);
             grb_Thanhtoan.Controls.Add(label12);
             grb_Thanhtoan.Controls.Add(label11);
             grb_Thanhtoan.Controls.Add(pn_buttonThanhToan);
@@ -712,6 +714,17 @@
             grb_Thanhtoan.TabIndex = 1;
             grb_Thanhtoan.TabStop = false;
             grb_Thanhtoan.Text = "Thanh toán";
+            // 
+            // pn_HuyHD
+            // 
+            pn_HuyHD.BackColor = Color.Transparent;
+            pn_HuyHD.BackgroundImage = (Image)resources.GetObject("pn_HuyHD.BackgroundImage");
+            pn_HuyHD.BackgroundImageLayout = ImageLayout.Zoom;
+            pn_HuyHD.Location = new Point(437, 418);
+            pn_HuyHD.Name = "pn_HuyHD";
+            pn_HuyHD.Size = new Size(49, 44);
+            pn_HuyHD.TabIndex = 0;
+            pn_HuyHD.Click += pn_HuyHD_Click;
             // 
             // label12
             // 
@@ -735,10 +748,9 @@
             // pn_buttonThanhToan
             // 
             pn_buttonThanhToan.BackColor = Color.Yellow;
-            pn_buttonThanhToan.BorderStyle = BorderStyle.FixedSingle;
             pn_buttonThanhToan.Controls.Add(pn_iconThanhtoan);
             pn_buttonThanhToan.Controls.Add(lb_Thanhtoan);
-            pn_buttonThanhToan.Location = new Point(262, 410);
+            pn_buttonThanhToan.Location = new Point(229, 414);
             pn_buttonThanhToan.Name = "pn_buttonThanhToan";
             pn_buttonThanhToan.Size = new Size(171, 50);
             pn_buttonThanhToan.TabIndex = 14;
@@ -1101,5 +1113,6 @@
         private Panel pn_ThongKe;
         private Label label13;
         private Panel panel13;
+        private Panel pn_HuyHD;
     }
 }

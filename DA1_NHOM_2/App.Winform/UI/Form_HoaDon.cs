@@ -82,7 +82,12 @@ namespace App.Winform.UI
             int stt = 1;
             foreach (HoaDon item in data)
             {
-                dtg_DSHoaDon.Rows.Add(stt++, item.MaHoaDon, item.KhachHang.TenKhachHang, item.NhanVien.TenNhanVien, AddThousandSeparators(item.TongTien), AddThousandSeparators(item.TienKhachTra), AddThousandSeparators(Convert.ToInt32(item.GiamGia) * 10000), (item.TrangThai == 0) ? "Chưa thanh toán" : "Đã thanh toán", item.NgayMua);
+                string tenKH = "";
+                if(item.KhachHang != null)
+                {
+                    tenKH = item.KhachHang.TenKhachHang;
+                }
+                dtg_DSHoaDon.Rows.Add(stt++, item.MaHoaDon, tenKH, item.NhanVien.TenNhanVien, AddThousandSeparators(item.TongTien), AddThousandSeparators(item.TienKhachTra), AddThousandSeparators(Convert.ToInt32(item.GiamGia) * 10000), item.TrangThai, item.NgayMua);
             }
 
 
@@ -143,15 +148,20 @@ namespace App.Winform.UI
 
         private void rbt_CheckedChanged(object sender, EventArgs e)
         {
-            int tt;
+            string tt;
             if(rbt_notpayed.Checked == true)
             {
-                tt = 0;
+                tt = "Chưa thanh toán";
                 LoadGrid(hdsv.FilByTT(tt));
             }
             else if(rbt_payed.Checked == true)
             {
-                tt = 1;
+                tt = "Đã thanh toán";
+                LoadGrid(hdsv.FilByTT(tt));
+            }
+            else if(rbt_Canceled.Checked == true)
+            {
+                tt = "Đã hủy";
                 LoadGrid(hdsv.FilByTT(tt));
             }
             else if(rbt_all.Checked == true)

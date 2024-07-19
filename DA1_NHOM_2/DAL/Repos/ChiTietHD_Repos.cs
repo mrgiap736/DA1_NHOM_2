@@ -35,7 +35,7 @@ namespace App.Data.Repos
 
         public List<ChiTietHoaDon> GetAll(Guid mahd)
 		{
-			return context.ChiTietHoaDon.Include(x => x.ChiTietSanPham).Where(x => x.MaHoaDon.Equals(mahd)).ToList();
+			return context.ChiTietHoaDon.Include(x => x.ChiTietSanPham.SanPham).Where(x => x.MaHoaDon.Equals(mahd)).ToList();
 		}
 
         public void Update(ChiTietHoaDon cthd)

@@ -17,7 +17,7 @@ namespace App.Data.Entities
 
         public int? GiamGia { get; set; }
 
-        public int TrangThai { get; set; }
+        public string TrangThai { get; set; }
 
         public Guid? MaKhachHang { get; set; }
 

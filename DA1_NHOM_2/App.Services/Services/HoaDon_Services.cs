@@ -28,9 +28,9 @@ namespace App.Services.Services
 			return hdrp.GetAll();
 		}
 
-		public void CapNhatHoaDon(Guid a, int b, int c, int d)
+		public void CapNhatHoaDon(HoaDon hoaDon)
 		{
-			hdrp.Update(a, b, c, d);
+			hdrp.Update(hoaDon);
 		}
 
 		public HoaDon GetHD(Guid id)
@@ -43,7 +43,7 @@ namespace App.Services.Services
 			return hdrp.SearchByNameKH(name);
 		}
 
-		public List<HoaDon> FilByTT(int tt)
+		public List<HoaDon> FilByTT(string tt)
 		{
 			return hdrp.FilByTT(tt);
 		}

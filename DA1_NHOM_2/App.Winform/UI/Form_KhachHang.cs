@@ -131,6 +131,8 @@ namespace App.Winform.UI
             }
 
             var kh = new KhachHang();
+            kh.MaKhachHang = Guid.NewGuid();
+            kh.Email = "test@gmail.com";
             kh.TenKhachHang = txt_TenKH.Text;
             kh.SoDienThoai = phoneNumber;
             kh.TichLuy = 0;
@@ -165,6 +167,7 @@ namespace App.Winform.UI
             // Tạo đối tượng khách hàng mới để lưu thông tin sửa đổi
             var kh = new KhachHang();
             kh.MaKhachHang = Guid.Parse(txt_MaKH.Text);
+         
             kh.TenKhachHang = txt_TenKH.Text;
             kh.SoDienThoai = txt_SĐT.Text;
             kh.TichLuy = diemtichluy;

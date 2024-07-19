@@ -11,9 +11,9 @@ namespace App.Data.IRepos
 	{
 		public List<HoaDon> GetAll();
 		public void Create(HoaDon hoaDon);
-		public void Update(Guid a, int b, int c, int d);
+		public void Update(HoaDon hoaDon);
 		public HoaDon Get(Guid id);
         public List<HoaDon> SearchByNameKH(string name);
-		public List<HoaDon> FilByTT(int tt);
+		public List<HoaDon> FilByTT(string tt);
     }
 }

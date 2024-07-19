@@ -32,11 +32,12 @@
             groupBox2 = new GroupBox();
             dtg_DSHoaDonCT = new DataGridView();
             groupBox1 = new GroupBox();
+            rbt_all = new RadioButton();
             rbt_payed = new RadioButton();
             rbt_notpayed = new RadioButton();
             tbx_Search = new TextBox();
             dtg_DSHoaDon = new DataGridView();
-            rbt_all = new RadioButton();
+            rbt_Canceled = new RadioButton();
             pn_Form_HoaDon.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtg_DSHoaDonCT).BeginInit();
@@ -73,12 +74,12 @@
             dtg_DSHoaDonCT.Name = "dtg_DSHoaDonCT";
             dtg_DSHoaDonCT.ReadOnly = true;
             dtg_DSHoaDonCT.RowHeadersWidth = 51;
-            dtg_DSHoaDonCT.RowTemplate.Height = 29;
             dtg_DSHoaDonCT.Size = new Size(1654, 282);
             dtg_DSHoaDonCT.TabIndex = 0;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(rbt_Canceled);
             groupBox1.Controls.Add(rbt_all);
             groupBox1.Controls.Add(rbt_payed);
             groupBox1.Controls.Add(rbt_notpayed);
@@ -90,6 +91,17 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Hóa đơn";
+            // 
+            // rbt_all
+            // 
+            rbt_all.AutoSize = true;
+            rbt_all.Location = new Point(562, 55);
+            rbt_all.Name = "rbt_all";
+            rbt_all.Size = new Size(70, 24);
+            rbt_all.TabIndex = 6;
+            rbt_all.TabStop = true;
+            rbt_all.Text = "Tất cả";
+            rbt_all.UseVisualStyleBackColor = true;
             // 
             // rbt_payed
             // 
@@ -131,21 +143,20 @@
             dtg_DSHoaDon.Name = "dtg_DSHoaDon";
             dtg_DSHoaDon.ReadOnly = true;
             dtg_DSHoaDon.RowHeadersWidth = 51;
-            dtg_DSHoaDon.RowTemplate.Height = 29;
             dtg_DSHoaDon.Size = new Size(1660, 357);
             dtg_DSHoaDon.TabIndex = 0;
             dtg_DSHoaDon.CellClick += dtg_DSHoaDon_CellClick;
             // 
-            // rbt_all
+            // rbt_Canceled
             // 
-            rbt_all.AutoSize = true;
-            rbt_all.Location = new Point(562, 55);
-            rbt_all.Name = "rbt_all";
-            rbt_all.Size = new Size(70, 24);
-            rbt_all.TabIndex = 6;
-            rbt_all.TabStop = true;
-            rbt_all.Text = "Tất cả";
-            rbt_all.UseVisualStyleBackColor = true;
+            rbt_Canceled.AutoSize = true;
+            rbt_Canceled.Location = new Point(1001, 55);
+            rbt_Canceled.Name = "rbt_Canceled";
+            rbt_Canceled.Size = new Size(76, 24);
+            rbt_Canceled.TabIndex = 7;
+            rbt_Canceled.TabStop = true;
+            rbt_Canceled.Text = "Đã hủy";
+            rbt_Canceled.UseVisualStyleBackColor = true;
             // 
             // Form_HoaDon
             // 
@@ -176,5 +187,6 @@
         private TextBox tbx_Search;
         private DataGridView dtg_DSHoaDon;
         private RadioButton rbt_all;
+        private RadioButton rbt_Canceled;
     }
 }
