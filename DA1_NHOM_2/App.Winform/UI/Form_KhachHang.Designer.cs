@@ -53,6 +53,8 @@
             label2 = new Label();
             txt_MaKH = new TextBox();
             label1 = new Label();
+            txt_Email = new TextBox();
+            label8 = new Label();
             pn_Form_KhachHang.SuspendLayout();
             groupBox1.SuspendLayout();
             pn_Btn_Xoa.SuspendLayout();
@@ -122,7 +124,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label7.Location = new Point(62, 12);
             label7.Name = "label7";
             label7.Size = new Size(153, 25);
@@ -154,7 +156,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label6.Location = new Point(87, 12);
             label6.Name = "label6";
             label6.Size = new Size(83, 25);
@@ -186,7 +188,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label5.Location = new Point(62, 12);
             label5.Name = "label5";
             label5.Size = new Size(153, 25);
@@ -218,7 +220,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label4.Location = new Point(58, 12);
             label4.Name = "label4";
             label4.Size = new Size(168, 25);
@@ -243,13 +245,14 @@
             dtgView.Location = new Point(6, 26);
             dtgView.Name = "dtgView";
             dtgView.RowHeadersWidth = 51;
-            dtgView.RowTemplate.Height = 29;
             dtgView.Size = new Size(966, 297);
             dtgView.TabIndex = 0;
             dtgView.CellClick += dtgView_CellClick;
             // 
             // grb_ThongTin
             // 
+            grb_ThongTin.Controls.Add(txt_Email);
+            grb_ThongTin.Controls.Add(label8);
             grb_ThongTin.Controls.Add(txt_SĐT);
             grb_ThongTin.Controls.Add(label3);
             grb_ThongTin.Controls.Add(txt_TenKH);
@@ -269,7 +272,6 @@
             txt_SĐT.Name = "txt_SĐT";
             txt_SĐT.Size = new Size(331, 27);
             txt_SĐT.TabIndex = 16;
-            //txt_SĐT.TextChanged += this.txt_SĐT_TextChanged;
             // 
             // label3
             // 
@@ -279,7 +281,6 @@
             label3.Size = new Size(100, 20);
             label3.TabIndex = 15;
             label3.Text = "Số điện thoại:";
-            //label3.Click += this.label3_Click;
             // 
             // txt_TenKH
             // 
@@ -287,7 +288,6 @@
             txt_TenKH.Name = "txt_TenKH";
             txt_TenKH.Size = new Size(331, 27);
             txt_TenKH.TabIndex = 14;
-            //txt_TenKH.TextChanged += this.txt_TenKH_TextChanged;
             // 
             // label2
             // 
@@ -297,7 +297,6 @@
             label2.Size = new Size(114, 20);
             label2.TabIndex = 13;
             label2.Text = "Tên khách hàng:";
-            //label2.Click += this.label2_Click;
             // 
             // txt_MaKH
             // 
@@ -306,7 +305,6 @@
             txt_MaKH.Name = "txt_MaKH";
             txt_MaKH.Size = new Size(331, 27);
             txt_MaKH.TabIndex = 12;
-            //txt_MaKH.TextChanged += this.txt_MaKH_TextChanged;
             // 
             // label1
             // 
@@ -317,6 +315,22 @@
             label1.TabIndex = 11;
             label1.Text = "Mã khách hàng:";
             label1.Click += label1_Click;
+            // 
+            // txt_Email
+            // 
+            txt_Email.Location = new Point(174, 207);
+            txt_Email.Name = "txt_Email";
+            txt_Email.Size = new Size(331, 27);
+            txt_Email.TabIndex = 18;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(48, 210);
+            label8.Name = "label8";
+            label8.Size = new Size(49, 20);
+            label8.TabIndex = 17;
+            label8.Text = "Email:";
             // 
             // Form_KhachHang
             // 
@@ -370,5 +384,7 @@
         private Panel panel1;
         private Panel panel4;
         private Panel panel3;
+        private TextBox txt_Email;
+        private Label label8;
     }
 }

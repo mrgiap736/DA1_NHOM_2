@@ -132,7 +132,7 @@ namespace App.Winform.UI
 
             var kh = new KhachHang();
             kh.MaKhachHang = Guid.NewGuid();
-            kh.Email = "test@gmail.com";
+            kh.Email = txt_Email.Text;
             kh.TenKhachHang = txt_TenKH.Text;
             kh.SoDienThoai = phoneNumber;
             kh.TichLuy = 0;
@@ -169,8 +169,9 @@ namespace App.Winform.UI
             kh.MaKhachHang = Guid.Parse(txt_MaKH.Text);
          
             kh.TenKhachHang = txt_TenKH.Text;
+            kh.Email = txt_Email.Text;
             kh.SoDienThoai = txt_SĐT.Text;
-            kh.TichLuy = diemtichluy;
+            //kh.TichLuy = diemtichluy;
 
             if (!Regex.IsMatch(kh.TenKhachHang, "^[a-zA-Z ]+$"))
             {

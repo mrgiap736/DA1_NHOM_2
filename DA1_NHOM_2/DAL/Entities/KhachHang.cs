@@ -12,7 +12,7 @@ namespace App.Data.Entities
         public string TenKhachHang { get; set; } = null!;
 
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Phone]
         public string SoDienThoai { get; set; } = null!;

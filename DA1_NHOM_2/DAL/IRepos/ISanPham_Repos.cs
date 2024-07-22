@@ -24,5 +24,10 @@ namespace App.Data.IRepos
 		public List<MauSac> GetAllMauSac();
 		public List<ChatLieu> GetAllChatLieu();
 
+		public void CreateHangSanXuat(HangSanXuat x);
+		public void CreateMauSac(MauSac x);
+		public void CreateChatLieu(ChatLieu x);
+		public void CreateLoaiRen(LoaiRen x);
+
     }
 }

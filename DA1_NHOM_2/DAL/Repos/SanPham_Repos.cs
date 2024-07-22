@@ -58,7 +58,7 @@ namespace App.Data.Repos
 
 		public bool UpdateCTSP(ChiTietSanPham ctsp)
 		{
-			context.Update(ctsp);
+			context.ChiTietSanPham.Update(ctsp);
 			context.SaveChanges();
 			return true;
 		}
@@ -202,6 +202,31 @@ namespace App.Data.Repos
         public List<ChatLieu> GetAllChatLieu()
         {
             return context.ChatLieu.ToList();
+        }
+
+        //Các hàm tạo thành phẩn sản phẩm 
+        public void CreateLoaiRen(LoaiRen x)
+        {
+            context.LoaiRen.Add(x);
+            context.SaveChanges();
+        }
+
+        public void CreateChatLieu(ChatLieu x)
+        {
+            context.ChatLieu.Add(x);
+            context.SaveChanges();
+        }
+
+        public void CreateMauSac(MauSac x)
+        {
+            context.MauSac.Add(x);
+            context.SaveChanges();
+        }
+
+        public void CreateHangSanXuat(HangSanXuat x)
+        {
+            context.HangSanXuat.Add(x);
+            context.SaveChanges();
         }
     }
 }

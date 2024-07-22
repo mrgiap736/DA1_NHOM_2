@@ -310,7 +310,7 @@ namespace App.Winform.UI
             foreach (var item in data)
             {
                 int sttGH = dtg_GioHang.Rows.Count;
-                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
+                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, bhsv.AddThousandSeparators(item.DonGia));
             }
         }
 
@@ -427,7 +427,7 @@ namespace App.Winform.UI
             //Thêm dữ liệu vào hóa đơn chờ 
             foreach (var item in hdsv.GetAllHoaDon())
             {
-                string tenkh = "";
+                string tenkh = "Không có";
                 if (item.KhachHang != null)
                 {
                     tenkh = item.KhachHang.TenKhachHang;
@@ -492,10 +492,10 @@ namespace App.Winform.UI
                             if (check)
                             {
                                 int sttGH = dtg_GioHang.Rows.Count;
-                                dtg_GioHang.Rows.Add(id, sttGH++, name, soluong, AddThousandSeparators(Convert.ToInt32(dongia)));
+                                dtg_GioHang.Rows.Add(id, sttGH++, name, soluong, bhsv.AddThousandSeparators(Convert.ToInt32(dongia)));
                             }
 
-                            lb_TongTien.Text = AddThousandSeparators(TinhTongTien());
+                            lb_TongTien.Text = bhsv.AddThousandSeparators(TinhTongTien());
 
                         }
                     }
@@ -527,7 +527,7 @@ namespace App.Winform.UI
 
                 tbx_TienKhachTra.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[4].Value.ToString();
                 tbx_Giamgia.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[5].Value.ToString();
-                lb_TongTien.Text = AddThousandSeparators(Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value));
+                lb_TongTien.Text = bhsv.AddThousandSeparators(Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value));
 
                 string nameKH_search = dtg_HoaDonCho.Rows[rowIndex].Cells[1].Value.ToString();
 
@@ -537,17 +537,19 @@ namespace App.Winform.UI
                 //Lấy dữ liệu khách hàng từ tên khách hàng
                 kHang = khsv.Search_KH_By_Name(nameKH_search);
                 string sdtKH = "";
-                string nameKH = "";
+                string nameKH = "...";
+                string tichluy = "...";
                 if(kHang != null)
                 {
                     sdtKH = kHang.SoDienThoai;
                     nameKH = kHang.TenKhachHang;
+                    tichluy = kHang.TichLuy.ToString();
                 }
 
 
                 tbx_SDTkh.Text = sdtKH;
                 lb_TenKH.Text = nameKH;
-                //lb_TichLuy.Text = kHang.TichLuy.ToString();
+                lb_TichLuy.Text = tichluy;
 
 
                 int tienthua = Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[4].Value) - Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value);
@@ -654,21 +656,14 @@ namespace App.Winform.UI
             }
 
             //Thêm dấu phảy ngăn cách phần nghìn 
-            lb_TongTien.Text = AddThousandSeparators(tongtien);
-            lb_TienThua.Text = AddThousandSeparators(tienthua);
+            lb_TongTien.Text = bhsv.AddThousandSeparators(tongtien);
+            lb_TienThua.Text = bhsv.AddThousandSeparators(tienthua);
 
 
 
         }
 
-        //Hàm chuyển số ngăn cách phần nghìn 
-        public static string AddThousandSeparators(int number)
-        {
-            // Chuyển đổi số sang chuỗi và sử dụng phương thức Format để thêm dấu chấm ngăn cách
-            string formattedNumber = string.Format("{0:N0}", number);
-
-            return formattedNumber;
-        }
+        
 
         //Hàm tìm kiếm khách hàng
         //Lấy mã khách hàng để tạo hóa đơn  
@@ -685,12 +680,13 @@ namespace App.Winform.UI
             }
             else
             {
+                maKH = null;
                 return;
             }
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn 
-        public bool ValidateTaoHD(Guid? makh, string tienkhachtra, int tongtien)
+        public bool ValidateTaoHD(string tienkhachtra, int tongtien)
         {
             bool check = true;
             //
@@ -699,11 +695,6 @@ namespace App.Winform.UI
                 MessageBox.Show("Không có sản phẩm nào được chọn !");
                 check = false;
             }
-            //else if (makh == 0)  ///cần sửa
-            //{
-            //    MessageBox.Show("Không tìm thấy khách hàng !");
-            //    check = false;
-            //}
             else if (tbx_TienKhachTra.Text == "")
             {
                 MessageBox.Show("Chưa nhập số tiền khách trả !");
@@ -732,7 +723,7 @@ namespace App.Winform.UI
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn chờ
-        public bool ValidateTaoHDCho(Guid? makh)
+        public bool ValidateTaoHDCho()
         {
             bool check = true;
             //
@@ -741,12 +732,7 @@ namespace App.Winform.UI
                 MessageBox.Show("Không có sản phẩm nào được chọn !");
                 check = false;
             }
-            //else if (makh == 0) ///cần sửa
-            //{
-            //    MessageBox.Show("Không tìm thấy khách hàng !");
-            //    check = false;
-            //}
-            //
+
             return check;
         }
 
@@ -762,13 +748,16 @@ namespace App.Winform.UI
 
             string trangthai = "Đã thanh toán";
 
-            if (!ValidateTaoHD(makhachhang, tbx_TienKhachTra.Text.Replace(",", ""), tongtien))
+            int tienkhachtra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
+            int giamgia = Convert.ToInt32(tbx_Giamgia.Text);
+
+            if (!ValidateTaoHD(tbx_TienKhachTra.Text.Replace(",", ""), tongtien))
             {
                 return;
             }
+            else
             {
-                int tienkhachtra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
-                int giamgia = Convert.ToInt32(tbx_Giamgia.Text);
+                
                 bool check = true;
                 foreach (var item in hdsv.GetAllHoaDon())
                 {
@@ -782,6 +771,7 @@ namespace App.Winform.UI
                 {
                     HoaDon hd = new HoaDon
                     {
+                        MaHoaDon = Guid.NewGuid(),
                         MaKhachHang = makhachhang,
                         MaNhanVien = manhanvien,
                         NgayMua = ngaymua,
@@ -793,6 +783,9 @@ namespace App.Winform.UI
                     hdsv.TaoHoaDon(hd);
                     AddHDChiTiet(hd.MaHoaDon);
                     MessageBox.Show("Thanh toán thành công");
+
+                    //Update số lượng sản phẩm 
+                    bhsv.UpdateSoLuongSP(hd.MaHoaDon);
 
                     if (kHang != null)
                     {
@@ -809,7 +802,9 @@ namespace App.Winform.UI
 
 
                     //In hoa don cho khach
+
                     InHoaDon(hd.MaHoaDon);
+
 
                     //Xoa du lieu input
                     ClearInput();
@@ -827,6 +822,9 @@ namespace App.Winform.UI
                     hdsv.CapNhatHoaDon(hd);
                     UpdateHDChiTiet();
                     MessageBox.Show("Thanh toán thành công");
+
+                    //Update số lượng sản phẩm 
+                    bhsv.UpdateSoLuongSP(hd.MaHoaDon);
 
                     if (kHang != null)
                     {
@@ -868,7 +866,7 @@ namespace App.Winform.UI
 
             string trangthai = "Chưa thanh toán";
 
-            if (!ValidateTaoHDCho(makhachhang))
+            if (!ValidateTaoHDCho())
             {
                 return;
             }
@@ -901,14 +899,173 @@ namespace App.Winform.UI
             }
         }
 
-        //Hủy hóa đơn
-        private void pn_HuyHD_Click(object sender, EventArgs e)
+        //Hàm in hóa đơn vật lý 
+        private void InHoaDon(Guid mahd)
         {
-            HoaDon hdonUpdate = hdsv.GetHD(idUpdate);
-            hdonUpdate.TrangThai = "Đã hủy";
+            // Tạo một tài liệu PDF mới
+            iTextSharp.text.Document document = new iTextSharp.text.Document();
+            string fileName = $"HoaDon_{DateTime.Now.ToString("yyyyMMddHHmmss")}.pdf"; // Sử dụng timestamp trong tên file
 
-            hdsv.CapNhatHoaDon(hdonUpdate);
+
+            try
+            {
+                PdfWriter.GetInstance(document, new FileStream(fileName, FileMode.Create));
+
+                // Mở tài liệu để bắt đầu viết
+                document.Open();
+
+                // Tạo một Paragraph cho nội dung hoá đơn
+                Paragraph content = new Paragraph();
+                content.Alignment = Element.ALIGN_CENTER; // Căn giữa nội dung
+
+                // Tạo BaseFont từ tệp font Arial
+                BaseFont arialBaseFont = BaseFont.CreateFont(@"C:\Windows\Fonts\Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+                // Sử dụng BaseFont để tạo Font Arial với kích thước 24 và đặt chế độ in đậm
+                iTextSharp.text.Font titleFont = new iTextSharp.text.Font(arialBaseFont, 17, iTextSharp.text.Font.BOLD);
+                // Tạo một Font chữ từ BaseFont Arial với kích thước 12 và đặt chế độ in đậm
+                iTextSharp.text.Font contentFont = new iTextSharp.text.Font(arialBaseFont, 12, iTextSharp.text.Font.NORMAL);
+
+
+
+                // Thêm thông tin hoá đơn vào nội dung với font chữ đã được thiết lập
+                content.Add(new iTextSharp.text.Chunk($"Cửa hàng: Magic Pro\n", contentFont));
+                content.Add(new iTextSharp.text.Chunk($"Địa chỉ : Bắc Từ Liêm , Hà Nội\n", contentFont));
+                content.Add(new iTextSharp.text.Chunk($"Số Điện thoại: 037509539\n", contentFont));
+
+                content.Add(new iTextSharp.text.Chunk("----------------------\n\n", titleFont));
+                content.Add(new iTextSharp.text.Chunk("HOÁ ĐƠN THANH TOÁN \n", titleFont));
+                content.Add(new iTextSharp.text.Chunk($"Mã hoá đơn:  {mahd}\n", contentFont));
+                content.Add(new iTextSharp.text.Chunk($"{DateTime.Now.ToLongDateString()}\n", contentFont));
+                content.Add(new iTextSharp.text.Chunk($"{DateTime.Now.ToLongTimeString()}\n", contentFont));
+
+
+                // Thêm thông tin nhân viên bán hàng và tên khách hàng
+                PdfPTable infoTable = new PdfPTable(2);
+                infoTable.WidthPercentage = 100;
+                infoTable.SpacingBefore = 10f; // Khoảng cách trước của bảng
+
+                PdfPCell nhanVienCell = new PdfPCell(new Phrase($"Nhân viên bán hàng: {lb_NameNV.Text}", contentFont));
+                nhanVienCell.Border = PdfPCell.NO_BORDER;
+                infoTable.AddCell(nhanVienCell);
+
+                PdfPCell tenKhachHangCell = new PdfPCell(new Phrase($"Tên khách hàng: {lb_TenKH.Text}\n\n", contentFont));
+                tenKhachHangCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                tenKhachHangCell.Border = PdfPCell.NO_BORDER;
+                infoTable.AddCell(tenKhachHangCell);
+
+                content.Add(infoTable);
+
+                content.Add(CreateProductsTable());
+
+                // Đặt tổng tiền, số tiền khách trả, giảm giá và tiền thừa bên trái
+                // Thêm tổng tiền vào nội dung với căn chỉnh bên trái
+                // Tạo một PdfPTable để chứa thông tin "Tổng tiền" và giá trị lb_TongTien.Text
+
+                PdfPTable totalTable = new PdfPTable(2);
+                totalTable.WidthPercentage = 100;
+                totalTable.SpacingBefore = 10f; // Khoảng cách trước của bảng
+
+                // Thêm cột "Thành tiền" với căn chỉnh bên trái
+                PdfPCell totalLabelCell2 = new PdfPCell(new Phrase($"Thành tiền: ", contentFont));
+                totalLabelCell2.Border = PdfPCell.NO_BORDER;
+                totalTable.AddCell(totalLabelCell2);
+
+                // Thêm giá trị lb_TongTien.Text với căn chỉnh bên phải
+                PdfPCell totalValueCell2 = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(TinhTongTienKhongGiamGia())} VND", contentFont));
+                totalValueCell2.HorizontalAlignment = Element.ALIGN_RIGHT;
+                totalValueCell2.Border = PdfPCell.NO_BORDER;
+                totalTable.AddCell(totalValueCell2);
+
+
+                // Thêm cột "Tổng tiền" với căn chỉnh bên trái
+                PdfPCell totalLabelCell = new PdfPCell(new Phrase($"Tổng tiền: ", contentFont));
+                totalLabelCell.Border = PdfPCell.NO_BORDER;
+                totalTable.AddCell(totalLabelCell);
+
+                // Thêm giá trị lb_TongTien.Text với căn chỉnh bên phải
+                PdfPCell totalValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(lb_TongTien.Text.Replace(",", "")))} VND", contentFont));
+                totalValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                totalValueCell.Border = PdfPCell.NO_BORDER;
+                totalTable.AddCell(totalValueCell);
+
+                // Thêm bảng thông tin "Tổng tiền" và giá trị lb_TongTien.Text vào nội dung của tài liệu
+                content.Add(totalTable);
+
+
+                // Tạo một PdfPTable để chứa thông tin "Giảm giá", "Số tiền khách trả" và "Tiền thừa"
+                PdfPTable paymentTable = new PdfPTable(2);
+                paymentTable.WidthPercentage = 100;
+                paymentTable.SpacingBefore = 10f; // Khoảng cách trước của bảng
+
+                // Thêm cột "Giảm giá" với căn chỉnh bên trái
+                PdfPCell discountLabelCell = new PdfPCell(new Phrase($"Giảm giá: ", contentFont));
+                discountLabelCell.Border = PdfPCell.NO_BORDER;
+                paymentTable.AddCell(discountLabelCell);
+
+                // Thêm giá trị tbx_Giamgia.Text với căn chỉnh bên phải
+                PdfPCell discountValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(tbx_Giamgia.Text) * 10000)} VND", contentFont));
+                discountValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                discountValueCell.Border = PdfPCell.NO_BORDER;
+                paymentTable.AddCell(discountValueCell);
+
+                // Thêm cột "Số tiền khách trả" với căn chỉnh bên trái
+                PdfPCell paymentLabelCell = new PdfPCell(new Phrase($"Số tiền khách trả: ", contentFont));
+                paymentLabelCell.Border = PdfPCell.NO_BORDER;
+                paymentTable.AddCell(paymentLabelCell);
+
+                // Thêm giá trị tbx_TienKhachTra.Text với căn chỉnh bên phải
+                PdfPCell paymentValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", "")))} VND", contentFont));
+                paymentValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                paymentValueCell.Border = PdfPCell.NO_BORDER;
+                paymentTable.AddCell(paymentValueCell);
+
+                // Thêm cột "Tiền thừa" với căn chỉnh bên trái
+                PdfPCell changeLabelCell = new PdfPCell(new Phrase($"Tiền thừa: ", contentFont));
+                changeLabelCell.Border = PdfPCell.NO_BORDER;
+                paymentTable.AddCell(changeLabelCell);
+
+                // Thêm giá trị lb_TienThua.Text với căn chỉnh bên phải
+                PdfPCell changeValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(lb_TienThua.Text.Replace(",", "")))} VND", contentFont));
+                changeValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                changeValueCell.Border = PdfPCell.NO_BORDER;
+                paymentTable.AddCell(changeValueCell);
+                // Thêm bảng thông tin "Giảm giá", "Số tiền khách trả" và "Tiền thừa" vào nội dung của tài liệu
+                content.Add(paymentTable);
+                content.Add(new iTextSharp.text.Chunk("----------------------\n\n", titleFont));
+                content.Add(new iTextSharp.text.Chunk($"Cảm ơn quý khách và hẹn gặp lại quý khách!!\n", contentFont));
+
+
+
+                // Đặt căn chỉnh nội dung của Paragraph ra giữa
+                content.Alignment = Element.ALIGN_CENTER;
+
+
+                // Thêm bảng sản phẩm
+
+
+                // Đặt căn chỉnh nội dung của Paragraph ra giữa
+
+                content.Alignment = Element.ALIGN_CENTER;
+
+
+                // Thêm nội dung hoá đơn vào tài liệu
+                document.Add(content);
+
+                // Đóng tài liệu
+                document.Close();
+
+                MessageBox.Show("Hoá đơn đã được lưu thành công vào tệp PDF.");
+
+                // Mở tệp PDF sau khi lưu
+                Process.Start(@"E:\PRO131_NEW\SumatraPDF\SumatraPDF.exe", fileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show( "Đã xảy ra lỗi: " + ex.Message);
+            }
         }
+
 
         //Hàm tạo chi tiết hóa đơn (được gọi sau khi tạo hóa đơn)
         public void AddHDChiTiet(Guid mahd)
@@ -988,173 +1145,9 @@ namespace App.Winform.UI
             }
         }
 
-        //Hàm in hóa đơn vật lý 
-        private void InHoaDon(Guid mahd)
-        {
-            // Tạo một tài liệu PDF mới
-            iTextSharp.text.Document document = new iTextSharp.text.Document();
-            string fileName = $"HoaDon_{DateTime.Now.ToString("yyyyMMddHHmmss")}.pdf"; // Sử dụng timestamp trong tên file
+        
 
-
-            try
-            {
-                PdfWriter.GetInstance(document, new FileStream(fileName, FileMode.Create));
-
-                // Mở tài liệu để bắt đầu viết
-                document.Open();
-
-                // Tạo một Paragraph cho nội dung hoá đơn
-                Paragraph content = new Paragraph();
-                content.Alignment = Element.ALIGN_CENTER; // Căn giữa nội dung
-
-                // Tạo BaseFont từ tệp font Arial
-                BaseFont arialBaseFont = BaseFont.CreateFont(@"C:\Windows\Fonts\Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-
-                // Sử dụng BaseFont để tạo Font Arial với kích thước 24 và đặt chế độ in đậm
-                iTextSharp.text.Font titleFont = new iTextSharp.text.Font(arialBaseFont, 17, iTextSharp.text.Font.BOLD);
-                // Tạo một Font chữ từ BaseFont Arial với kích thước 12 và đặt chế độ in đậm
-                iTextSharp.text.Font contentFont = new iTextSharp.text.Font(arialBaseFont, 12, iTextSharp.text.Font.NORMAL);
-
-
-
-                // Thêm thông tin hoá đơn vào nội dung với font chữ đã được thiết lập
-                content.Add(new iTextSharp.text.Chunk($"Cửa hàng: Magic Pro\n", contentFont));
-                content.Add(new iTextSharp.text.Chunk($"Địa chỉ : Bắc Từ Liêm , Hà Nội\n", contentFont));
-                content.Add(new iTextSharp.text.Chunk($"Số Điện thoại: 037509539\n", contentFont));
-
-                content.Add(new iTextSharp.text.Chunk("----------------------\n\n", titleFont));
-                content.Add(new iTextSharp.text.Chunk("HOÁ ĐƠN THANH TOÁN \n", titleFont));
-                content.Add(new iTextSharp.text.Chunk($"Mã hoá đơn:  {mahd}\n", contentFont));
-                content.Add(new iTextSharp.text.Chunk($"{DateTime.Now.ToLongDateString()}\n", contentFont));
-                content.Add(new iTextSharp.text.Chunk($"{DateTime.Now.ToLongTimeString()}\n", contentFont));
-
-
-                // Thêm thông tin nhân viên bán hàng và tên khách hàng
-                PdfPTable infoTable = new PdfPTable(2);
-                infoTable.WidthPercentage = 100;
-                infoTable.SpacingBefore = 10f; // Khoảng cách trước của bảng
-
-                PdfPCell nhanVienCell = new PdfPCell(new Phrase($"Nhân viên bán hàng: {lb_NameNV.Text}", contentFont));
-                nhanVienCell.Border = PdfPCell.NO_BORDER;
-                infoTable.AddCell(nhanVienCell);
-
-                PdfPCell tenKhachHangCell = new PdfPCell(new Phrase($"Tên khách hàng: {lb_TenKH.Text}\n\n", contentFont));
-                tenKhachHangCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                tenKhachHangCell.Border = PdfPCell.NO_BORDER;
-                infoTable.AddCell(tenKhachHangCell);
-
-                content.Add(infoTable);
-
-                content.Add(CreateProductsTable());
-
-                // Đặt tổng tiền, số tiền khách trả, giảm giá và tiền thừa bên trái
-                // Thêm tổng tiền vào nội dung với căn chỉnh bên trái
-                // Tạo một PdfPTable để chứa thông tin "Tổng tiền" và giá trị lb_TongTien.Text
-
-                PdfPTable totalTable = new PdfPTable(2);
-                totalTable.WidthPercentage = 100;
-                totalTable.SpacingBefore = 10f; // Khoảng cách trước của bảng
-
-                // Thêm cột "Thành tiền" với căn chỉnh bên trái
-                PdfPCell totalLabelCell2 = new PdfPCell(new Phrase($"Thành tiền: ", contentFont));
-                totalLabelCell2.Border = PdfPCell.NO_BORDER;
-                totalTable.AddCell(totalLabelCell2);
-
-                // Thêm giá trị lb_TongTien.Text với căn chỉnh bên phải
-                PdfPCell totalValueCell2 = new PdfPCell(new Phrase($"{AddThousandSeparators(TinhTongTienKhongGiamGia())} VND", contentFont));
-                totalValueCell2.HorizontalAlignment = Element.ALIGN_RIGHT;
-                totalValueCell2.Border = PdfPCell.NO_BORDER;
-                totalTable.AddCell(totalValueCell2);
-
-
-                // Thêm cột "Tổng tiền" với căn chỉnh bên trái
-                PdfPCell totalLabelCell = new PdfPCell(new Phrase($"Tổng tiền: ", contentFont));
-                totalLabelCell.Border = PdfPCell.NO_BORDER;
-                totalTable.AddCell(totalLabelCell);
-
-                // Thêm giá trị lb_TongTien.Text với căn chỉnh bên phải
-                PdfPCell totalValueCell = new PdfPCell(new Phrase($"{AddThousandSeparators(Convert.ToInt32(lb_TongTien.Text.Replace(",", "")))} VND", contentFont));
-                totalValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                totalValueCell.Border = PdfPCell.NO_BORDER;
-                totalTable.AddCell(totalValueCell);
-
-                // Thêm bảng thông tin "Tổng tiền" và giá trị lb_TongTien.Text vào nội dung của tài liệu
-                content.Add(totalTable);
-
-
-                // Tạo một PdfPTable để chứa thông tin "Giảm giá", "Số tiền khách trả" và "Tiền thừa"
-                PdfPTable paymentTable = new PdfPTable(2);
-                paymentTable.WidthPercentage = 100;
-                paymentTable.SpacingBefore = 10f; // Khoảng cách trước của bảng
-
-                // Thêm cột "Giảm giá" với căn chỉnh bên trái
-                PdfPCell discountLabelCell = new PdfPCell(new Phrase($"Giảm giá: ", contentFont));
-                discountLabelCell.Border = PdfPCell.NO_BORDER;
-                paymentTable.AddCell(discountLabelCell);
-
-                // Thêm giá trị tbx_Giamgia.Text với căn chỉnh bên phải
-                PdfPCell discountValueCell = new PdfPCell(new Phrase($"{AddThousandSeparators(Convert.ToInt32(tbx_Giamgia.Text) * 10000)} VND", contentFont));
-                discountValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                discountValueCell.Border = PdfPCell.NO_BORDER;
-                paymentTable.AddCell(discountValueCell);
-
-                // Thêm cột "Số tiền khách trả" với căn chỉnh bên trái
-                PdfPCell paymentLabelCell = new PdfPCell(new Phrase($"Số tiền khách trả: ", contentFont));
-                paymentLabelCell.Border = PdfPCell.NO_BORDER;
-                paymentTable.AddCell(paymentLabelCell);
-
-                // Thêm giá trị tbx_TienKhachTra.Text với căn chỉnh bên phải
-                PdfPCell paymentValueCell = new PdfPCell(new Phrase($"{AddThousandSeparators(Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", "")))} VND", contentFont));
-                paymentValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                paymentValueCell.Border = PdfPCell.NO_BORDER;
-                paymentTable.AddCell(paymentValueCell);
-
-                // Thêm cột "Tiền thừa" với căn chỉnh bên trái
-                PdfPCell changeLabelCell = new PdfPCell(new Phrase($"Tiền thừa: ", contentFont));
-                changeLabelCell.Border = PdfPCell.NO_BORDER;
-                paymentTable.AddCell(changeLabelCell);
-
-                // Thêm giá trị lb_TienThua.Text với căn chỉnh bên phải
-                PdfPCell changeValueCell = new PdfPCell(new Phrase($"{AddThousandSeparators(Convert.ToInt32(lb_TienThua.Text.Replace(",", "")))} VND", contentFont));
-                changeValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                changeValueCell.Border = PdfPCell.NO_BORDER;
-                paymentTable.AddCell(changeValueCell);
-                // Thêm bảng thông tin "Giảm giá", "Số tiền khách trả" và "Tiền thừa" vào nội dung của tài liệu
-                content.Add(paymentTable);
-                content.Add(new iTextSharp.text.Chunk("----------------------\n\n", titleFont));
-                content.Add(new iTextSharp.text.Chunk($"Cảm ơn quý khách và hẹn gặp lại quý khách!!\n", contentFont));
-
-
-
-                // Đặt căn chỉnh nội dung của Paragraph ra giữa
-                content.Alignment = Element.ALIGN_CENTER;
-
-
-                // Thêm bảng sản phẩm
-
-
-                // Đặt căn chỉnh nội dung của Paragraph ra giữa
-
-                content.Alignment = Element.ALIGN_CENTER;
-
-
-                // Thêm nội dung hoá đơn vào tài liệu
-                document.Add(content);
-
-                // Đóng tài liệu
-                document.Close();
-
-                MessageBox.Show("Hoá đơn đã được lưu thành công vào tệp PDF.");
-
-                // Mở tệp PDF sau khi lưu
-                Process.Start(@"E:\PRO131_NEW\SumatraPDF\SumatraPDF.exe", fileName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
-            }
-        }
-
+        
         // Hàm tạo bảng sản phẩm cho hoá đơn
         private PdfPTable CreateProductsTable()
         {
@@ -1198,6 +1191,15 @@ namespace App.Winform.UI
 
         #region các nút 
 
+        //Hủy hóa đơn
+        private void pn_HuyHD_Click(object sender, EventArgs e)
+        {
+            HoaDon hdonUpdate = hdsv.GetHD(idUpdate);
+            hdonUpdate.TrangThai = "Đã hủy";
+
+            hdsv.CapNhatHoaDon(hdonUpdate);
+        }
+
         //Nut xoa sp
         private void pn_BtnXoaSP_Click(object sender, EventArgs e)
         {
@@ -1210,14 +1212,14 @@ namespace App.Winform.UI
                 }
             }
 
-            lb_TongTien.Text = AddThousandSeparators(TinhTongTien());
+            lb_TongTien.Text = bhsv.AddThousandSeparators(TinhTongTien());
         }
 
         //nut xoa gio hang
         private void pn_BtnXoaGioHang_Click(object sender, EventArgs e)
         {
             dtg_GioHang.Rows.Clear();
-            lb_TongTien.Text = AddThousandSeparators(TinhTongTien());
+            lb_TongTien.Text = bhsv.AddThousandSeparators(TinhTongTien());
         }
 
         //Nut tạo hóa đơn
@@ -1268,7 +1270,7 @@ namespace App.Winform.UI
             }
 
             //Chia phần trăm, nghìn cho input
-            tbx_TienKhachTra.Text = AddThousandSeparators(tien);
+            tbx_TienKhachTra.Text = bhsv.AddThousandSeparators(tien);
 
             //reset lại focus 
             tbx_TienKhachTra.SelectionStart = tbx_TienKhachTra.Text.Length;
