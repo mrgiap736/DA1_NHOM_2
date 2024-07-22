@@ -314,7 +314,7 @@ namespace App.Winform.UI
             }
         }
 
-        public void LoadGrid(dynamic? data)
+        public void LoadGrid(dynamic data)
         {
             dtg_DSsanpham.Rows.Clear();
             dtg_HoaDonCho.Rows.Clear();
@@ -361,7 +361,8 @@ namespace App.Winform.UI
                     dtg_DSsanpham.Rows.Add(stt++,
                         item.SanPham.TenSanPham,
                         item.SanPham.LoaiSanPham,
-                        item.SoLuong, item.GiaBan,
+                        item.SoLuong,
+                        item.GiaBan,
                         item.MauSac.Name,
                         item.ChatLieu.Name,
                         item.HangSanXuat.Name,
@@ -686,28 +687,18 @@ namespace App.Winform.UI
         }
 
         //Hàm validate dữ liệu đầu vào tạo hóa đơn 
-        public bool ValidateTaoHD(string tienkhachtra, int tongtien)
+        public bool ValidateTaoHD(string tienkhachtra, int tongtien, string trangthai)
         {
             bool check = true;
             //
-            if (dtg_GioHang.Rows.Count == 1)
+            if(trangthai == "Đã thanh toán")
             {
-                MessageBox.Show("Không có sản phẩm nào được chọn !");
-                check = false;
-            }
-            else if (tbx_TienKhachTra.Text == "")
-            {
-                MessageBox.Show("Chưa nhập số tiền khách trả !");
-                check = false;
-            }
-            else if (tbx_Giamgia.Text == "")
-            {
-                MessageBox.Show("Chưa nhập số điểm giảm giá !");
-                check = false;
-            }
-            else
-            {
-                if (Convert.ToInt32(tienkhachtra) == 0)
+                if (dtg_GioHang.Rows.Count == 1)
+                {
+                    MessageBox.Show("Không có sản phẩm nào được chọn !");
+                    check = false;
+                }
+                else if (Convert.ToInt32(tienkhachtra) == 0)
                 {
                     MessageBox.Show("Chưa nhập số tiền khách trả !");
                     check = false;
@@ -717,41 +708,24 @@ namespace App.Winform.UI
                     MessageBox.Show("Số tiền khách gửi không đủ !");
                     check = false;
                 }
-            }
-            //
-            return check;
-        }
 
-        //Hàm validate dữ liệu đầu vào tạo hóa đơn chờ
-        public bool ValidateTaoHDCho()
-        {
-            bool check = true;
-            //
-            if (dtg_GioHang.Rows.Count == 1)
+            }
+            if(trangthai == "Chưa thanh toán")
             {
-                MessageBox.Show("Không có sản phẩm nào được chọn !");
-                check = false;
+                if (dtg_GioHang.Rows.Count == 1)
+                {
+                    MessageBox.Show("Không có sản phẩm nào được chọn !");
+                    check = false;
+                }
             }
-
+            //
             return check;
         }
 
         //Hàm thanh toán (Tạo hóa đơn)
         public void ThanhToan()
-        {
-            //Lấy dữ liệu
-            Guid? makhachhang = maKH;
-            Guid manhanvien = nvien.MaNhanVien;
-            DateTime ngaymua = DateTime.Now;
-
-            int tongtien = TinhTongTien();
-
-            string trangthai = "Đã thanh toán";
-
-            int tienkhachtra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
-            int giamgia = Convert.ToInt32(tbx_Giamgia.Text);
-
-            if (!ValidateTaoHD(tbx_TienKhachTra.Text.Replace(",", ""), tongtien))
+        {     
+            if (!ValidateTaoHD(tbx_TienKhachTra.Text.Replace(",", ""), TinhTongTien(), "Đã thanh toán"))
             {
                 return;
             }
@@ -769,23 +743,8 @@ namespace App.Winform.UI
 
                 if (check)
                 {
-                    HoaDon hd = new HoaDon
-                    {
-                        MaHoaDon = Guid.NewGuid(),
-                        MaKhachHang = makhachhang,
-                        MaNhanVien = manhanvien,
-                        NgayMua = ngaymua,
-                        TongTien = tongtien,
-                        TienKhachTra = tienkhachtra,
-                        GiamGia = giamgia,
-                        TrangThai = trangthai
-                    };
-                    hdsv.TaoHoaDon(hd);
-                    AddHDChiTiet(hd.MaHoaDon);
-                    MessageBox.Show("Thanh toán thành công");
 
-                    //Update số lượng sản phẩm 
-                    bhsv.UpdateSoLuongSP(hd.MaHoaDon);
+                    TaoHoaDon("Đã thanh toán");
 
                     if (kHang != null)
                     {
@@ -800,12 +759,6 @@ namespace App.Winform.UI
                         khsv.Update(kHang);
                     }
 
-
-                    //In hoa don cho khach
-
-                    InHoaDon(hd.MaHoaDon);
-
-
                     //Xoa du lieu input
                     ClearInput();
 
@@ -814,17 +767,14 @@ namespace App.Winform.UI
                 {
                     HoaDon hd = new HoaDon();
                     hd.MaHoaDon = idUpdate;
-                    hd.TienKhachTra = tienkhachtra;
-                    hd.GiamGia = giamgia;
-                    hd.TongTien = tongtien;
+                    hd.TienKhachTra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
+                    hd.GiamGia = Convert.ToInt32(tbx_Giamgia.Text);
+                    hd.TongTien = TinhTongTien();
                     hd.TrangThai = "Đã thanh toán";
                     //Thanh toán hóa đơn chờ
                     hdsv.CapNhatHoaDon(hd);
                     UpdateHDChiTiet();
                     MessageBox.Show("Thanh toán thành công");
-
-                    //Update số lượng sản phẩm 
-                    bhsv.UpdateSoLuongSP(hd.MaHoaDon);
 
                     if (kHang != null)
                     {
@@ -851,8 +801,8 @@ namespace App.Winform.UI
             }
         }
 
-        //Hàm tạo hóa đơn chờ (Tạo hóa đơn)
-        public void TaoHoaDonCho()
+        //Hàm tạo hóa đơn
+        public void TaoHoaDon(string trangthai)
         {
             Guid? makhachhang = maKH;
             Guid manhanvien = nvien.MaNhanVien;
@@ -860,13 +810,11 @@ namespace App.Winform.UI
 
             int tongtien = TinhTongTien();
 
-            int tienkhachtra = 0;
+            int tienkhachtra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
 
-            int giamgia = 0;
+            int giamgia = Convert.ToInt32(tbx_Giamgia.Text);
 
-            string trangthai = "Chưa thanh toán";
-
-            if (!ValidateTaoHDCho())
+            if (!ValidateTaoHD(tienkhachtra.ToString(), tongtien, "Chưa thanh toán"))
             {
                 return;
             }
@@ -876,10 +824,11 @@ namespace App.Winform.UI
                 {
                     UpdateHDChiTiet();
                 }
-                else
+                else 
                 {
                     HoaDon hd = new HoaDon
                     {
+                        MaHoaDon = Guid.NewGuid(),
                         MaKhachHang = makhachhang,
                         MaNhanVien = manhanvien,
                         NgayMua = ngaymua,
@@ -890,13 +839,21 @@ namespace App.Winform.UI
                     };
                     hdsv.TaoHoaDon(hd);
                     AddHDChiTiet(hd.MaHoaDon);
+
+                    //Update số lượng sản phẩm 
+                    bhsv.UpdateSoLuongSP(hd.MaHoaDon);
+
+                    //In hoa don cho khach
+                    if(trangthai == "Đã thanh toán")
+                    {
+                        InHoaDon(hd.MaHoaDon);
+                    }           
                 }
 
-                //
-
-                LoadGrid(bhsv.GetAllSanPham());
-                ClearInput();
             }
+
+            LoadGrid(bhsv.GetAllSanPham());
+            ClearInput();
         }
 
         //Hàm in hóa đơn vật lý 
@@ -1225,7 +1182,7 @@ namespace App.Winform.UI
         //Nut tạo hóa đơn
         private void pn_BtnTaoHoaDon_Click(object sender, EventArgs e)
         {
-            TaoHoaDonCho();
+            TaoHoaDon("Chưa thanh toán");
         }
 
 
