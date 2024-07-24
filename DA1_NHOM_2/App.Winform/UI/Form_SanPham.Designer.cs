@@ -83,6 +83,7 @@
             label3 = new Label();
             txt_TenSanPham = new TextBox();
             label2 = new Label();
+            groupBox2 = new GroupBox();
             pn_Form_SanPham.SuspendLayout();
             grb_TimKiem.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -100,11 +101,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ptb_Anh).BeginInit();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // pn_Form_SanPham
             // 
             pn_Form_SanPham.BackColor = Color.FromArgb(255, 192, 192);
+            pn_Form_SanPham.Controls.Add(groupBox2);
             pn_Form_SanPham.Controls.Add(grb_TimKiem);
             pn_Form_SanPham.Controls.Add(groupBox3);
             pn_Form_SanPham.Controls.Add(grb_ChucNang);
@@ -263,13 +266,12 @@
             // grb_ChucNang
             // 
             grb_ChucNang.Controls.Add(pn_XuatExcel);
-            grb_ChucNang.Controls.Add(pn_XoaSP);
             grb_ChucNang.Controls.Add(pn_UpdateSP);
             grb_ChucNang.Controls.Add(pn_ThemSP);
             grb_ChucNang.Controls.Add(pn_LamMoi);
             grb_ChucNang.Location = new Point(1211, 3);
             grb_ChucNang.Name = "grb_ChucNang";
-            grb_ChucNang.Size = new Size(349, 502);
+            grb_ChucNang.Size = new Size(349, 374);
             grb_ChucNang.TabIndex = 1;
             grb_ChucNang.TabStop = false;
             grb_ChucNang.Text = "Chức năng";
@@ -280,7 +282,7 @@
             pn_XuatExcel.BorderStyle = BorderStyle.FixedSingle;
             pn_XuatExcel.Controls.Add(label12);
             pn_XuatExcel.Controls.Add(pictureBox5);
-            pn_XuatExcel.Location = new Point(43, 408);
+            pn_XuatExcel.Location = new Point(53, 288);
             pn_XuatExcel.Name = "pn_XuatExcel";
             pn_XuatExcel.Size = new Size(248, 49);
             pn_XuatExcel.TabIndex = 1;
@@ -317,11 +319,10 @@
             pn_XoaSP.BorderStyle = BorderStyle.FixedSingle;
             pn_XoaSP.Controls.Add(pictureBox1);
             pn_XoaSP.Controls.Add(label11);
-            pn_XoaSP.Location = new Point(43, 315);
+            pn_XoaSP.Location = new Point(53, 41);
             pn_XoaSP.Name = "pn_XoaSP";
             pn_XoaSP.Size = new Size(248, 49);
             pn_XoaSP.TabIndex = 1;
-            pn_XoaSP.Click += pn_XoaSP_Click;
             // 
             // pictureBox1
             // 
@@ -333,7 +334,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pn_XoaSP_Click;
             // 
             // label11
             // 
@@ -342,10 +342,9 @@
             label11.Location = new Point(71, 9);
             label11.Margin = new Padding(2, 0, 2, 0);
             label11.Name = "label11";
-            label11.Size = new Size(147, 28);
+            label11.Size = new Size(153, 28);
             label11.TabIndex = 3;
-            label11.Text = "Xoá Sản Phẩm";
-            label11.Click += pn_XoaSP_Click;
+            label11.Text = "Thành phần SP";
             // 
             // pn_UpdateSP
             // 
@@ -353,7 +352,7 @@
             pn_UpdateSP.BorderStyle = BorderStyle.FixedSingle;
             pn_UpdateSP.Controls.Add(pictureBox2);
             pn_UpdateSP.Controls.Add(label10);
-            pn_UpdateSP.Location = new Point(43, 229);
+            pn_UpdateSP.Location = new Point(53, 216);
             pn_UpdateSP.Name = "pn_UpdateSP";
             pn_UpdateSP.Size = new Size(248, 49);
             pn_UpdateSP.TabIndex = 1;
@@ -390,7 +389,7 @@
             pn_ThemSP.BorderStyle = BorderStyle.FixedSingle;
             pn_ThemSP.Controls.Add(pictureBox3);
             pn_ThemSP.Controls.Add(label9);
-            pn_ThemSP.Location = new Point(43, 148);
+            pn_ThemSP.Location = new Point(53, 142);
             pn_ThemSP.Name = "pn_ThemSP";
             pn_ThemSP.Size = new Size(248, 49);
             pn_ThemSP.TabIndex = 1;
@@ -427,7 +426,7 @@
             pn_LamMoi.BorderStyle = BorderStyle.FixedSingle;
             pn_LamMoi.Controls.Add(pictureBox4);
             pn_LamMoi.Controls.Add(label8);
-            pn_LamMoi.Location = new Point(43, 70);
+            pn_LamMoi.Location = new Point(53, 70);
             pn_LamMoi.Name = "pn_LamMoi";
             pn_LamMoi.Size = new Size(248, 49);
             pn_LamMoi.TabIndex = 0;
@@ -715,6 +714,16 @@
             label2.TabIndex = 2;
             label2.Text = "Tên sản phẩm:";
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(pn_XoaSP);
+            groupBox2.Location = new Point(1211, 380);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(349, 125);
+            groupBox2.TabIndex = 4;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Các thành phần sản phẩm";
+            // 
             // Form_SanPham
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -747,6 +756,7 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ptb_Anh).EndInit();
+            groupBox2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -806,5 +816,6 @@
         private Label label19;
         private ComboBox cbx_FillChatLieu;
         private Label label18;
+        private GroupBox groupBox2;
     }
 }
