@@ -21,6 +21,7 @@ namespace App.Winform.UI
             InitializeComponent();
             _service = new SanPham_Services();
             LoadGird(ApplyFilters());
+            LoadGrid2();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ///123///////2113232
             LoadComboBox();
@@ -43,6 +44,8 @@ namespace App.Winform.UI
             }
             return ctrls;
         }
+
+        
         public void LoadGird(dynamic data)
         {
             dtgView.Rows.Clear();
@@ -83,6 +86,66 @@ namespace App.Winform.UI
                     );
             }
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        public void LoadGrid2()
+        {
+            dtg_DSMau.Rows.Clear();
+            dtg_DSChatLieu.Rows.Clear();
+            dtg_DSLoaiRen.Rows.Clear();
+            dtg_DSHangSX.Rows.Clear();
+
+            dtg_DSMau.ColumnCount = 3;
+            dtg_DSChatLieu.ColumnCount = 3;
+            dtg_DSLoaiRen.ColumnCount = 3;
+            dtg_DSHangSX.ColumnCount = 3;
+
+            dtg_DSMau.Columns[0].Name = "Id";
+            dtg_DSChatLieu.Columns[0].Name = "Id";
+            dtg_DSLoaiRen.Columns[0].Name = "Id";
+            dtg_DSHangSX.Columns[0].Name = "Id";
+
+            dtg_DSMau.Columns[0].Visible = false;
+            dtg_DSChatLieu.Columns[0].Visible = false;
+            dtg_DSLoaiRen.Columns[0].Visible = false;
+            dtg_DSHangSX.Columns[0].Visible = false;
+
+            dtg_DSMau.Columns[1].Name = "STT";
+            dtg_DSChatLieu.Columns[1].Name = "STT";
+            dtg_DSLoaiRen.Columns[1].Name = "STT";
+            dtg_DSHangSX.Columns[1].Name = "STT";
+
+            dtg_DSMau.Columns[1].Width = 40;
+            dtg_DSChatLieu.Columns[1].Width = 40;
+            dtg_DSLoaiRen.Columns[1].Width = 40;
+            dtg_DSHangSX.Columns[1].Width = 40;
+
+            dtg_DSMau.Columns[2].Name = "Màu";
+            dtg_DSChatLieu.Columns[2].Name = "Chất liệu";
+            dtg_DSLoaiRen.Columns[2].Name = "Loại";
+            dtg_DSHangSX.Columns[2].Name = "Hãng";
+
+            int stt = 1;
+            foreach (var item in _service.GetAllMauSac())
+            {
+                dtg_DSMau.Rows.Add(item.Id, stt++, item.Name);
+            }
+
+            foreach (var item in _service.GetAllChatLieu())
+            {
+                dtg_DSChatLieu.Rows.Add(item.Id, stt++, item.Name);
+            }
+
+            foreach (var item in _service.GetAllLoaiRen())
+            {
+                dtg_DSLoaiRen.Rows.Add(item.Id, stt++, item.Name);
+            }
+
+            foreach (var item in _service.GetAllHangSanXuat())
+            {
+                dtg_DSHangSX.Rows.Add(item.Id, stt++, item.Name);
+            }
+
         }
 
 
