@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240708034236_Update1")]
+    [Migration("20240722035911_Update1")]
     partial class Update1
     {
         /// <inheritdoc />
@@ -73,11 +73,11 @@ namespace App.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ChatLieuId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<double>("CanNang")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("ChieuDai")
-                        .HasColumnType("int");
+                    b.Property<double>("ChieuDai")
+                        .HasColumnType("float");
 
                     b.Property<int>("GiaBan")
                         .HasColumnType("int");
@@ -91,27 +91,33 @@ namespace App.Data.Migrations
                     b.Property<Guid>("MaHangSanXuat")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("MaLoaiRen")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("MaMauSac")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MaSanPham")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MauSacId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TrangThai")
+                    b.Property<int>("SoLuong")
                         .HasColumnType("int");
+
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatLieuId");
+                    b.HasIndex("MaChatLieu");
 
                     b.HasIndex("MaHangSanXuat");
 
-                    b.HasIndex("MaSanPham");
+                    b.HasIndex("MaLoaiRen");
 
-                    b.HasIndex("MauSacId");
+                    b.HasIndex("MaMauSac");
+
+                    b.HasIndex("MaSanPham");
 
                     b.ToTable("ChiTietSanPham");
                 });
@@ -143,7 +149,7 @@ namespace App.Data.Migrations
                     b.Property<int?>("GiamGia")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("MaKhachHang")
+                    b.Property<Guid?>("MaKhachHang")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MaNhanVien")
@@ -158,8 +164,9 @@ namespace App.Data.Migrations
                     b.Property<int>("TongTien")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrangThai")
-                        .HasColumnType("int");
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaHoaDon");
 
@@ -177,7 +184,6 @@ namespace App.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SoDienThoai")
@@ -194,12 +200,28 @@ namespace App.Data.Migrations
                     b.HasKey("MaKhachHang");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("SoDienThoai")
                         .IsUnique();
 
                     b.ToTable("KhachHang");
+                });
+
+            modelBuilder.Entity("App.Data.Entities.LoaiRen", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoaiRen");
                 });
 
             modelBuilder.Entity("App.Data.Entities.MauSac", b =>
@@ -271,9 +293,6 @@ namespace App.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
                     b.Property<string>("TenSanPham")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -309,11 +328,23 @@ namespace App.Data.Migrations
                 {
                     b.HasOne("App.Data.Entities.ChatLieu", "ChatLieu")
                         .WithMany("ChiTietSanPhams")
-                        .HasForeignKey("ChatLieuId");
+                        .HasForeignKey("MaChatLieu");
 
                     b.HasOne("App.Data.Entities.HangSanXuat", "HangSanXuat")
                         .WithMany("ChiTietSanPhams")
                         .HasForeignKey("MaHangSanXuat")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Data.Entities.LoaiRen", "LoaiRen")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaLoaiRen")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Data.Entities.MauSac", "MauSac")
+                        .WithMany("ChiTietSanPhams")
+                        .HasForeignKey("MaMauSac")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -323,15 +354,11 @@ namespace App.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("App.Data.Entities.MauSac", "MauSac")
-                        .WithMany("ChiTietSanPhams")
-                        .HasForeignKey("MauSacId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ChatLieu");
 
                     b.Navigation("HangSanXuat");
+
+                    b.Navigation("LoaiRen");
 
                     b.Navigation("MauSac");
 
@@ -342,9 +369,7 @@ namespace App.Data.Migrations
                 {
                     b.HasOne("App.Data.Entities.KhachHang", "KhachHang")
                         .WithMany("HoaDons")
-                        .HasForeignKey("MaKhachHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaKhachHang");
 
                     b.HasOne("App.Data.Entities.NhanVien", "NhanVien")
                         .WithMany("HoaDons")
@@ -380,6 +405,11 @@ namespace App.Data.Migrations
             modelBuilder.Entity("App.Data.Entities.KhachHang", b =>
                 {
                     b.Navigation("HoaDons");
+                });
+
+            modelBuilder.Entity("App.Data.Entities.LoaiRen", b =>
+                {
+                    b.Navigation("ChiTietSanPhams");
                 });
 
             modelBuilder.Entity("App.Data.Entities.MauSac", b =>

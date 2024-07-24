@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240718014940_Update6")]
-    partial class Update6
+    [Migration("20240722031442_CR")]
+    partial class CR
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,8 +164,9 @@ namespace App.Data.Migrations
                     b.Property<int>("TongTien")
                         .HasColumnType("int");
 
-                    b.Property<int>("TrangThai")
-                        .HasColumnType("int");
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaHoaDon");
 
@@ -183,7 +184,6 @@ namespace App.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SoDienThoai")
@@ -200,7 +200,8 @@ namespace App.Data.Migrations
                     b.HasKey("MaKhachHang");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("SoDienThoai")
                         .IsUnique();

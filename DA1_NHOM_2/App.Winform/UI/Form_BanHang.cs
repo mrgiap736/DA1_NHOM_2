@@ -30,6 +30,10 @@ namespace App.Winform.UI
         HoaDon_Services hdsv;
         KhachHang_Services khsv;
         ChiTietHD_Services ctsv;
+        SanPham_Services spsv;
+
+        NhanVien nvien;
+        KhachHang kHang;
 
         public Form_BanHang(NhanVien? nv)
         {
@@ -40,12 +44,15 @@ namespace App.Winform.UI
             hdsv = new HoaDon_Services();
             ctsv = new ChiTietHD_Services();
             khsv = new KhachHang_Services();
+            spsv = new SanPham_Services();
 
             GetCtrl();
 
             LoadCBX1();
             LoadCBX2();
 
+            cbx_Filter1.SelectedIndexChanged += cbx_Filter_SelectedIndexChanged;
+            cbx_Filter2.SelectedIndexChanged += cbx_Filter_SelectedIndexChanged;
             //Lấy mã nhân viên từ tk pw đăng nhập vào app
 
             if (nv == null)
@@ -53,11 +60,9 @@ namespace App.Winform.UI
                 nvien = null;
             }
             else nvien = nv;
-
+            
         }
-        NhanVien nvien;
-
-        KhachHang kHang;
+       
 
         private void PhanQuyen_NhanVien(NhanVien nvien)
         {
@@ -115,7 +120,6 @@ namespace App.Winform.UI
             pn_SanPham.BackColor = Color.FromArgb(45, 149, 150);
             pn_BanHang.BackColor = Color.FromArgb(38, 80, 115);
             pn_ThongKe.BackColor = Color.FromArgb(45, 149, 150);
-
         }
 
         private void pn_HoaDon_Click(object sender, EventArgs e)
@@ -226,7 +230,6 @@ namespace App.Winform.UI
             //Phân quyền chức năng trước khi thao tác
             PhanQuyen_NhanVien(nvien);
             //
-            //
 
             if (nvien == null)
             {
@@ -234,7 +237,9 @@ namespace App.Winform.UI
             }
             else lb_NameNV.Text = nvien.TenNhanVien;
 
-            LoadGrid(bhsv.GetAllSanPham());
+            
+            LoadGrid(spsv.GetAll());
+
 
             tbx_TienKhachTra.Click += tbx_Click;
             tbx_Giamgia.Click += tbx_Click;
@@ -246,6 +251,7 @@ namespace App.Winform.UI
             {
                 column.ReadOnly = true;
             }
+            
 
         }
 
@@ -285,7 +291,7 @@ namespace App.Winform.UI
             }
 
             //Tự động chọn item 0 (tất cả)
-            cbx_Filter1.SelectedIndex = 0;
+            cbx_Filter1.SelectedItem = "Tất cả";
             cbx_Filter1.DropDown += cbx_Filter1_DropDown;
         }
 
@@ -299,7 +305,7 @@ namespace App.Winform.UI
             cbx_Filter2.Items.Add("Trên 50 triệu");
 
             //Tự động chọn item 0 (tất cả)
-            cbx_Filter2.SelectedIndex = 0;
+            cbx_Filter2.SelectedItem = "Tất cả";
         }
 
         private void LoadGioHang(dynamic data) //note
@@ -317,7 +323,6 @@ namespace App.Winform.UI
         public void LoadGrid(dynamic data)
         {
             dtg_DSsanpham.Rows.Clear();
-            dtg_HoaDonCho.Rows.Clear();
 
             //Tạo cột cho ds sản phẩm 
             dtg_DSsanpham.ColumnCount = 9;
@@ -351,26 +356,26 @@ namespace App.Winform.UI
             dtg_DSsanpham.Columns[8].Visible = false;
             dtg_DSsanpham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+
             //Thêm dữ liệu vào ds sản phẩm
             //stt
+            
             int stt = 1;
-            if (data != null)
+            foreach (var item in data)
             {
-                foreach (var item in data)
-                {
-                    dtg_DSsanpham.Rows.Add(stt++,
-                        item.SanPham.TenSanPham,
-                        item.SanPham.LoaiSanPham,
-                        item.SoLuong,
-                        item.GiaBan,
-                        item.MauSac.Name,
-                        item.ChatLieu.Name,
-                        item.HangSanXuat.Name,
-                        item.Id
-                        );
-                }
-
+                dtg_DSsanpham.Rows.Add(stt++,
+                    item.SanPham.TenSanPham,
+                    item.SanPham.LoaiSanPham,
+                    item.SoLuong,
+                    item.GiaBan,
+                    item.MauSac.Name,
+                    item.ChatLieu.Name,
+                    item.HangSanXuat.Name,
+                    item.Id
+                    );
             }
+
+
 
 
             //Tạo cột cho giỏ hàng
@@ -424,7 +429,7 @@ namespace App.Winform.UI
 
 
 
-
+            dtg_HoaDonCho.Rows.Clear();
             //Thêm dữ liệu vào hóa đơn chờ 
             foreach (var item in hdsv.GetAllHoaDon())
             {
@@ -434,11 +439,11 @@ namespace App.Winform.UI
                     tenkh = item.KhachHang.TenKhachHang;
                 }
 
-                if(item.TrangThai == "Chưa thanh toán")
+                if (item.TrangThai == "Chưa thanh toán")
                 {
                     dtg_HoaDonCho.Rows.Add(item.MaHoaDon, tenkh, item.TrangThai, item.TongTien, item.TienKhachTra, item.GiamGia);
                 }
-                
+
             }
 
         }
@@ -540,7 +545,7 @@ namespace App.Winform.UI
                 string sdtKH = "";
                 string nameKH = "...";
                 string tichluy = "...";
-                if(kHang != null)
+                if (kHang != null)
                 {
                     sdtKH = kHang.SoDienThoai;
                     nameKH = kHang.TenKhachHang;
@@ -664,7 +669,7 @@ namespace App.Winform.UI
 
         }
 
-        
+
 
         //Hàm tìm kiếm khách hàng
         //Lấy mã khách hàng để tạo hóa đơn  
@@ -691,7 +696,7 @@ namespace App.Winform.UI
         {
             bool check = true;
             //
-            if(trangthai == "Đã thanh toán")
+            if (trangthai == "Đã thanh toán")
             {
                 if (dtg_GioHang.Rows.Count == 1)
                 {
@@ -710,7 +715,7 @@ namespace App.Winform.UI
                 }
 
             }
-            if(trangthai == "Chưa thanh toán")
+            if (trangthai == "Chưa thanh toán")
             {
                 if (dtg_GioHang.Rows.Count == 1)
                 {
@@ -724,14 +729,14 @@ namespace App.Winform.UI
 
         //Hàm thanh toán (Tạo hóa đơn)
         public void ThanhToan()
-        {     
+        {
             if (!ValidateTaoHD(tbx_TienKhachTra.Text.Replace(",", ""), TinhTongTien(), "Đã thanh toán"))
             {
                 return;
             }
             else
             {
-                
+
                 bool check = true;
                 foreach (var item in hdsv.GetAllHoaDon())
                 {
@@ -796,8 +801,8 @@ namespace App.Winform.UI
                     ClearInput();
                 }
 
-                dtg_GioHang.Rows.Clear();
-                LoadGrid(bhsv.GetAllSanPham());
+               
+                LoadGrid(spsv.GetAll());
             }
         }
 
@@ -824,7 +829,7 @@ namespace App.Winform.UI
                 {
                     UpdateHDChiTiet();
                 }
-                else 
+                else
                 {
                     HoaDon hd = new HoaDon
                     {
@@ -844,15 +849,15 @@ namespace App.Winform.UI
                     bhsv.UpdateSoLuongSP(hd.MaHoaDon);
 
                     //In hoa don cho khach
-                    if(trangthai == "Đã thanh toán")
+                    if (trangthai == "Đã thanh toán")
                     {
                         InHoaDon(hd.MaHoaDon);
-                    }           
+                    }
                 }
 
             }
 
-            LoadGrid(bhsv.GetAllSanPham());
+            LoadGrid(spsv.GetAll());
             ClearInput();
         }
 
@@ -1019,7 +1024,7 @@ namespace App.Winform.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show( "Đã xảy ra lỗi: " + ex.Message);
+                MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
             }
         }
 
@@ -1040,8 +1045,6 @@ namespace App.Winform.UI
                     ctsv.TaoChiTietHoaDon(ctHoaDon);
                 }
             }
-
-            LoadGrid(bhsv.GetAllSanPham());
         }
 
         //Hàm update chi tiết hóa đơn (được gọi sau khi thanh toán hóa đơn chờ)
@@ -1102,9 +1105,9 @@ namespace App.Winform.UI
             }
         }
 
-        
 
-        
+
+
         // Hàm tạo bảng sản phẩm cho hoá đơn
         private PdfPTable CreateProductsTable()
         {
@@ -1189,7 +1192,7 @@ namespace App.Winform.UI
         //Nút cập nhật
         private void pn_BtnCapNhat_Click(object sender, EventArgs e)
         {
-            LoadGrid(bhsv.GetAllSanPham());
+            LoadGrid(spsv.GetAll());
         }
 
 
@@ -1313,7 +1316,7 @@ namespace App.Winform.UI
 
 
         #region Sự kiện combobox
-        private void cbx_Filter2_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbx_Filter_SelectedIndexChanged(object sender, EventArgs e)
         {
             string searchText = tbx_Search.Text;
             int filter1Index = cbx_Filter1.SelectedIndex;
@@ -1385,18 +1388,6 @@ namespace App.Winform.UI
             return -1; // Trả về -1 nếu không tìm thấy cột
         }
 
-        private void cbx_Filter1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string searchText = tbx_Search.Text;
-            int filter1Index = cbx_Filter1.SelectedIndex;
-            int filter2Index = cbx_Filter2.SelectedIndex;
-
-            // Gọi phương thức GetFilteredData và tải dữ liệu vào DataGridView
-            LoadGrid(bhsv.LocALL(searchText, filter1Index, filter2Index));
-
-
-        }
-
         private void cbx_Filter1_DropDown(object sender, EventArgs e)
         {
             cbx_Filter1.Items.Clear(); // Xóa tất cả các mục đã tồn tại trong ComboBox trước khi thêm các mục mới
@@ -1414,13 +1405,6 @@ namespace App.Winform.UI
             }
 
         }
-
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-            LoadGrid(bhsv.GetAllSanPham());
-        }
-
-        
+       
     }
 }

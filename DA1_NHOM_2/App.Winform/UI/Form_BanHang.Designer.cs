@@ -929,7 +929,6 @@
             cbx_Filter2.Name = "cbx_Filter2";
             cbx_Filter2.Size = new Size(237, 28);
             cbx_Filter2.TabIndex = 4;
-            cbx_Filter2.SelectedIndexChanged += cbx_Filter2_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -949,7 +948,6 @@
             cbx_Filter1.Size = new Size(145, 28);
             cbx_Filter1.TabIndex = 2;
             cbx_Filter1.DropDown += cbx_Filter1_DropDown;
-            cbx_Filter1.SelectedIndexChanged += cbx_Filter1_SelectedIndexChanged;
             // 
             // label1
             // 

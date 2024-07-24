@@ -16,9 +16,9 @@ namespace App.Data.Repos
 
         public SanPham_Repos()
         {
-            context = new AppDBContext();
-            
+            context = new AppDBContext();    
         }
+
         public List<ChiTietSanPham> GetAll()
         {
             return context.ChiTietSanPham
@@ -36,7 +36,7 @@ namespace App.Data.Repos
 
 		public bool AddSP(SanPham sp)
 		{
-			context.Add(sp);
+			context.SanPham.Add(sp);
 			context.SaveChanges();
 			return true;
 		}

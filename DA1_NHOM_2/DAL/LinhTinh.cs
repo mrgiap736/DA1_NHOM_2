@@ -8,9 +8,9 @@ namespace App.Data
 {
     internal class LinhTinh
     {
-        //    public void FakeData()
-        //    {
-        //        List<MauSac> lst = new List<MauSac>
+        //public void FakeData()
+        //{
+        //    List<MauSac> lst = new List<MauSac>
         //{
         //    new MauSac{Id = Guid.NewGuid(), Name = "Đen"},
         //    new MauSac{Id = Guid.NewGuid(), Name = "Trắng"},
@@ -29,21 +29,21 @@ namespace App.Data
         //    new MauSac{Id = Guid.NewGuid(), Name = "Vàng ánh kim"}
         //};
 
-        //        using (AppDBContext context = new AppDBContext())
+        //    using (AppDBContext context = new AppDBContext())
+        //    {
+        //        foreach (var item in lst)
         //        {
-        //            foreach (var item in lst)
-        //            {
-        //                context.MauSac.Add(item);
-        //            }
-        //            context.SaveChanges();
+        //            context.MauSac.Add(item);
         //        }
-
-        //        MessageBox.Show("Thành công");
+        //        context.SaveChanges();
         //    }
 
-        //    public void FakeDataManufacturers()
-        //    {
-        //        List<HangSanXuat> lst = new List<HangSanXuat>
+        //    MessageBox.Show("Thành công");
+        //}
+
+        //public void FakeDataManufacturers()
+        //{
+        //    List<HangSanXuat> lst = new List<HangSanXuat>
         //{
         //    new HangSanXuat{Id = Guid.NewGuid(), Name = "Predator"},
         //    new HangSanXuat{Id = Guid.NewGuid(), Name = "McDermott"},
@@ -65,17 +65,17 @@ namespace App.Data
         //    new HangSanXuat{Id = Guid.NewGuid(), Name = "Maple"}
         //};
 
-        //        using (AppDBContext context = new AppDBContext())
+        //    using (AppDBContext context = new AppDBContext())
+        //    {
+        //        foreach (var item in lst)
         //        {
-        //            foreach (var item in lst)
-        //            {
-        //                context.HangSanXuat.Add(item);
-        //            }
-        //            context.SaveChanges();
+        //            context.HangSanXuat.Add(item);
         //        }
+        //        context.SaveChanges();
+        //    }
 
-        //        MessageBox.Show("Thành công");
-        //    }
-        //    }
+        //    MessageBox.Show("Thành công");
+        //}
     }
 }
+

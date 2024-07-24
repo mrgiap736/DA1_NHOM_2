@@ -181,7 +181,6 @@ namespace App.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SoDienThoai")
@@ -198,7 +197,8 @@ namespace App.Data.Migrations
                     b.HasKey("MaKhachHang");
 
                     b.HasIndex("Email")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("SoDienThoai")
                         .IsUnique();
