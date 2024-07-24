@@ -16,22 +16,20 @@ namespace App.Services.Services
     {
         SanPham_Repos sprp;
         KhachHang_Repos khrp;
-        HoaDon_Repos hdrp;
         ChiTietHD_Repos cthdrp;
-        SanPham_Services spsv;
+        SanPham_Services _spsv;
 
         public BanHang_Services()
         {
             sprp = new SanPham_Repos();
             khrp = new KhachHang_Repos();
-            hdrp = new HoaDon_Repos();
             cthdrp = new ChiTietHD_Repos();
-            spsv = new SanPham_Services();
+            _spsv = new SanPham_Services();
         }
 
         public List<ChiTietSanPham> GetAllSanPham()
         {
-            return sprp.GetAll();
+            return _spsv.GetAll();
         }
 
         public List<ChiTietSanPham> GetSPByName(string name)
@@ -69,7 +67,7 @@ namespace App.Services.Services
                 //Cập nhật số lượng mới 
                 item.ChiTietSanPham.SoLuong = soluongSP - soluongtru;
 
-                spsv.Update(item.ChiTietSanPham);
+                _spsv.Update(item.ChiTietSanPham);
             }
         }
 

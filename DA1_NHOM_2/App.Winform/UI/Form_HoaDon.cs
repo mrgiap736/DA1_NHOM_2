@@ -83,7 +83,7 @@ namespace App.Winform.UI
             foreach (HoaDon item in data)
             {
                 string tenKH = "";
-                if(item.KhachHang != null)
+                if (item.KhachHang != null)
                 {
                     tenKH = item.KhachHang.TenKhachHang;
                 }
@@ -126,19 +126,19 @@ namespace App.Winform.UI
             dtg_DSHoaDonCT.Rows.Clear();
             int rowIndex = e.RowIndex;
 
-            //if (e.RowIndex < 0 || dtg_DSHoaDon.Rows[rowIndex].Cells[0].Value == null || dtg_DSHoaDon.RowCount > 1)
-            //{
-            //    return;
-            //}
-            //else
-            //{
-            Guid mahd = Guid.Parse(dtg_DSHoaDon.Rows[rowIndex].Cells[1].Value.ToString());
-            int stt = 1;
-            foreach (ChiTietHoaDon item in ctsv.GetAllCTHoaDon(mahd))
+            if (e.RowIndex < 0 || dtg_DSHoaDon.Rows[rowIndex].Cells[0].Value == null || dtg_DSHoaDon.RowCount > 1)
             {
-                dtg_DSHoaDonCT.Rows.Add(stt++, item.MaChiTietHoaDon, item.MaHoaDon, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
+                return;
             }
-            //}
+            else
+            {
+                Guid mahd = Guid.Parse(dtg_DSHoaDon.Rows[rowIndex].Cells[1].Value.ToString());
+                int stt = 1;
+                foreach (ChiTietHoaDon item in ctsv.GetAllCTHoaDon(mahd))
+                {
+                    dtg_DSHoaDonCT.Rows.Add(stt++, item.MaChiTietHoaDon, item.MaHoaDon, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
+                }
+            }
         }
 
         private void tbx_Search_TextChanged(object sender, EventArgs e)
@@ -149,22 +149,22 @@ namespace App.Winform.UI
         private void rbt_CheckedChanged(object sender, EventArgs e)
         {
             string tt;
-            if(rbt_notpayed.Checked == true)
+            if (rbt_notpayed.Checked == true)
             {
                 tt = "Chưa thanh toán";
                 LoadGrid(hdsv.FilByTT(tt));
             }
-            else if(rbt_payed.Checked == true)
+            else if (rbt_payed.Checked == true)
             {
                 tt = "Đã thanh toán";
                 LoadGrid(hdsv.FilByTT(tt));
             }
-            else if(rbt_Canceled.Checked == true)
+            else if (rbt_Canceled.Checked == true)
             {
                 tt = "Đã hủy";
                 LoadGrid(hdsv.FilByTT(tt));
             }
-            else if(rbt_all.Checked == true)
+            else if (rbt_all.Checked == true)
             {
                 LoadGrid(hdsv.GetAllHoaDon());
             }

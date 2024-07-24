@@ -86,7 +86,7 @@ CustomScreenDPI = 0
 
 FileStates [
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724103541.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110733.pdf
 		Favorites [
 		]
 		IsPinned = false
@@ -106,7 +106,7 @@ FileStates [
 		ReparseIdx = 0
 	]
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724102827.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110516.pdf
 		Favorites [
 		]
 		IsPinned = false
@@ -126,7 +126,7 @@ FileStates [
 		ReparseIdx = 0
 	]
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724102718.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724105314.pdf
 		Favorites [
 		]
 		IsPinned = false
@@ -146,12 +146,72 @@ FileStates [
 		ReparseIdx = 0
 	]
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724100503.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724103541.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 2
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724102827.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 3
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724102718.pdf
 		Favorites [
 		]
 		IsPinned = false
 		IsMissing = false
 		OpenCount = 4
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724100503.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 5
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -1310,7 +1370,7 @@ SessionData [
 	[
 		TabStates [
 			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724100503.pdf
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724105314.pdf
 				DisplayMode = continuous
 				PageNo = 1
 				Zoom = fit page
@@ -1319,7 +1379,7 @@ SessionData [
 				ShowToc = false
 			]
 			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724102718.pdf
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110516.pdf
 				DisplayMode = continuous
 				PageNo = 1
 				Zoom = fit page
@@ -1328,16 +1388,7 @@ SessionData [
 				ShowToc = false
 			]
 			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724102827.pdf
-				DisplayMode = continuous
-				PageNo = 1
-				Zoom = fit page
-				Rotation = 0
-				ScrollPos = -1 -1
-				ShowToc = false
-			]
-			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724103541.pdf
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110733.pdf
 				DisplayMode = continuous
 				PageNo = 1
 				Zoom = fit page
@@ -1346,7 +1397,7 @@ SessionData [
 				ShowToc = false
 			]
 		]
-		TabIndex = 5
+		TabIndex = 4
 		WindowState = 1
 		WindowPos = 566 0 788 1020
 		SidebarDx = 0

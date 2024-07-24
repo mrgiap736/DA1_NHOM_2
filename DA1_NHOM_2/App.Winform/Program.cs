@@ -1,19 +1,31 @@
+﻿using App.Services.Services;
 using App.Winform.UI;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Winform
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form_DangNhap());
+            Application.Run(serviceProvider.GetRequiredService<Form_DangNhap>());
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            // Đăng ký các dịch vụ và form
+            services.AddTransient<Form_DangNhap>();
+
+            // Đăng ký các dịch vụ khác
+            services.AddTransient<SanPham_Services>();
+            services.AddTransient<BanHang_Services>();
         }
     }
 }

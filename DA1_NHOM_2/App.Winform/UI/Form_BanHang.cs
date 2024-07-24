@@ -26,11 +26,10 @@ namespace App.Winform.UI
 {
     public partial class Form_BanHang : Form
     {
-        BanHang_Services bhsv;
+        BanHang_Services _bhsv;
         HoaDon_Services hdsv;
         KhachHang_Services khsv;
         ChiTietHD_Services ctsv;
-        SanPham_Services spsv;
 
         NhanVien nvien;
         KhachHang kHang;
@@ -40,11 +39,10 @@ namespace App.Winform.UI
 
             InitializeComponent();
 
-            bhsv = new BanHang_Services();
+            _bhsv = new BanHang_Services();
             hdsv = new HoaDon_Services();
             ctsv = new ChiTietHD_Services();
             khsv = new KhachHang_Services();
-            spsv = new SanPham_Services();
 
             GetCtrl();
 
@@ -238,7 +236,7 @@ namespace App.Winform.UI
             else lb_NameNV.Text = nvien.TenNhanVien;
 
             
-            LoadGrid(spsv.GetAll());
+            LoadGrid(_bhsv.GetAllSanPham());
 
 
             tbx_TienKhachTra.Click += tbx_Click;
@@ -316,7 +314,7 @@ namespace App.Winform.UI
             foreach (var item in data)
             {
                 int sttGH = dtg_GioHang.Rows.Count;
-                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, bhsv.AddThousandSeparators(item.DonGia));
+                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, _bhsv.AddThousandSeparators(item.DonGia));
             }
         }
 
@@ -498,10 +496,10 @@ namespace App.Winform.UI
                             if (check)
                             {
                                 int sttGH = dtg_GioHang.Rows.Count;
-                                dtg_GioHang.Rows.Add(id, sttGH++, name, soluong, bhsv.AddThousandSeparators(Convert.ToInt32(dongia)));
+                                dtg_GioHang.Rows.Add(id, sttGH++, name, soluong, _bhsv.AddThousandSeparators(Convert.ToInt32(dongia)));
                             }
 
-                            lb_TongTien.Text = bhsv.AddThousandSeparators(TinhTongTien());
+                            lb_TongTien.Text = _bhsv.AddThousandSeparators(TinhTongTien());
 
                         }
                     }
@@ -533,7 +531,7 @@ namespace App.Winform.UI
 
                 tbx_TienKhachTra.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[4].Value.ToString();
                 tbx_Giamgia.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[5].Value.ToString();
-                lb_TongTien.Text = bhsv.AddThousandSeparators(Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value));
+                lb_TongTien.Text = _bhsv.AddThousandSeparators(Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value));
 
                 string nameKH_search = dtg_HoaDonCho.Rows[rowIndex].Cells[1].Value.ToString();
 
@@ -662,8 +660,8 @@ namespace App.Winform.UI
             }
 
             //Thêm dấu phảy ngăn cách phần nghìn 
-            lb_TongTien.Text = bhsv.AddThousandSeparators(tongtien);
-            lb_TienThua.Text = bhsv.AddThousandSeparators(tienthua);
+            lb_TongTien.Text = _bhsv.AddThousandSeparators(tongtien);
+            lb_TienThua.Text = _bhsv.AddThousandSeparators(tienthua);
 
 
 
@@ -676,7 +674,7 @@ namespace App.Winform.UI
         Guid? maKH;
         public void SearchCustomer()
         {
-            kHang = bhsv.GetKhachHang(tbx_SDTkh.Text);
+            kHang = _bhsv.GetKhachHang(tbx_SDTkh.Text);
 
             if (kHang != null)
             {
@@ -802,7 +800,7 @@ namespace App.Winform.UI
                 }
 
                
-                LoadGrid(spsv.GetAll());
+                LoadGrid(_bhsv.GetAllSanPham());
             }
         }
 
@@ -846,7 +844,7 @@ namespace App.Winform.UI
                     AddHDChiTiet(hd.MaHoaDon);
 
                     //Update số lượng sản phẩm 
-                    bhsv.UpdateSoLuongSP(hd.MaHoaDon);
+                    _bhsv.UpdateSoLuongSP(hd.MaHoaDon);
 
                     //In hoa don cho khach
                     if (trangthai == "Đã thanh toán")
@@ -857,7 +855,7 @@ namespace App.Winform.UI
 
             }
 
-            LoadGrid(spsv.GetAll());
+            LoadGrid(_bhsv.GetAllSanPham());
             ClearInput();
         }
 
@@ -934,7 +932,7 @@ namespace App.Winform.UI
                 totalTable.AddCell(totalLabelCell2);
 
                 // Thêm giá trị lb_TongTien.Text với căn chỉnh bên phải
-                PdfPCell totalValueCell2 = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(TinhTongTienKhongGiamGia())} VND", contentFont));
+                PdfPCell totalValueCell2 = new PdfPCell(new Phrase($"{_bhsv.AddThousandSeparators(TinhTongTienKhongGiamGia())} VND", contentFont));
                 totalValueCell2.HorizontalAlignment = Element.ALIGN_RIGHT;
                 totalValueCell2.Border = PdfPCell.NO_BORDER;
                 totalTable.AddCell(totalValueCell2);
@@ -946,7 +944,7 @@ namespace App.Winform.UI
                 totalTable.AddCell(totalLabelCell);
 
                 // Thêm giá trị lb_TongTien.Text với căn chỉnh bên phải
-                PdfPCell totalValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(lb_TongTien.Text.Replace(",", "")))} VND", contentFont));
+                PdfPCell totalValueCell = new PdfPCell(new Phrase($"{_bhsv.AddThousandSeparators(Convert.ToInt32(lb_TongTien.Text.Replace(",", "")))} VND", contentFont));
                 totalValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 totalValueCell.Border = PdfPCell.NO_BORDER;
                 totalTable.AddCell(totalValueCell);
@@ -966,7 +964,7 @@ namespace App.Winform.UI
                 paymentTable.AddCell(discountLabelCell);
 
                 // Thêm giá trị tbx_Giamgia.Text với căn chỉnh bên phải
-                PdfPCell discountValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(tbx_Giamgia.Text) * 10000)} VND", contentFont));
+                PdfPCell discountValueCell = new PdfPCell(new Phrase($"{_bhsv.AddThousandSeparators(Convert.ToInt32(tbx_Giamgia.Text) * 10000)} VND", contentFont));
                 discountValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 discountValueCell.Border = PdfPCell.NO_BORDER;
                 paymentTable.AddCell(discountValueCell);
@@ -977,7 +975,7 @@ namespace App.Winform.UI
                 paymentTable.AddCell(paymentLabelCell);
 
                 // Thêm giá trị tbx_TienKhachTra.Text với căn chỉnh bên phải
-                PdfPCell paymentValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", "")))} VND", contentFont));
+                PdfPCell paymentValueCell = new PdfPCell(new Phrase($"{_bhsv.AddThousandSeparators(Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", "")))} VND", contentFont));
                 paymentValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 paymentValueCell.Border = PdfPCell.NO_BORDER;
                 paymentTable.AddCell(paymentValueCell);
@@ -988,7 +986,7 @@ namespace App.Winform.UI
                 paymentTable.AddCell(changeLabelCell);
 
                 // Thêm giá trị lb_TienThua.Text với căn chỉnh bên phải
-                PdfPCell changeValueCell = new PdfPCell(new Phrase($"{bhsv.AddThousandSeparators(Convert.ToInt32(lb_TienThua.Text.Replace(",", "")))} VND", contentFont));
+                PdfPCell changeValueCell = new PdfPCell(new Phrase($"{_bhsv.AddThousandSeparators(Convert.ToInt32(lb_TienThua.Text.Replace(",", "")))} VND", contentFont));
                 changeValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 changeValueCell.Border = PdfPCell.NO_BORDER;
                 paymentTable.AddCell(changeValueCell);
@@ -1172,14 +1170,14 @@ namespace App.Winform.UI
                 }
             }
 
-            lb_TongTien.Text = bhsv.AddThousandSeparators(TinhTongTien());
+            lb_TongTien.Text = _bhsv.AddThousandSeparators(TinhTongTien());
         }
 
         //nut xoa gio hang
         private void pn_BtnXoaGioHang_Click(object sender, EventArgs e)
         {
             dtg_GioHang.Rows.Clear();
-            lb_TongTien.Text = bhsv.AddThousandSeparators(TinhTongTien());
+            lb_TongTien.Text = _bhsv.AddThousandSeparators(TinhTongTien());
         }
 
         //Nut tạo hóa đơn
@@ -1192,7 +1190,7 @@ namespace App.Winform.UI
         //Nút cập nhật
         private void pn_BtnCapNhat_Click(object sender, EventArgs e)
         {
-            LoadGrid(spsv.GetAll());
+            LoadGrid(_bhsv.GetAllSanPham());
         }
 
 
@@ -1230,7 +1228,7 @@ namespace App.Winform.UI
             }
 
             //Chia phần trăm, nghìn cho input
-            tbx_TienKhachTra.Text = bhsv.AddThousandSeparators(tien);
+            tbx_TienKhachTra.Text = _bhsv.AddThousandSeparators(tien);
 
             //reset lại focus 
             tbx_TienKhachTra.SelectionStart = tbx_TienKhachTra.Text.Length;
@@ -1306,7 +1304,7 @@ namespace App.Winform.UI
             int filter2Index = cbx_Filter2.SelectedIndex;
 
             // Gọi phương thức GetFilteredData và tải dữ liệu vào DataGridView
-            LoadGrid(bhsv.LocALL(searchText, filter1Index, filter2Index));
+            LoadGrid(_bhsv.LocALL(searchText, filter1Index, filter2Index));
 
 
         }
@@ -1323,7 +1321,7 @@ namespace App.Winform.UI
             int filter2Index = cbx_Filter2.SelectedIndex;
 
             // Gọi phương thức GetFilteredData và tải dữ liệu vào DataGridView
-            LoadGrid(bhsv.LocALL(searchText, filter1Index, filter2Index));
+            LoadGrid(_bhsv.LocALL(searchText, filter1Index, filter2Index));
 
         }
 
