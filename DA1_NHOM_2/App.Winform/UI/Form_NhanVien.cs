@@ -15,12 +15,14 @@ namespace App.Winform.UI
 {
     public partial class Form_NhanVien : Form
     {
+        NhanVien _nv;
         NhanVien_Services _service;
         List<NhanVien> _listNV = new();
         Guid _idwhenclick = Guid.Parse("00000000-0000-0000-0000-000000000000");
-        public Form_NhanVien()
+        public Form_NhanVien(NhanVien nv)
         {
             InitializeComponent();
+            _nv = nv;
             _service = new NhanVien_Services();
             LoadGird(null);
             Cmb_ChucVu.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -59,7 +61,12 @@ namespace App.Winform.UI
             foreach (var nv in _service.GetAll(txt_Search.Text))
             {
                 int stt = _listNV.IndexOf(nv) + 1;
-                dtgView.Rows.Add(stt, nv.MaNhanVien, nv.TenNhanVien, nv.ChucVu, nv.SoDienThoai, nv.Email, nv.TaiKhoan, nv.MatKhau,nv.NgayBatDau.ToShortDateString(), nv.NgayKetThuc, nv.TrangThai);
+                string matkhau = "******";
+                if(nv.MatKhau == _nv.MatKhau)
+                {
+                    matkhau = nv.MatKhau;
+                }
+                dtgView.Rows.Add(stt, nv.MaNhanVien, nv.TenNhanVien, nv.ChucVu, nv.SoDienThoai, nv.Email, nv.TaiKhoan, matkhau,nv.NgayBatDau.ToShortDateString(), nv.NgayKetThuc, nv.TrangThai);
             }
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }

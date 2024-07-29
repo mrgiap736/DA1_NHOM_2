@@ -185,7 +185,7 @@ namespace App.Winform.UI
             lb_TenChucNang.Text = "QUẢN LÝ NHÂN VIÊN";
             pn_Form_BanHang.Controls.Clear();
 
-            Form_NhanVien form = new Form_NhanVien();
+            Form_NhanVien form = new Form_NhanVien(nvien);
 
             foreach (var item in form.GetCtrl())
             {
