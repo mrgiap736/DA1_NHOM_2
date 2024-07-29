@@ -33,16 +33,24 @@
             groupBox1 = new GroupBox();
             txt_Search = new TextBox();
             pn_Btn_Xoa = new Panel();
+            panel4 = new Panel();
             label9 = new Label();
             pn_Btn_LamMoi = new Panel();
+            panel3 = new Panel();
             label8 = new Label();
             pn_Btn_Sua = new Panel();
+            panel2 = new Panel();
             label7 = new Label();
             pn_Btn_Them = new Panel();
+            panel1 = new Panel();
             label6 = new Label();
             grb_DanhSach = new GroupBox();
             dtgView = new DataGridView();
             grb_ThongTin = new GroupBox();
+            txt_EmailNV = new TextBox();
+            label10 = new Label();
+            txt_SdtNv = new TextBox();
+            label1 = new Label();
             Cmb_ChucVu = new ComboBox();
             txt_MatKhau = new TextBox();
             label5 = new Label();
@@ -51,12 +59,6 @@
             label3 = new Label();
             txt_TenNV = new TextBox();
             label2 = new Label();
-            txt_MaNV = new TextBox();
-            label1 = new Label();
-            panel1 = new Panel();
-            panel2 = new Panel();
-            panel3 = new Panel();
-            panel4 = new Panel();
             pn_Form_NhanVien.SuspendLayout();
             groupBox1.SuspendLayout();
             pn_Btn_Xoa.SuspendLayout();
@@ -113,15 +115,25 @@
             pn_Btn_Xoa.TabIndex = 16;
             pn_Btn_Xoa.Click += pn_Btn_Xoa_Click;
             // 
+            // panel4
+            // 
+            panel4.BackgroundImage = (Image)resources.GetObject("panel4.BackgroundImage");
+            panel4.BackgroundImageLayout = ImageLayout.Zoom;
+            panel4.Location = new Point(3, 3);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(49, 44);
+            panel4.TabIndex = 19;
+            panel4.Click += pn_Btn_Xoa_Click;
+            // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label9.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label9.Location = new Point(73, 12);
             label9.Name = "label9";
-            label9.Size = new Size(138, 25);
+            label9.Size = new Size(141, 25);
             label9.TabIndex = 24;
-            label9.Text = "Xoá nhân viên";
+            label9.Text = "Hủy nhân viên";
             label9.Click += label9_Click;
             // 
             // pn_Btn_LamMoi
@@ -135,10 +147,20 @@
             pn_Btn_LamMoi.TabIndex = 15;
             pn_Btn_LamMoi.Click += pn_Btn_LamMoi_Click;
             // 
+            // panel3
+            // 
+            panel3.BackgroundImage = (Image)resources.GetObject("panel3.BackgroundImage");
+            panel3.BackgroundImageLayout = ImageLayout.Zoom;
+            panel3.Location = new Point(3, 3);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(49, 44);
+            panel3.TabIndex = 19;
+            panel3.Click += pn_Btn_LamMoi_Click;
+            // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label8.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label8.Location = new Point(95, 12);
             label8.Name = "label8";
             label8.Size = new Size(88, 25);
@@ -157,10 +179,20 @@
             pn_Btn_Sua.TabIndex = 14;
             pn_Btn_Sua.Click += pn_Btn_Sua_Click;
             // 
+            // panel2
+            // 
+            panel2.BackgroundImage = (Image)resources.GetObject("panel2.BackgroundImage");
+            panel2.BackgroundImageLayout = ImageLayout.Zoom;
+            panel2.Location = new Point(3, 3);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(49, 44);
+            panel2.TabIndex = 19;
+            panel2.Click += pn_Btn_Sua_Click;
+            // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label7.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label7.Location = new Point(56, 12);
             label7.Name = "label7";
             label7.Size = new Size(169, 25);
@@ -179,10 +211,20 @@
             pn_Btn_Them.TabIndex = 13;
             pn_Btn_Them.Click += pn_Btn_Them_Click;
             // 
+            // panel1
+            // 
+            panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
+            panel1.BackgroundImageLayout = ImageLayout.Zoom;
+            panel1.Location = new Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(49, 44);
+            panel1.TabIndex = 19;
+            panel1.Click += pn_Btn_Them_Click;
+            // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             label6.Location = new Point(61, 12);
             label6.Name = "label6";
             label6.Size = new Size(153, 25);
@@ -207,13 +249,16 @@
             dtgView.Location = new Point(6, 26);
             dtgView.Name = "dtgView";
             dtgView.RowHeadersWidth = 51;
-            dtgView.RowTemplate.Height = 29;
             dtgView.Size = new Size(966, 297);
             dtgView.TabIndex = 0;
             dtgView.CellClick += dtgView_CellClick;
             // 
             // grb_ThongTin
             // 
+            grb_ThongTin.Controls.Add(txt_EmailNV);
+            grb_ThongTin.Controls.Add(label10);
+            grb_ThongTin.Controls.Add(txt_SdtNv);
+            grb_ThongTin.Controls.Add(label1);
             grb_ThongTin.Controls.Add(Cmb_ChucVu);
             grb_ThongTin.Controls.Add(txt_MatKhau);
             grb_ThongTin.Controls.Add(label5);
@@ -222,8 +267,6 @@
             grb_ThongTin.Controls.Add(label3);
             grb_ThongTin.Controls.Add(txt_TenNV);
             grb_ThongTin.Controls.Add(label2);
-            grb_ThongTin.Controls.Add(txt_MaNV);
-            grb_ThongTin.Controls.Add(label1);
             grb_ThongTin.Location = new Point(27, 21);
             grb_ThongTin.Name = "grb_ThongTin";
             grb_ThongTin.Size = new Size(592, 329);
@@ -231,12 +274,44 @@
             grb_ThongTin.TabStop = false;
             grb_ThongTin.Text = "Thông tin nhân viên";
             // 
+            // txt_EmailNV
+            // 
+            txt_EmailNV.Location = new Point(185, 182);
+            txt_EmailNV.Name = "txt_EmailNV";
+            txt_EmailNV.Size = new Size(331, 27);
+            txt_EmailNV.TabIndex = 24;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(59, 185);
+            label10.Name = "label10";
+            label10.Size = new Size(49, 20);
+            label10.TabIndex = 23;
+            label10.Text = "Email:";
+            // 
+            // txt_SdtNv
+            // 
+            txt_SdtNv.Location = new Point(185, 138);
+            txt_SdtNv.Name = "txt_SdtNv";
+            txt_SdtNv.Size = new Size(331, 27);
+            txt_SdtNv.TabIndex = 22;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(59, 141);
+            label1.Name = "label1";
+            label1.Size = new Size(100, 20);
+            label1.TabIndex = 21;
+            label1.Text = "Số điện thoại:";
+            // 
             // Cmb_ChucVu
             // 
             Cmb_ChucVu.BackColor = SystemColors.ButtonHighlight;
             Cmb_ChucVu.ForeColor = Color.Black;
             Cmb_ChucVu.Items.AddRange(new object[] { "Admin", "Nhân Viên" });
-            Cmb_ChucVu.Location = new Point(174, 149);
+            Cmb_ChucVu.Location = new Point(185, 94);
             Cmb_ChucVu.Name = "Cmb_ChucVu";
             Cmb_ChucVu.Size = new Size(331, 28);
             Cmb_ChucVu.TabIndex = 20;
@@ -244,7 +319,7 @@
             // 
             // txt_MatKhau
             // 
-            txt_MatKhau.Location = new Point(174, 243);
+            txt_MatKhau.Location = new Point(185, 271);
             txt_MatKhau.Name = "txt_MatKhau";
             txt_MatKhau.Size = new Size(331, 27);
             txt_MatKhau.TabIndex = 19;
@@ -252,7 +327,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(48, 246);
+            label5.Location = new Point(59, 274);
             label5.Name = "label5";
             label5.Size = new Size(73, 20);
             label5.TabIndex = 18;
@@ -260,7 +335,7 @@
             // 
             // txt_TaiKhoan
             // 
-            txt_TaiKhoan.Location = new Point(174, 197);
+            txt_TaiKhoan.Location = new Point(185, 226);
             txt_TaiKhoan.Name = "txt_TaiKhoan";
             txt_TaiKhoan.Size = new Size(331, 27);
             txt_TaiKhoan.TabIndex = 17;
@@ -268,7 +343,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(48, 200);
+            label4.Location = new Point(59, 229);
             label4.Name = "label4";
             label4.Size = new Size(74, 20);
             label4.TabIndex = 16;
@@ -277,7 +352,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(48, 152);
+            label3.Location = new Point(59, 97);
             label3.Name = "label3";
             label3.Size = new Size(68, 20);
             label3.TabIndex = 15;
@@ -285,7 +360,7 @@
             // 
             // txt_TenNV
             // 
-            txt_TenNV.Location = new Point(174, 103);
+            txt_TenNV.Location = new Point(185, 53);
             txt_TenNV.Name = "txt_TenNV";
             txt_TenNV.Size = new Size(331, 27);
             txt_TenNV.TabIndex = 14;
@@ -293,67 +368,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(48, 106);
+            label2.Location = new Point(59, 56);
             label2.Name = "label2";
             label2.Size = new Size(102, 20);
             label2.TabIndex = 13;
             label2.Text = "Tên nhân viên:";
-            // 
-            // txt_MaNV
-            // 
-            txt_MaNV.Location = new Point(174, 59);
-            txt_MaNV.Name = "txt_MaNV";
-            txt_MaNV.Size = new Size(331, 27);
-            txt_MaNV.TabIndex = 12;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(48, 62);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 20);
-            label1.TabIndex = 11;
-            label1.Text = "Mã nhân viên:";
-            // 
-            // panel1
-            // 
-            panel1.BackgroundImage = (Image)resources.GetObject("panel1.BackgroundImage");
-            panel1.BackgroundImageLayout = ImageLayout.Zoom;
-            panel1.Location = new Point(3, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(49, 44);
-            panel1.TabIndex = 19;
-            panel1.Click += pn_Btn_Them_Click;
-            // 
-            // panel2
-            // 
-            panel2.BackgroundImage = (Image)resources.GetObject("panel2.BackgroundImage");
-            panel2.BackgroundImageLayout = ImageLayout.Zoom;
-            panel2.Location = new Point(3, 3);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(49, 44);
-            panel2.TabIndex = 19;
-            panel2.Click += pn_Btn_Sua_Click;
-            // 
-            // panel3
-            // 
-            panel3.BackgroundImage = (Image)resources.GetObject("panel3.BackgroundImage");
-            panel3.BackgroundImageLayout = ImageLayout.Zoom;
-            panel3.Location = new Point(3, 3);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(49, 44);
-            panel3.TabIndex = 19;
-            panel3.Click += pn_Btn_LamMoi_Click;
-            // 
-            // panel4
-            // 
-            panel4.BackgroundImage = (Image)resources.GetObject("panel4.BackgroundImage");
-            panel4.BackgroundImageLayout = ImageLayout.Zoom;
-            panel4.Location = new Point(3, 3);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(49, 44);
-            panel4.TabIndex = 19;
-            panel4.Click += pn_Btn_Xoa_Click;
             // 
             // Form_NhanVien
             // 
@@ -393,8 +412,6 @@
         private Label label3;
         private TextBox txt_TenNV;
         private Label label2;
-        private TextBox txt_MaNV;
-        private Label label1;
         private Panel pn_Btn_Xoa;
         private Panel pn_Btn_LamMoi;
         private Panel pn_Btn_Sua;
@@ -411,5 +428,9 @@
         private Panel panel3;
         private Panel panel2;
         private Panel panel1;
+        private TextBox txt_SdtNv;
+        private Label label1;
+        private TextBox txt_EmailNV;
+        private Label label10;
     }
 }

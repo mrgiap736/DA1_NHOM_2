@@ -17,7 +17,7 @@ namespace App.Winform.UI
     {
         KhachHang_Services _service;
         List<KhachHang> _listKH = new();
-        Guid _idwhenclick;
+        Guid _idwhenclick = Guid.Parse("00000000-0000-0000-0000-000000000000");
         public Form_KhachHang(NhanVien nv)
         {
             InitializeComponent();
@@ -64,7 +64,9 @@ namespace App.Winform.UI
             dtgView.Rows.Clear();
             dtgView.ColumnCount = 5;
             dtgView.Columns[0].Name = "STT";
+            dtgView.Columns[0].Width = 40;
             dtgView.Columns[1].Name = "Mã khách hàng";
+            dtgView.Columns[1].Visible = false;
             dtgView.Columns[2].Name = "Tên khách hàng";
             dtgView.Columns[3].Name = "Số Điện Thoại";
             dtgView.Columns[4].Name = "Điểm Tích Luỹ";
@@ -153,7 +155,7 @@ namespace App.Winform.UI
         {
 
             // Kiểm tra xem đã chọn một khách hàng từ danh sách hay chưa
-            if (string.IsNullOrEmpty(txt_MaKH.Text))
+            if (_idwhenclick == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để sửa.");
                 return;
@@ -166,7 +168,7 @@ namespace App.Winform.UI
             }
             // Tạo đối tượng khách hàng mới để lưu thông tin sửa đổi
             var kh = new KhachHang();
-            kh.MaKhachHang = Guid.Parse(txt_MaKH.Text);
+            kh.MaKhachHang = _idwhenclick;
          
             kh.TenKhachHang = txt_TenKH.Text;
             kh.Email = txt_Email.Text;
@@ -210,7 +212,6 @@ namespace App.Winform.UI
 
         private void pn_Btn_LamMoi_Click(object sender, EventArgs e)
         {
-            txt_MaKH.Text = "";
             txt_TenKH.Text = "";
             txt_SĐT.Text = "";
         }
@@ -218,7 +219,7 @@ namespace App.Winform.UI
         private void pn_Btn_Xoa_Click(object sender, EventArgs e)
         {
             // Kiểm tra xem đã chọn một khách hàng từ danh sách hay chưa
-            if (string.IsNullOrEmpty(txt_MaKH.Text))
+            if (_idwhenclick == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để xóa.");
                 return;
@@ -280,7 +281,6 @@ namespace App.Winform.UI
             }
             var obj = _listKH[index];
             _idwhenclick = obj.MaKhachHang;
-            txt_MaKH.Text = obj.MaKhachHang.ToString();
             txt_TenKH.Text = obj.TenKhachHang;
             txt_SĐT.Text = obj.SoDienThoai.ToString();
             diemtichluy = obj.TichLuy;

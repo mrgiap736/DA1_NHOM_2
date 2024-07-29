@@ -31,7 +31,6 @@ namespace App.Services.Services
 		public string Update(NhanVien nv)
 		{
 			var clone = _repos.GetAll().FirstOrDefault(x => x.MaNhanVien == nv.MaNhanVien);
-			clone.MaNhanVien = nv.MaNhanVien;
 			clone.TenNhanVien = nv.TenNhanVien;
 			clone.ChucVu= nv.ChucVu;
 			clone.TaiKhoan = nv.TaiKhoan;
@@ -49,13 +48,15 @@ namespace App.Services.Services
 		public string Remove(NhanVien nv)
 		{
 			var clone = _repos.GetAll().FirstOrDefault(x => x.MaNhanVien == nv.MaNhanVien);
-			if (_repos.RemoveNV(clone) == true)
+			clone.NgayKetThuc = DateTime.Now;
+			clone.TrangThai = "Đã nghỉ việc";
+			if (_repos.UpdateNV(clone) == true)
 			{
-				return "Đã xoá nhân viên ";
+				return "Đã hủy nhân viên ";
 			}
 			else
 			{
-				return "Xoá nhân viên thất bại";
+				return "Hủy nhân viên thất bại";
 			}
 		}
 

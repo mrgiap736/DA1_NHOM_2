@@ -47,14 +47,12 @@
             grb_DanhSach = new GroupBox();
             dtgView = new DataGridView();
             grb_ThongTin = new GroupBox();
+            txt_Email = new TextBox();
+            label8 = new Label();
             txt_SĐT = new TextBox();
             label3 = new Label();
             txt_TenKH = new TextBox();
             label2 = new Label();
-            txt_MaKH = new TextBox();
-            label1 = new Label();
-            txt_Email = new TextBox();
-            label8 = new Label();
             pn_Form_KhachHang.SuspendLayout();
             groupBox1.SuspendLayout();
             pn_Btn_Xoa.SuspendLayout();
@@ -257,8 +255,6 @@
             grb_ThongTin.Controls.Add(label3);
             grb_ThongTin.Controls.Add(txt_TenKH);
             grb_ThongTin.Controls.Add(label2);
-            grb_ThongTin.Controls.Add(txt_MaKH);
-            grb_ThongTin.Controls.Add(label1);
             grb_ThongTin.Location = new Point(27, 21);
             grb_ThongTin.Name = "grb_ThongTin";
             grb_ThongTin.Size = new Size(592, 329);
@@ -266,59 +262,9 @@
             grb_ThongTin.TabStop = false;
             grb_ThongTin.Text = "Thông tin nhân viên";
             // 
-            // txt_SĐT
-            // 
-            txt_SĐT.Location = new Point(174, 161);
-            txt_SĐT.Name = "txt_SĐT";
-            txt_SĐT.Size = new Size(331, 27);
-            txt_SĐT.TabIndex = 16;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(48, 164);
-            label3.Name = "label3";
-            label3.Size = new Size(100, 20);
-            label3.TabIndex = 15;
-            label3.Text = "Số điện thoại:";
-            // 
-            // txt_TenKH
-            // 
-            txt_TenKH.Location = new Point(174, 115);
-            txt_TenKH.Name = "txt_TenKH";
-            txt_TenKH.Size = new Size(331, 27);
-            txt_TenKH.TabIndex = 14;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(48, 118);
-            label2.Name = "label2";
-            label2.Size = new Size(114, 20);
-            label2.TabIndex = 13;
-            label2.Text = "Tên khách hàng:";
-            // 
-            // txt_MaKH
-            // 
-            txt_MaKH.Enabled = false;
-            txt_MaKH.Location = new Point(174, 71);
-            txt_MaKH.Name = "txt_MaKH";
-            txt_MaKH.Size = new Size(331, 27);
-            txt_MaKH.TabIndex = 12;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(48, 74);
-            label1.Name = "label1";
-            label1.Size = new Size(112, 20);
-            label1.TabIndex = 11;
-            label1.Text = "Mã khách hàng:";
-            label1.Click += label1_Click;
-            // 
             // txt_Email
             // 
-            txt_Email.Location = new Point(174, 207);
+            txt_Email.Location = new Point(190, 188);
             txt_Email.Name = "txt_Email";
             txt_Email.Size = new Size(331, 27);
             txt_Email.TabIndex = 18;
@@ -326,11 +272,43 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(48, 210);
+            label8.Location = new Point(64, 191);
             label8.Name = "label8";
             label8.Size = new Size(49, 20);
             label8.TabIndex = 17;
             label8.Text = "Email:";
+            // 
+            // txt_SĐT
+            // 
+            txt_SĐT.Location = new Point(190, 142);
+            txt_SĐT.Name = "txt_SĐT";
+            txt_SĐT.Size = new Size(331, 27);
+            txt_SĐT.TabIndex = 16;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(64, 145);
+            label3.Name = "label3";
+            label3.Size = new Size(100, 20);
+            label3.TabIndex = 15;
+            label3.Text = "Số điện thoại:";
+            // 
+            // txt_TenKH
+            // 
+            txt_TenKH.Location = new Point(190, 96);
+            txt_TenKH.Name = "txt_TenKH";
+            txt_TenKH.Size = new Size(331, 27);
+            txt_TenKH.TabIndex = 14;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(64, 99);
+            label2.Name = "label2";
+            label2.Size = new Size(114, 20);
+            label2.TabIndex = 13;
+            label2.Text = "Tên khách hàng:";
             // 
             // Form_KhachHang
             // 
@@ -374,8 +352,6 @@
         private Label label3;
         private TextBox txt_TenKH;
         private Label label2;
-        private TextBox txt_MaKH;
-        private Label label1;
         private Label label7;
         private Label label6;
         private Label label5;

@@ -1,4 +1,5 @@
-﻿using App.Services.Services;
+﻿using App.Data.Entities;
+using App.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,16 @@ namespace App.Winform.UI
             string us = tbx_usn.Text;
             string pw = tbx_pass.Text;
 
-            if (loginsv.GetUS_PW(us, pw) != null)
+            NhanVien nv = loginsv.GetUS_PW(us, pw);
+            if(nv == null)
+            {
+                MessageBox.Show("Đăng nhập thất bại không có tài khoản trên hệ thống");
+            }
+            else if(nv.TrangThai == "Đã nghỉ việc")
+            {
+                MessageBox.Show("Bạn không thể truy cập tài khoản");
+            }
+            else
             {
                 Form_BanHang tt = new Form_BanHang(loginsv.GetUS_PW(us, pw));
                 
@@ -33,10 +43,6 @@ namespace App.Winform.UI
                 tt.Show();
 
                 tt.FormClosed += (s, args) => this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Đăng nhập thất bại !");
             }
 
         }

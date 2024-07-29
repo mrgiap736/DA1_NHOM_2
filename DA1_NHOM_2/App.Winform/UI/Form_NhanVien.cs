@@ -17,7 +17,7 @@ namespace App.Winform.UI
     {
         NhanVien_Services _service;
         List<NhanVien> _listNV = new();
-        Guid _idwhenclick;
+        Guid _idwhenclick = Guid.Parse("00000000-0000-0000-0000-000000000000");
         public Form_NhanVien()
         {
             InitializeComponent();
@@ -40,21 +40,37 @@ namespace App.Winform.UI
         public void LoadGird(string search)
         {
             dtgView.Rows.Clear();
-            dtgView.ColumnCount = 6;
+            dtgView.ColumnCount = 11;
             dtgView.Columns[0].Name = "STT";
+            dtgView.Columns[0].Width = 40;
             dtgView.Columns[1].Name = "Mã Nhân Viên";
+            dtgView.Columns[1].Visible = false;
             dtgView.Columns[2].Name = "Tên Nhân Viên";
             dtgView.Columns[3].Name = "Chức vụ";
-            dtgView.Columns[4].Name = "Tài khoản";
-            dtgView.Columns[5].Name = "Mật khẩu";
+            dtgView.Columns[4].Name = "Số điện thoại";
+            dtgView.Columns[5].Name = "Email";
+            dtgView.Columns[6].Name = "Tài khoản";
+            dtgView.Columns[7].Name = "Mật khẩu";
+            dtgView.Columns[8].Name = "Ngày bắt đầu";
+            dtgView.Columns[9].Name = "Ngày kết thúc";
+            dtgView.Columns[10].Name = "Trạng thái";
 
             _listNV = _service.GetAll(search);
             foreach (var nv in _service.GetAll(txt_Search.Text))
             {
                 int stt = _listNV.IndexOf(nv) + 1;
-                dtgView.Rows.Add(stt, nv.MaNhanVien, nv.TenNhanVien, nv.ChucVu, nv.TaiKhoan, nv.MatKhau);
+                dtgView.Rows.Add(stt, nv.MaNhanVien, nv.TenNhanVien, nv.ChucVu, nv.SoDienThoai, nv.Email, nv.TaiKhoan, nv.MatKhau,nv.NgayBatDau.ToShortDateString(), nv.NgayKetThuc, nv.TrangThai);
             }
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        public void ResetInput()
+        {
+            txt_TenNV.Text = "";
+            txt_SdtNv.Text = "";
+            txt_EmailNV.Text = "";
+            txt_TaiKhoan.Text = "";
+            txt_MatKhau.Text = "";
         }
 
         private void pn_Btn_Them_Click(object sender, EventArgs e)
@@ -64,20 +80,18 @@ namespace App.Winform.UI
                 MessageBox.Show("Vui lòng chọn chức vụ.");
                 return;
             }
-            if (string.IsNullOrEmpty(txt_MaNV.Text) ||
-                string.IsNullOrEmpty(txt_TenNV.Text) ||
+            if (string.IsNullOrEmpty(txt_TenNV.Text) ||
                 string.IsNullOrEmpty(txt_TaiKhoan.Text) ||
-                string.IsNullOrEmpty(txt_MatKhau.Text))
+                string.IsNullOrEmpty(txt_MatKhau.Text)  ||
+                string.IsNullOrEmpty(txt_EmailNV.Text)  ||
+                string.IsNullOrEmpty(txt_SdtNv.Text))
+
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.");
                 return;
             }
-            // Kiểm tra mã nhân viên có đúng yêu cầu không
-            if (txt_MaNV.Text.Length < 3 || txt_MaNV.Text.Length > 10)
-            {
-                MessageBox.Show("Mã nhân viên phải có từ 3 đến 10 ký tự.");
-                return;
-            }
+
+
             // Kiểm tra tên nhân viên có chứa số không
             if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
             {
@@ -108,28 +122,29 @@ namespace App.Winform.UI
             {
                 var nv = new NhanVien
                 {
-                    MaNhanVien = Guid.Parse(txt_MaNV.Text),
+                    MaNhanVien = Guid.NewGuid(),
                     TenNhanVien = txt_TenNV.Text,
                     ChucVu = selectedValue,
+                    SoDienThoai = txt_SdtNv.Text,
+                    Email = txt_EmailNV.Text,
                     TaiKhoan = txt_TaiKhoan.Text,
-                    MatKhau = txt_MatKhau.Text
+                    MatKhau = txt_MatKhau.Text,
+                    NgayBatDau = DateTime.Now,
+                    TrangThai = "Đang làm việc"
                 };
 
                 string result = _service.Add(nv);
                 MessageBox.Show(result);
                 LoadGird(null);
 
-                txt_MaNV.Text = "";
-                txt_TenNV.Text = "";
-                txt_TaiKhoan.Text = "";
-                txt_MatKhau.Text = "";
+                ResetInput();
             }
         }
 
 
         private void pn_Btn_Sua_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txt_MaNV.Text))
+            if (_idwhenclick == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
                 MessageBox.Show("Vui lòng chọn một Nhân Viên để sửa.");
                 return;
@@ -139,12 +154,7 @@ namespace App.Winform.UI
                 MessageBox.Show("Tên nhân viên không được chứa số.");
                 return;
             }
-            // Kiểm tra mã nhân viên có đúng yêu cầu không
-            if (txt_MaNV.Text.Length < 3 || txt_MaNV.Text.Length > 10)
-            {
-                MessageBox.Show("Mã nhân viên phải có từ 3 đến 10 ký tự.");
-                return;
-            }
+
             // Kiểm tra tên nhân viên có chứa số không
             if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
             {
@@ -159,11 +169,6 @@ namespace App.Winform.UI
                 return;
             }
 
-            if (string.IsNullOrEmpty(txt_MaNV.Text))
-            {
-                MessageBox.Show("Vui lòng chọn một nhân viên để sửa.");
-                return;
-            }
             if (Cmb_ChucVu.SelectedItem == null)
             {
                 MessageBox.Show("Vui lòng chọn chức vụ.");
@@ -175,10 +180,12 @@ namespace App.Winform.UI
                 return;
             }
 
-            if (string.IsNullOrEmpty(txt_MaNV.Text) ||
-                string.IsNullOrEmpty(txt_TenNV.Text) ||
+
+            if (string.IsNullOrEmpty(txt_TenNV.Text) ||
                 string.IsNullOrEmpty(txt_TaiKhoan.Text) ||
-                string.IsNullOrEmpty(txt_MatKhau.Text))
+                string.IsNullOrEmpty(txt_MatKhau.Text) ||
+                string.IsNullOrEmpty(txt_EmailNV.Text) ||
+                string.IsNullOrEmpty(txt_SdtNv.Text))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.");
                 return;
@@ -192,9 +199,11 @@ namespace App.Winform.UI
             {
                 var nv = new NhanVien
                 {
-                    MaNhanVien = Guid.Parse(txt_MaNV.Text),
+                    MaNhanVien = _idwhenclick,
                     TenNhanVien = txt_TenNV.Text,
                     ChucVu = selectedValue, // Gán giá trị từ ComboBox Chức vụ
+                    SoDienThoai = txt_SdtNv.Text,
+                    Email = txt_EmailNV.Text,
                     TaiKhoan = txt_TaiKhoan.Text,
                     MatKhau = txt_MatKhau.Text
                 };
@@ -205,10 +214,7 @@ namespace App.Winform.UI
                 // Cập nhật lại danh sách nhân viên trên giao diện
                 LoadGird(null);
 
-                txt_MaNV.Text = "";
-                txt_TenNV.Text = "";
-                txt_TaiKhoan.Text = "";
-                txt_MatKhau.Text = "";
+                ResetInput();
             }
         }
 
@@ -218,16 +224,16 @@ namespace App.Winform.UI
         private void pn_Btn_Xoa_Click(object sender, EventArgs e)
         {
             // Kiểm tra xem đã chọn một nhân viên từ danh sách hay chưa
-            if (_idwhenclick == null)
+            if (_idwhenclick == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
-                MessageBox.Show("Vui lòng chọn một nhân viên để xoá.");
+                MessageBox.Show("Vui lòng chọn một nhân viên để hủy.");
                 return;
             }
 
             var nv = new NhanVien();
             nv.MaNhanVien = _idwhenclick;
 
-            var option = MessageBox.Show("Xác nhận muốn xoá nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
+            var option = MessageBox.Show("Xác nhận muốn hủy nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
             if (option == DialogResult.Yes)
             {
                 MessageBox.Show(_service.Remove(nv));
@@ -242,7 +248,6 @@ namespace App.Winform.UI
 
         private void pn_Btn_LamMoi_Click(object sender, EventArgs e)
         {
-            txt_MaNV.Text = "";
             txt_TenNV.Text = "";
             Cmb_ChucVu.Text = "";
             txt_TaiKhoan.Text = "";
@@ -258,9 +263,10 @@ namespace App.Winform.UI
             }
             var obj = _listNV[index];
             _idwhenclick = obj.MaNhanVien;
-            txt_MaNV.Text = obj.MaNhanVien.ToString();
             txt_TenNV.Text = obj.TenNhanVien;
             Cmb_ChucVu.Text = obj.ChucVu;
+            txt_EmailNV.Text = obj.Email;
+            txt_SdtNv.Text = obj.SoDienThoai;
             txt_TaiKhoan.Text = obj.TaiKhoan;
             txt_MatKhau.Text = obj.MatKhau;
         }
