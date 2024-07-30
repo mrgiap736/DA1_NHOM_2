@@ -51,33 +51,8 @@ namespace App.Services.Services
 
         private async Task<string> SendPasswordResetEmail(string toEmail, string newPassword)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri($"https://api.mailgun.net/v3/sandbox653a6654bb8c4a3d89dbfbfff202c625.mailgun.org/messages");
-                var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"api:{""}"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
 
-                var content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("from", "Excited User <mailgun@sandbox653a6654bb8c4a3d89dbfbfff202c625.mailgun.org>"),
-                    new KeyValuePair<string, string>("to", toEmail),
-                    new KeyValuePair<string, string>("subject", "Your New Password"),
-                    new KeyValuePair<string, string>("text", $"Your new password is: {newPassword}")
-                });
-
-                var response = await client.PostAsync("", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return "Gửi mật khẩu mới thành công \n Vui lòng kiểm tra email của bạn";
-                }
-                else
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return $"Gửi email thất bại: {response.StatusCode}, {responseContent}";
-                }
-            }
-
+            return "";
         }
     }
 }
