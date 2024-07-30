@@ -51,11 +51,10 @@ namespace App.Services.Services
 
         private async Task<string> SendPasswordResetEmail(string toEmail, string newPassword)
         {
-            //74e03cfe6aaec878d2e3db151c313e47-afce6020-ada5533d
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri($"https://api.mailgun.net/v3/sandbox653a6654bb8c4a3d89dbfbfff202c625.mailgun.org/messages");
-                var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"api:{"74e03cfe6aaec878d2e3db151c313e47-afce6020-ada5533d"}"));
+                var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"api:{""}"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
 
                 var content = new FormUrlEncodedContent(new[]
