@@ -205,27 +205,9 @@ namespace App.Data.Repos
         }
 
         //Các hàm tạo thành phẩn sản phẩm 
-        public void CreateLoaiRen(LoaiRen x)
+        public void CreateEntity<T>(T entity) where T : class
         {
-            context.LoaiRen.Add(x);
-            context.SaveChanges();
-        }
-
-        public void CreateChatLieu(ChatLieu x)
-        {
-            context.ChatLieu.Add(x);
-            context.SaveChanges();
-        }
-
-        public void CreateMauSac(MauSac x)
-        {
-            context.MauSac.Add(x);
-            context.SaveChanges();
-        }
-
-        public void CreateHangSanXuat(HangSanXuat x)
-        {
-            context.HangSanXuat.Add(x);
+            context.Set<T>().Add(entity);
             context.SaveChanges();
         }
     }

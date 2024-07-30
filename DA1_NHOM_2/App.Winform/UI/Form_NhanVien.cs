@@ -275,7 +275,13 @@ namespace App.Winform.UI
             txt_EmailNV.Text = obj.Email;
             txt_SdtNv.Text = obj.SoDienThoai;
             txt_TaiKhoan.Text = obj.TaiKhoan;
-            txt_MatKhau.Text = obj.MatKhau;
+
+            string matkhau = "";
+            if(obj.MaNhanVien == _nv.MaNhanVien)
+            {
+                matkhau = obj.MatKhau;
+            }
+            txt_MatKhau.Text = matkhau;
         }
 
         private void label6_Click(object sender, EventArgs e)

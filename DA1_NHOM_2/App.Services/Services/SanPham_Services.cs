@@ -184,5 +184,17 @@ namespace App.Services.Services
 
             return query.ToList();
         }
+
+
+        public bool CreateThanhPhan<T> (T entity) where T : class
+        {
+            try
+            {
+                _repos.CreateEntity(entity);
+                return true;
+            }
+            catch { return false; }
+
+        }
     }
 }

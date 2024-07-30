@@ -1,6 +1,6 @@
 ﻿namespace App.Winform.UI
 {
-    partial class Form_DangNhap
+    partial class Form_ForgotPass
     {
         /// <summary>
         /// Required designer variable.
@@ -28,48 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_DangNhap));
-            pn_FormLogin = new Panel();
-            btn_ForgotPass = new Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_ForgotPass));
+            btn_Login = new Button();
             pn_passicon = new Panel();
             pn_iconus = new Panel();
-            tbx_pass = new TextBox();
+            tbx_email = new TextBox();
             label2 = new Label();
-            btn_DangNhap = new Button();
+            btn_GuiMK = new Button();
             tbx_usn = new TextBox();
             label1 = new Label();
-            pn_FormLogin.SuspendLayout();
             SuspendLayout();
             // 
-            // pn_FormLogin
+            // btn_Login
             // 
-            pn_FormLogin.BackgroundImage = (Image)resources.GetObject("pn_FormLogin.BackgroundImage");
-            pn_FormLogin.BackgroundImageLayout = ImageLayout.Stretch;
-            pn_FormLogin.Controls.Add(btn_ForgotPass);
-            pn_FormLogin.Controls.Add(pn_passicon);
-            pn_FormLogin.Controls.Add(pn_iconus);
-            pn_FormLogin.Controls.Add(tbx_pass);
-            pn_FormLogin.Controls.Add(label2);
-            pn_FormLogin.Controls.Add(btn_DangNhap);
-            pn_FormLogin.Controls.Add(tbx_usn);
-            pn_FormLogin.Controls.Add(label1);
-            pn_FormLogin.Location = new Point(0, 0);
-            pn_FormLogin.Name = "pn_FormLogin";
-            pn_FormLogin.Size = new Size(482, 253);
-            pn_FormLogin.TabIndex = 8;
-            // 
-            // btn_ForgotPass
-            // 
-            btn_ForgotPass.BackColor = Color.FromArgb(255, 128, 0);
-            btn_ForgotPass.Font = new Font("Times New Roman", 11F);
-            btn_ForgotPass.ForeColor = Color.White;
-            btn_ForgotPass.Location = new Point(236, 182);
-            btn_ForgotPass.Name = "btn_ForgotPass";
-            btn_ForgotPass.Size = new Size(150, 40);
-            btn_ForgotPass.TabIndex = 15;
-            btn_ForgotPass.Text = "Quên mật khẩu";
-            btn_ForgotPass.UseVisualStyleBackColor = false;
-            btn_ForgotPass.Click += btn_ForgotPass_Click;
+            btn_Login.BackColor = Color.FromArgb(255, 128, 0);
+            btn_Login.Font = new Font("Times New Roman", 11F);
+            btn_Login.ForeColor = Color.White;
+            btn_Login.Location = new Point(258, 174);
+            btn_Login.Name = "btn_Login";
+            btn_Login.Size = new Size(132, 40);
+            btn_Login.TabIndex = 15;
+            btn_Login.Text = "Đăng nhập";
+            btn_Login.UseVisualStyleBackColor = false;
+            btn_Login.Click += btn_Login_Click;
             // 
             // pn_passicon
             // 
@@ -92,14 +73,13 @@
             pn_iconus.Size = new Size(30, 27);
             pn_iconus.TabIndex = 13;
             // 
-            // tbx_pass
+            // tbx_email
             // 
-            tbx_pass.Location = new Point(101, 132);
-            tbx_pass.Name = "tbx_pass";
-            tbx_pass.PasswordChar = '*';
-            tbx_pass.PlaceholderText = "Nhập mật khẩu";
-            tbx_pass.Size = new Size(305, 27);
-            tbx_pass.TabIndex = 10;
+            tbx_email.Location = new Point(101, 132);
+            tbx_email.Name = "tbx_email";
+            tbx_email.PlaceholderText = "Nhập email";
+            tbx_email.Size = new Size(305, 27);
+            tbx_email.TabIndex = 10;
             // 
             // label2
             // 
@@ -108,22 +88,22 @@
             label2.ForeColor = Color.White;
             label2.Location = new Point(101, 109);
             label2.Name = "label2";
-            label2.Size = new Size(70, 20);
+            label2.Size = new Size(46, 20);
             label2.TabIndex = 11;
-            label2.Text = "Mật khẩu";
+            label2.Text = "Email";
             // 
-            // btn_DangNhap
+            // btn_GuiMK
             // 
-            btn_DangNhap.BackColor = Color.FromArgb(255, 128, 0);
-            btn_DangNhap.Font = new Font("Times New Roman", 11F);
-            btn_DangNhap.ForeColor = Color.White;
-            btn_DangNhap.Location = new Point(120, 182);
-            btn_DangNhap.Name = "btn_DangNhap";
-            btn_DangNhap.Size = new Size(110, 40);
-            btn_DangNhap.TabIndex = 12;
-            btn_DangNhap.Text = "Đăng nhập";
-            btn_DangNhap.UseVisualStyleBackColor = false;
-            btn_DangNhap.Click += btn_DangNhap_Click;
+            btn_GuiMK.BackColor = Color.FromArgb(255, 128, 0);
+            btn_GuiMK.Font = new Font("Times New Roman", 11F);
+            btn_GuiMK.ForeColor = Color.White;
+            btn_GuiMK.Location = new Point(113, 174);
+            btn_GuiMK.Name = "btn_GuiMK";
+            btn_GuiMK.Size = new Size(129, 40);
+            btn_GuiMK.TabIndex = 12;
+            btn_GuiMK.Text = "Gửi mật khẩu";
+            btn_GuiMK.UseVisualStyleBackColor = false;
+            btn_GuiMK.Click += btn_GuiMK_Click;
             // 
             // tbx_usn
             // 
@@ -132,7 +112,6 @@
             tbx_usn.PlaceholderText = "Nhập tài khoản";
             tbx_usn.Size = new Size(305, 27);
             tbx_usn.TabIndex = 9;
-            tbx_usn.KeyDown += tbx_usn_KeyDown;
             // 
             // label1
             // 
@@ -145,34 +124,36 @@
             label1.TabIndex = 8;
             label1.Text = "Tài khoản";
             // 
-            // Form_DangNhap
+            // Form_ForgotPass
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImageLayout = ImageLayout.Stretch;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(482, 253);
-            Controls.Add(pn_FormLogin);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            Name = "Form_DangNhap";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Đăng nhập";
-            Click += btn_DangNhap_Click;
-            KeyDown += Form_DangNhap_KeyDown;
-            pn_FormLogin.ResumeLayout(false);
-            pn_FormLogin.PerformLayout();
+            Controls.Add(btn_Login);
+            Controls.Add(pn_passicon);
+            Controls.Add(pn_iconus);
+            Controls.Add(tbx_email);
+            Controls.Add(label2);
+            Controls.Add(btn_GuiMK);
+            Controls.Add(tbx_usn);
+            Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "Form_ForgotPass";
+            Text = "Form_ForgotPass";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Panel pn_FormLogin;
-        private Button btn_ForgotPass;
+        private Button btn_Login;
         private Panel pn_passicon;
         private Panel pn_iconus;
-        private TextBox tbx_pass;
+        private TextBox tbx_email;
         private Label label2;
-        private Button btn_DangNhap;
+        private Button btn_GuiMK;
         private TextBox tbx_usn;
         private Label label1;
     }

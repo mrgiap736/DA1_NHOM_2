@@ -27,18 +27,18 @@ namespace App.Winform.UI
             string pw = tbx_pass.Text;
 
             NhanVien nv = loginsv.GetUS_PW(us, pw);
-            if(nv == null)
+            if (nv == null)
             {
                 MessageBox.Show("Đăng nhập thất bại không có tài khoản trên hệ thống");
             }
-            else if(nv.TrangThai == "Đã nghỉ việc")
+            else if (nv.TrangThai == "Đã nghỉ việc")
             {
                 MessageBox.Show("Bạn không thể truy cập tài khoản");
             }
             else
             {
                 Form_BanHang tt = new Form_BanHang(loginsv.GetUS_PW(us, pw));
-                
+
                 this.Hide();
                 tt.Show();
 
@@ -61,6 +61,18 @@ namespace App.Winform.UI
             {
                 tbx_pass.Focus();
             }
+        }
+
+        private void btn_ForgotPass_Click(object sender, EventArgs e)
+        {
+            pn_FormLogin.Controls.Clear();
+            Form_ForgotPass fp = new Form_ForgotPass();
+            fp.FormBorderStyle = FormBorderStyle.None;
+            fp.TopLevel = false;
+            fp.Dock = DockStyle.Fill;
+
+            pn_FormLogin.Controls.Add(fp);
+            fp.Show();
         }
     }
 }
