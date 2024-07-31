@@ -20,25 +20,25 @@ namespace App.Data.Entities
 
         public int GiaBan { get; set; }
 
-        public Guid MaLoaiRen { get; set; }
+        public Guid? MaLoaiRen { get; set; }
 
         public Guid? MaChatLieu { get; set; }
 
-        public Guid MaMauSac { get; set; }
+        public Guid? MaMauSac { get; set; }
 
         public string TrangThai { get; set; }
 
         public byte[]? HinhAnh { get; set; } // Thêm thuộc tính HinhAnh
 
-        public Guid MaHangSanXuat { get; set; }
+        public Guid? MaHangSanXuat { get; set; }
 
-        public HangSanXuat HangSanXuat { get; set; }
+        public HangSanXuat? HangSanXuat { get; set; }
 
         public ChatLieu? ChatLieu { get; set; }
 
-        public MauSac MauSac { get; set; }
+        public MauSac? MauSac { get; set; }
 
-        public LoaiRen LoaiRen { get; set; }
+        public LoaiRen? LoaiRen { get; set; }
 
         public SanPham SanPham { get; set; }
 

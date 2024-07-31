@@ -359,8 +359,13 @@ namespace App.Winform.UI
             //stt
             
             int stt = 1;
-            foreach (var item in data)
+            foreach (ChiTietSanPham item in data)
             {
+                if (item.TrangThai == "Ngừng kinh doanh")
+                {
+                    continue;
+                }
+
                 dtg_DSsanpham.Rows.Add(stt++,
                     item.SanPham.TenSanPham,
                     item.SanPham.LoaiSanPham,

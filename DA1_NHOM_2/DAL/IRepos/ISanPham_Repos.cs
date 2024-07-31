@@ -19,15 +19,11 @@ namespace App.Data.IRepos
 		public List<ChiTietSanPham> FilterByPrice(int index);
 		public List<ChiTietSanPham> FilterByTheFirm(int index);
 
-		public List<LoaiRen> GetAllLoaiRen();
-		public List<HangSanXuat> GetAllHangSanXuat();
-		public List<MauSac> GetAllMauSac();
-		public List<ChatLieu> GetAllChatLieu();
+		public List<T> GetAllThanhPhan<T>() where T : class;
 
-		public void CreateHangSanXuat(HangSanXuat x);
-		public void CreateMauSac(MauSac x);
-		public void CreateChatLieu(ChatLieu x);
-		public void CreateLoaiRen(LoaiRen x);
+		public void CreateEntity<T>(T entity) where T : class;
+
+		public void DeleteEntity<T>(Guid id) where T : class;
 
     }
 }

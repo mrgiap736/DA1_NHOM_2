@@ -184,30 +184,66 @@ namespace App.Data.Repos
             throw new NotImplementedException();
         }
 
-        public List<LoaiRen> GetAllLoaiRen()
+        public List<T> GetAllThanhPhan<T>() where T : class
         {
-            return context.LoaiRen.ToList();
+            return context.Set<T>().ToList();
         }
 
-        public List<HangSanXuat> GetAllHangSanXuat()
-        {
-            return context.HangSanXuat.ToList();
-        }
-
-        public List<MauSac> GetAllMauSac()
-        {
-            return context.MauSac.ToList();
-        }
-
-        public List<ChatLieu> GetAllChatLieu()
-        {
-            return context.ChatLieu.ToList();
-        }
 
         //Các hàm tạo thành phẩn sản phẩm 
         public void CreateEntity<T>(T entity) where T : class
         {
             context.Set<T>().Add(entity);
+            context.SaveChanges();
+        }
+
+        public void DeleteEntity<T>(Guid id) where T : class
+        {
+            var e = context.Set<T>().Find(id);
+
+            if (e == null)
+            {
+                throw new Exception($"{typeof(T).Name} not found.");
+            }
+
+            // Kiểm tra các ràng buộc toàn vẹn
+            if (typeof(T) == typeof(MauSac))
+            {
+                var mauSac = e as MauSac;
+                if (context.ChiTietSanPham.Any(sp => sp.MaMauSac == mauSac.Id))
+                {
+                    throw new Exception("Không thể xóa màu");
+                }
+            }
+
+            if (typeof(T) == typeof(ChatLieu))
+            {
+                var chatlieu = e as ChatLieu;
+                if (context.ChiTietSanPham.Any(sp => sp.MaChatLieu == chatlieu.Id))
+                {
+                    throw new Exception("Không thể xóa chất liệu");
+                }
+            }
+
+            if (typeof(T) == typeof(LoaiRen))
+            {
+                var loairen = e as LoaiRen;
+                if (context.ChiTietSanPham.Any(sp => sp.MaLoaiRen == loairen.Id))
+                {
+                    throw new Exception("Không thể xóa loại ren");
+                }
+            }
+
+            if (typeof(T) == typeof(HangSanXuat))
+            {
+                var hangsx = e as HangSanXuat;
+                if (context.ChiTietSanPham.Any(sp => sp.MaHangSanXuat == hangsx.Id))
+                {
+                    throw new Exception("Không thể xóa hãng sản xuất");
+                }
+            }
+
+            context.Set<T>().Remove(e);
             context.SaveChanges();
         }
     }

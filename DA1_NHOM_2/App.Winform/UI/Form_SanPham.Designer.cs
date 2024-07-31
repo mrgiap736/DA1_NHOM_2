@@ -93,14 +93,9 @@
             dtg_DSChatLieu = new DataGridView();
             dtg_DSMau = new DataGridView();
             groupBox2 = new GroupBox();
-            btn_XoaHangSX = new Button();
-            btn_AddHangSX = new Button();
-            btn_XoaLoaiRen = new Button();
-            btn_AddLoaiRen = new Button();
-            btn_XoaChatLieu = new Button();
-            btn_AddChatLieu = new Button();
-            btn_XoaMau = new Button();
-            btn_AddMau = new Button();
+            btn_Reset = new Button();
+            btn_XoaTP = new Button();
+            btn_AddTP = new Button();
             label24 = new Label();
             txt_HangSanXuat_2 = new TextBox();
             label23 = new Label();
@@ -215,6 +210,7 @@
             cbx_FillLoaiRen.Name = "cbx_FillLoaiRen";
             cbx_FillLoaiRen.Size = new Size(151, 28);
             cbx_FillLoaiRen.TabIndex = 36;
+            cbx_FillLoaiRen.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // cbx_FillMauSac
             // 
@@ -225,6 +221,7 @@
             cbx_FillMauSac.Name = "cbx_FillMauSac";
             cbx_FillMauSac.Size = new Size(151, 28);
             cbx_FillMauSac.TabIndex = 35;
+            cbx_FillMauSac.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // label19
             // 
@@ -245,6 +242,7 @@
             cbx_FillChatLieu.Name = "cbx_FillChatLieu";
             cbx_FillChatLieu.Size = new Size(151, 28);
             cbx_FillChatLieu.TabIndex = 34;
+            cbx_FillChatLieu.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // label18
             // 
@@ -275,6 +273,7 @@
             cbx_FillHangSX.Name = "cbx_FillHangSX";
             cbx_FillHangSX.Size = new Size(151, 28);
             cbx_FillHangSX.TabIndex = 17;
+            cbx_FillHangSX.SelectedIndexChanged += cbx_Fill_SelectedIndexChanged;
             // 
             // txt_Search
             // 
@@ -284,6 +283,7 @@
             txt_Search.PlaceholderText = " Mời nhập tên sản phẩm cần tìm?";
             txt_Search.Size = new Size(276, 30);
             txt_Search.TabIndex = 16;
+            txt_Search.TextChanged += txt_Search_TextChanged;
             // 
             // groupBox3
             // 
@@ -330,6 +330,7 @@
             pn_XuatExcel.Name = "pn_XuatExcel";
             pn_XuatExcel.Size = new Size(248, 49);
             pn_XuatExcel.TabIndex = 1;
+            pn_XuatExcel.Click += pn_XuatExcel_Click;
             // 
             // label12
             // 
@@ -341,6 +342,7 @@
             label12.Size = new Size(111, 28);
             label12.TabIndex = 5;
             label12.Text = "Xuất Excel";
+            label12.Click += pn_XuatExcel_Click;
             // 
             // pictureBox5
             // 
@@ -353,6 +355,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 5;
             pictureBox5.TabStop = false;
+            pictureBox5.Click += pn_XuatExcel_Click;
             // 
             // pn_UpdateSP
             // 
@@ -364,6 +367,7 @@
             pn_UpdateSP.Name = "pn_UpdateSP";
             pn_UpdateSP.Size = new Size(248, 49);
             pn_UpdateSP.TabIndex = 1;
+            pn_UpdateSP.Click += pn_UpdateSP_Click;
             // 
             // pictureBox2
             // 
@@ -376,6 +380,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 5;
             pictureBox2.TabStop = false;
+            pictureBox2.Click += pn_UpdateSP_Click;
             // 
             // label10
             // 
@@ -387,6 +392,7 @@
             label10.Size = new Size(179, 28);
             label10.TabIndex = 2;
             label10.Text = "Update Sản Phẩm";
+            label10.Click += pn_UpdateSP_Click;
             // 
             // pn_ThemSP
             // 
@@ -398,6 +404,7 @@
             pn_ThemSP.Name = "pn_ThemSP";
             pn_ThemSP.Size = new Size(248, 49);
             pn_ThemSP.TabIndex = 1;
+            pn_ThemSP.Click += pn_ThemSP_Click;
             // 
             // pictureBox3
             // 
@@ -410,6 +417,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 6;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += pn_ThemSP_Click;
             // 
             // label9
             // 
@@ -421,6 +429,7 @@
             label9.Size = new Size(164, 28);
             label9.TabIndex = 1;
             label9.Text = "Thêm Sản Phẩm";
+            label9.Click += pn_ThemSP_Click;
             // 
             // pn_LamMoi
             // 
@@ -432,6 +441,7 @@
             pn_LamMoi.Name = "pn_LamMoi";
             pn_LamMoi.Size = new Size(248, 49);
             pn_LamMoi.TabIndex = 0;
+            pn_LamMoi.Click += pn_LamMoi_Click;
             // 
             // pictureBox4
             // 
@@ -444,6 +454,7 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 7;
             pictureBox4.TabStop = false;
+            pictureBox4.Click += pn_LamMoi_Click;
             // 
             // label8
             // 
@@ -455,6 +466,7 @@
             label8.Size = new Size(95, 28);
             label8.TabIndex = 0;
             label8.Text = "Làm Mới";
+            label8.Click += pn_LamMoi_Click;
             // 
             // groupBox1
             // 
@@ -492,7 +504,7 @@
             // 
             cbx_TrangThai.DropDownStyle = ComboBoxStyle.DropDownList;
             cbx_TrangThai.FormattingEnabled = true;
-            cbx_TrangThai.Items.AddRange(new object[] { "Còn hàng", "Hết hàng" });
+            cbx_TrangThai.Items.AddRange(new object[] { "Đang kinh doanh", "Ngừng kinh doanh" });
             cbx_TrangThai.Location = new Point(576, 288);
             cbx_TrangThai.Name = "cbx_TrangThai";
             cbx_TrangThai.Size = new Size(193, 28);
@@ -617,6 +629,7 @@
             txt_SoLuong.Name = "txt_SoLuong";
             txt_SoLuong.Size = new Size(249, 30);
             txt_SoLuong.TabIndex = 18;
+            txt_SoLuong.TextChanged += txt_SoLuong_TextChanged;
             // 
             // label1
             // 
@@ -641,6 +654,7 @@
             ptb_Anh.SizeMode = PictureBoxSizeMode.Zoom;
             ptb_Anh.TabIndex = 0;
             ptb_Anh.TabStop = false;
+            ptb_Anh.Click += pictureBox1_Click;
             // 
             // txt_GiaBan
             // 
@@ -649,6 +663,7 @@
             txt_GiaBan.Name = "txt_GiaBan";
             txt_GiaBan.Size = new Size(249, 30);
             txt_GiaBan.TabIndex = 11;
+            txt_GiaBan.TextChanged += txt_GiaBan_TextChanged;
             // 
             // label6
             // 
@@ -781,6 +796,7 @@
             dtg_DSHangSX.RowHeadersWidth = 51;
             dtg_DSHangSX.Size = new Size(223, 336);
             dtg_DSHangSX.TabIndex = 3;
+            dtg_DSHangSX.CellClick += dtgView_CellClick_HangSX;
             // 
             // dtg_DSLoaiRen
             // 
@@ -792,6 +808,7 @@
             dtg_DSLoaiRen.RowHeadersWidth = 51;
             dtg_DSLoaiRen.Size = new Size(223, 336);
             dtg_DSLoaiRen.TabIndex = 2;
+            dtg_DSLoaiRen.CellClick += dtgView_CellClick_LoaiRen;
             // 
             // dtg_DSChatLieu
             // 
@@ -803,6 +820,7 @@
             dtg_DSChatLieu.RowHeadersWidth = 51;
             dtg_DSChatLieu.Size = new Size(223, 336);
             dtg_DSChatLieu.TabIndex = 1;
+            dtg_DSChatLieu.CellClick += dtgView_CellClick_ChatLieu;
             // 
             // dtg_DSMau
             // 
@@ -814,17 +832,13 @@
             dtg_DSMau.RowHeadersWidth = 51;
             dtg_DSMau.Size = new Size(223, 336);
             dtg_DSMau.TabIndex = 0;
+            dtg_DSMau.CellClick += dtgView_CellClick_MauSac;
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(btn_XoaHangSX);
-            groupBox2.Controls.Add(btn_AddHangSX);
-            groupBox2.Controls.Add(btn_XoaLoaiRen);
-            groupBox2.Controls.Add(btn_AddLoaiRen);
-            groupBox2.Controls.Add(btn_XoaChatLieu);
-            groupBox2.Controls.Add(btn_AddChatLieu);
-            groupBox2.Controls.Add(btn_XoaMau);
-            groupBox2.Controls.Add(btn_AddMau);
+            groupBox2.Controls.Add(btn_Reset);
+            groupBox2.Controls.Add(btn_XoaTP);
+            groupBox2.Controls.Add(btn_AddTP);
             groupBox2.Controls.Add(label24);
             groupBox2.Controls.Add(txt_HangSanXuat_2);
             groupBox2.Controls.Add(label23);
@@ -840,77 +854,35 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin thành phần";
             // 
-            // btn_XoaHangSX
+            // btn_Reset
             // 
-            btn_XoaHangSX.Location = new Point(759, 256);
-            btn_XoaHangSX.Name = "btn_XoaHangSX";
-            btn_XoaHangSX.Size = new Size(94, 29);
-            btn_XoaHangSX.TabIndex = 15;
-            btn_XoaHangSX.Text = "Xóa";
-            btn_XoaHangSX.UseVisualStyleBackColor = true;
+            btn_Reset.Location = new Point(674, 204);
+            btn_Reset.Name = "btn_Reset";
+            btn_Reset.Size = new Size(94, 29);
+            btn_Reset.TabIndex = 10;
+            btn_Reset.Text = "Làm mới";
+            btn_Reset.UseVisualStyleBackColor = true;
+            btn_Reset.Click += btn_Reset_Click;
             // 
-            // btn_AddHangSX
+            // btn_XoaTP
             // 
-            btn_AddHangSX.Location = new Point(620, 255);
-            btn_AddHangSX.Name = "btn_AddHangSX";
-            btn_AddHangSX.Size = new Size(94, 29);
-            btn_AddHangSX.TabIndex = 14;
-            btn_AddHangSX.Text = "Thêm";
-            btn_AddHangSX.UseVisualStyleBackColor = true;
+            btn_XoaTP.Location = new Point(759, 151);
+            btn_XoaTP.Name = "btn_XoaTP";
+            btn_XoaTP.Size = new Size(94, 29);
+            btn_XoaTP.TabIndex = 9;
+            btn_XoaTP.Text = "Xóa";
+            btn_XoaTP.UseVisualStyleBackColor = true;
+            btn_XoaTP.Click += btn_DelTP_Click;
             // 
-            // btn_XoaLoaiRen
+            // btn_AddTP
             // 
-            btn_XoaLoaiRen.Location = new Point(759, 197);
-            btn_XoaLoaiRen.Name = "btn_XoaLoaiRen";
-            btn_XoaLoaiRen.Size = new Size(94, 29);
-            btn_XoaLoaiRen.TabIndex = 13;
-            btn_XoaLoaiRen.Text = "Xóa";
-            btn_XoaLoaiRen.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddLoaiRen
-            // 
-            btn_AddLoaiRen.Location = new Point(620, 196);
-            btn_AddLoaiRen.Name = "btn_AddLoaiRen";
-            btn_AddLoaiRen.Size = new Size(94, 29);
-            btn_AddLoaiRen.TabIndex = 12;
-            btn_AddLoaiRen.Text = "Thêm";
-            btn_AddLoaiRen.UseVisualStyleBackColor = true;
-            // 
-            // btn_XoaChatLieu
-            // 
-            btn_XoaChatLieu.Location = new Point(759, 137);
-            btn_XoaChatLieu.Name = "btn_XoaChatLieu";
-            btn_XoaChatLieu.Size = new Size(94, 29);
-            btn_XoaChatLieu.TabIndex = 11;
-            btn_XoaChatLieu.Text = "Xóa";
-            btn_XoaChatLieu.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddChatLieu
-            // 
-            btn_AddChatLieu.Location = new Point(620, 136);
-            btn_AddChatLieu.Name = "btn_AddChatLieu";
-            btn_AddChatLieu.Size = new Size(94, 29);
-            btn_AddChatLieu.TabIndex = 10;
-            btn_AddChatLieu.Text = "Thêm";
-            btn_AddChatLieu.UseVisualStyleBackColor = true;
-            // 
-            // btn_XoaMau
-            // 
-            btn_XoaMau.Location = new Point(759, 76);
-            btn_XoaMau.Name = "btn_XoaMau";
-            btn_XoaMau.Size = new Size(94, 29);
-            btn_XoaMau.TabIndex = 9;
-            btn_XoaMau.Text = "Xóa";
-            btn_XoaMau.UseVisualStyleBackColor = true;
-            // 
-            // btn_AddMau
-            // 
-            btn_AddMau.Location = new Point(620, 75);
-            btn_AddMau.Name = "btn_AddMau";
-            btn_AddMau.Size = new Size(94, 29);
-            btn_AddMau.TabIndex = 8;
-            btn_AddMau.Text = "Thêm";
-            btn_AddMau.UseVisualStyleBackColor = true;
+            btn_AddTP.Location = new Point(595, 151);
+            btn_AddTP.Name = "btn_AddTP";
+            btn_AddTP.Size = new Size(94, 29);
+            btn_AddTP.TabIndex = 8;
+            btn_AddTP.Text = "Thêm";
+            btn_AddTP.UseVisualStyleBackColor = true;
+            btn_AddTP.Click += btn_AddThanhPhan_Click;
             // 
             // label24
             // 
@@ -1076,8 +1048,8 @@
         private Label label2;
         private TabPage tabPage2;
         private GroupBox groupBox2;
-        private Button btn_XoaMau;
-        private Button btn_AddMau;
+        private Button btn_XoaTP;
+        private Button btn_AddTP;
         private Label label24;
         private TextBox txt_HangSanXuat_2;
         private Label label23;
@@ -1091,15 +1063,10 @@
         private DataGridView dtg_DSLoaiRen;
         private DataGridView dtg_DSChatLieu;
         private DataGridView dtg_DSMau;
-        private Button btn_XoaHangSX;
-        private Button btn_AddHangSX;
-        private Button btn_XoaLoaiRen;
-        private Button btn_AddLoaiRen;
-        private Button btn_XoaChatLieu;
-        private Button btn_AddChatLieu;
         private Label label28;
         private Label label27;
         private Label label26;
         private Label label25;
+        private Button btn_Reset;
     }
 }

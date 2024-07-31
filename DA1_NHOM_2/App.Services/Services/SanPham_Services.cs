@@ -91,22 +91,22 @@ namespace App.Services.Services
         //
         public List<HangSanXuat> GetAllHangSanXuat()
         {
-            return _repos.GetAllHangSanXuat();
+            return _repos.GetAllThanhPhan<HangSanXuat>();
         }
 
         public List<MauSac> GetAllMauSac()
         {
-            return _repos.GetAllMauSac();
+            return _repos.GetAllThanhPhan<MauSac>();
         }
 
         public List<ChatLieu> GetAllChatLieu()
         {
-            return _repos.GetAllChatLieu();
+            return _repos.GetAllThanhPhan<ChatLieu>();
         }
 
         public List<LoaiRen> GetAllLoaiRen()
         {
-            return _repos.GetAllLoaiRen();
+            return _repos.GetAllThanhPhan<LoaiRen>();
         }
         // Lấy id của các trường dữ liệu
 
@@ -195,6 +195,19 @@ namespace App.Services.Services
             }
             catch { return false; }
 
+        }
+
+        public bool DeleteThanhPhan<T> (Guid id) where T : class
+        {
+            try
+            {
+                _repos.DeleteEntity<T>(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

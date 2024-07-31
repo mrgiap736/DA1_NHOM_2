@@ -16,6 +16,11 @@ namespace App.Winform.UI
         SanPham_Services _service;
         List<ChiTietSanPham> _listSP = new();
         Guid _idwhenclick;
+
+        Guid _idMS;
+        Guid _idCL;
+        Guid _idLR;
+        Guid _idHS;
         public Form_SanPham(NhanVien nv)
         {
             InitializeComponent();
@@ -32,6 +37,7 @@ namespace App.Winform.UI
             cbx_FillLoaiRen.SelectedItem = "Tất cả";
             cbx_TrangThai.SelectedItem = "Còn hàng";
 
+
         }
 
         public List<Control> GetCtrl()
@@ -45,7 +51,7 @@ namespace App.Winform.UI
             return ctrls;
         }
 
-        
+
         public void LoadGird(dynamic data)
         {
             dtgView.Rows.Clear();
@@ -171,6 +177,9 @@ namespace App.Winform.UI
             cbx_FillHangSX.Text = "Tất cả";
 
             ptb_Anh.Image = null;
+
+            LoadGird(ApplyFilters());
+            LoadComboBox();
         }
 
         private void LoadComboBox()
@@ -362,13 +371,13 @@ namespace App.Winform.UI
 
                 foreach (var item in lstCTSP)
                 {
-                    if(item == ctsp)
+                    if (item == ctsp)
                     {
                         checkExistCTSP = false;
                     }
                 }
 
-                if(checkExistCTSP)
+                if (checkExistCTSP)
                 {
                     // Hiển thị hộp thoại xác nhận
                     var option = MessageBox.Show("Xác nhận muốn thêm sản phẩm?", "Xác nhận",
@@ -392,7 +401,7 @@ namespace App.Winform.UI
                     return;
                 }
 
-                
+
             }
 
 
@@ -476,7 +485,7 @@ namespace App.Winform.UI
 
             var ctsp = new ChiTietSanPham();
             ctsp.Id = _idwhenclick; //Mã sản phẩm chưa sửa được
-       
+
             ctsp.MaHangSanXuat = _service.GetIdHangSX(cbx_HangSX.Text);
             ctsp.MaMauSac = _service.GetIdMauSac(cbx_MauSac.Text);
             ctsp.MaChatLieu = _service.GetIdChatLieu(cbx_ChatLieu.Text);
@@ -592,6 +601,90 @@ namespace App.Winform.UI
             }
 
 
+        }
+
+        private void dtgView_CellClick_MauSac(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+
+            if (index < 0 || dtg_DSMau.SelectedRows.Count > 1)
+            {
+                return;
+            }
+            else
+            {
+                if (dtg_DSMau.Rows[index].Cells[0].Value == null)
+                {
+                    return;
+                }
+
+                _idMS = Guid.Parse(dtg_DSMau.Rows[index].Cells[0].Value.ToString());
+
+                txt_MauSac_2.Text = dtg_DSMau.Rows[index].Cells[2].Value.ToString();
+            }       
+        }
+
+        private void dtgView_CellClick_ChatLieu(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+
+            if (index < 0 || dtg_DSChatLieu.SelectedRows.Count > 1)
+            {
+                return;
+            }
+            else
+            {
+                if (dtg_DSChatLieu.Rows[index].Cells[0].Value == null)
+                {
+                    return;
+                }
+
+                _idCL = Guid.Parse(dtg_DSChatLieu.Rows[index].Cells[0].Value.ToString());
+
+                txt_ChatLieu_2.Text = dtg_DSChatLieu.Rows[index].Cells[2].Value.ToString();
+            }
+        }
+
+        private void dtgView_CellClick_LoaiRen(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+
+            if (index < 0 || dtg_DSLoaiRen.SelectedRows.Count > 1)
+            {
+                return;
+            }
+            else
+            {
+                if (dtg_DSLoaiRen.Rows[index].Cells[0].Value == null)
+                {
+                    return;
+                }
+
+                _idLR = Guid.Parse(dtg_DSLoaiRen.Rows[index].Cells[0].Value.ToString());
+
+                txt_LoaiRen_2.Text = dtg_DSLoaiRen.Rows[index].Cells[2].Value.ToString();
+            }
+        }
+
+        private void dtgView_CellClick_HangSX(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+
+            if (index < 0 || dtg_DSHangSX.SelectedRows.Count > 1)
+            {
+                return;
+            }
+            else
+            {
+                if (dtg_DSHangSX.Rows[index].Cells[0].Value == null)
+                {
+                    return;
+                }
+
+                _idHS = Guid.Parse(dtg_DSHangSX.Rows[index].Cells[0].Value.ToString());
+
+                txt_HangSanXuat_2.Text = dtg_DSHangSX.Rows[index].Cells[2].Value.ToString();
+            }
         }
 
 
@@ -751,11 +844,6 @@ namespace App.Winform.UI
             }
         }
 
-        private void pn_LamMoi_MouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
         private void pn_LamMoi_MouseLeave(object sender, EventArgs e)
         {
 
@@ -816,35 +904,97 @@ namespace App.Winform.UI
         //
         private void txt_SoLuong_TextChanged(object sender, EventArgs e)
         {
-            CheckStatus(txt_SoLuong.Text);
+            
         }
 
         private void cbx_TrangThai_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CheckStatus(txt_SoLuong.Text);
+            
         }
 
         public void CheckStatus(string input)
         {
-            if(int.TryParse(input, out int soluong))
+            
+
+        }
+
+        public void btn_AddThanhPhan_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txt_ChatLieu_2.Text))
             {
-                if (soluong == 0)
-                {
-                    cbx_TrangThai.SelectedItem = "Hết hàng";
-                }
-                else
-                {
-                    cbx_TrangThai.SelectedItem = "Còn hàng";
-                }
+                _service.CreateThanhPhan<ChatLieu>(new ChatLieu { Id = Guid.NewGuid(), Name = txt_ChatLieu_2.Text.Trim() });
+            }
+
+            if (!string.IsNullOrWhiteSpace(txt_MauSac_2.Text))
+            {
+                _service.CreateThanhPhan<MauSac>(new MauSac { Id = Guid.NewGuid(), Name = txt_MauSac_2.Text.Trim() });
+            }
+
+            if (!string.IsNullOrWhiteSpace(txt_LoaiRen_2.Text))
+            {
+                _service.CreateThanhPhan<LoaiRen>(new LoaiRen { Id = Guid.NewGuid(), Name = txt_LoaiRen_2.Text.Trim() });
+            }
+
+            if (!string.IsNullOrWhiteSpace(txt_HangSanXuat_2.Text))
+            {
+                _service.CreateThanhPhan<HangSanXuat>(new HangSanXuat { Id = Guid.NewGuid(), Name = txt_HangSanXuat_2.Text.Trim() });
+            }
+
+            MessageBox.Show("Thêm thành công");
+            ResetInput();
+            LoadGrid2();
+        }
+
+        public void btn_DelTP_Click(object sender, EventArgs e)
+        {
+            bool check = true;
+            if (!string.IsNullOrWhiteSpace(txt_ChatLieu_2.Text))
+            {
+                if (!_service.DeleteThanhPhan<ChatLieu>(_idCL)) check = false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txt_MauSac_2.Text))
+            {
+                if (!_service.DeleteThanhPhan<MauSac>(_idMS)) check = false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txt_LoaiRen_2.Text))
+            {
+                if(!_service.DeleteThanhPhan<LoaiRen>(_idLR)) check = false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txt_HangSanXuat_2.Text))
+            {
+                if (!_service.DeleteThanhPhan<HangSanXuat>(_idHS)) check = false;
+            }
+
+            if(check)
+            {
+                MessageBox.Show("Xóa thành công");
+                ResetInput();
+                LoadGrid2();
             }
             else
             {
-                return;
+                MessageBox.Show("Xóa thất bại");
+                ResetInput();
+                LoadGrid2();
             }
-            
         }
 
-        
+        public void btn_Reset_Click(object sender, EventArgs e)
+        {
+            ResetInput();
+            LoadGrid2();
+        }
+
+        public void ResetInput()
+        {
+            txt_ChatLieu_2.Text = null;
+            txt_MauSac_2.Text = null;
+            txt_HangSanXuat_2.Text = null;
+            txt_LoaiRen_2.Text = null;
+        }
     }
 
 }
