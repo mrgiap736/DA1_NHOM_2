@@ -50,7 +50,6 @@ namespace App.Services.Services
 		public string Remove(NhanVien nv)
 		{
 			var clone = _repos.GetAll().FirstOrDefault(x => x.MaNhanVien == nv.MaNhanVien);
-			clone.NgayKetThuc = DateTime.Now;
 			clone.TrangThai = "Đã nghỉ việc";
 			if (_repos.UpdateNV(clone) == true)
 			{

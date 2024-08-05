@@ -49,6 +49,7 @@ namespace App.Data.Repos
 		{
 			var hoadonUp = context.HoaDon.Find(hd.MaHoaDon);
 
+			hoadonUp.MaKhachHang = hd.MaKhachHang;
 			hoadonUp.TienKhachTra = hd.TienKhachTra;
 			hoadonUp.GiamGia = hd.GiamGia;
 			hoadonUp.TongTien = hd.TongTien;

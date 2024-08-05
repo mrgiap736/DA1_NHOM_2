@@ -24,10 +24,6 @@ namespace App.Data.Entities
 
         public string MatKhau { get; set; } = null!;
 
-        public DateTime NgayBatDau { get; set; }
-
-        public DateTime? NgayKetThuc {  get; set; }
-
         public string TrangThai {  get; set; }
 
         public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();

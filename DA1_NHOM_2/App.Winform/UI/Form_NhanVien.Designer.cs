@@ -59,6 +59,8 @@
             label3 = new Label();
             txt_TenNV = new TextBox();
             label2 = new Label();
+            cbx_TrangThai = new ComboBox();
+            label11 = new Label();
             pn_Form_NhanVien.SuspendLayout();
             groupBox1.SuspendLayout();
             pn_Btn_Xoa.SuspendLayout();
@@ -255,6 +257,8 @@
             // 
             // grb_ThongTin
             // 
+            grb_ThongTin.Controls.Add(label11);
+            grb_ThongTin.Controls.Add(cbx_TrangThai);
             grb_ThongTin.Controls.Add(txt_EmailNV);
             grb_ThongTin.Controls.Add(label10);
             grb_ThongTin.Controls.Add(txt_SdtNv);
@@ -276,7 +280,7 @@
             // 
             // txt_EmailNV
             // 
-            txt_EmailNV.Location = new Point(185, 182);
+            txt_EmailNV.Location = new Point(190, 155);
             txt_EmailNV.Name = "txt_EmailNV";
             txt_EmailNV.Size = new Size(331, 27);
             txt_EmailNV.TabIndex = 24;
@@ -284,7 +288,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(59, 185);
+            label10.Location = new Point(64, 158);
             label10.Name = "label10";
             label10.Size = new Size(49, 20);
             label10.TabIndex = 23;
@@ -292,7 +296,7 @@
             // 
             // txt_SdtNv
             // 
-            txt_SdtNv.Location = new Point(185, 138);
+            txt_SdtNv.Location = new Point(190, 111);
             txt_SdtNv.Name = "txt_SdtNv";
             txt_SdtNv.Size = new Size(331, 27);
             txt_SdtNv.TabIndex = 22;
@@ -300,7 +304,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(59, 141);
+            label1.Location = new Point(64, 114);
             label1.Name = "label1";
             label1.Size = new Size(100, 20);
             label1.TabIndex = 21;
@@ -311,7 +315,7 @@
             Cmb_ChucVu.BackColor = SystemColors.ButtonHighlight;
             Cmb_ChucVu.ForeColor = Color.Black;
             Cmb_ChucVu.Items.AddRange(new object[] { "Admin", "Nhân Viên" });
-            Cmb_ChucVu.Location = new Point(185, 94);
+            Cmb_ChucVu.Location = new Point(190, 67);
             Cmb_ChucVu.Name = "Cmb_ChucVu";
             Cmb_ChucVu.Size = new Size(331, 28);
             Cmb_ChucVu.TabIndex = 20;
@@ -319,7 +323,7 @@
             // 
             // txt_MatKhau
             // 
-            txt_MatKhau.Location = new Point(185, 271);
+            txt_MatKhau.Location = new Point(190, 244);
             txt_MatKhau.Name = "txt_MatKhau";
             txt_MatKhau.Size = new Size(331, 27);
             txt_MatKhau.TabIndex = 19;
@@ -327,7 +331,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(59, 274);
+            label5.Location = new Point(64, 247);
             label5.Name = "label5";
             label5.Size = new Size(73, 20);
             label5.TabIndex = 18;
@@ -335,7 +339,7 @@
             // 
             // txt_TaiKhoan
             // 
-            txt_TaiKhoan.Location = new Point(185, 226);
+            txt_TaiKhoan.Location = new Point(190, 199);
             txt_TaiKhoan.Name = "txt_TaiKhoan";
             txt_TaiKhoan.Size = new Size(331, 27);
             txt_TaiKhoan.TabIndex = 17;
@@ -343,7 +347,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(59, 229);
+            label4.Location = new Point(64, 202);
             label4.Name = "label4";
             label4.Size = new Size(74, 20);
             label4.TabIndex = 16;
@@ -352,7 +356,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(59, 97);
+            label3.Location = new Point(64, 70);
             label3.Name = "label3";
             label3.Size = new Size(68, 20);
             label3.TabIndex = 15;
@@ -360,7 +364,7 @@
             // 
             // txt_TenNV
             // 
-            txt_TenNV.Location = new Point(185, 53);
+            txt_TenNV.Location = new Point(190, 26);
             txt_TenNV.Name = "txt_TenNV";
             txt_TenNV.Size = new Size(331, 27);
             txt_TenNV.TabIndex = 14;
@@ -368,11 +372,29 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(59, 56);
+            label2.Location = new Point(64, 29);
             label2.Name = "label2";
             label2.Size = new Size(102, 20);
             label2.TabIndex = 13;
             label2.Text = "Tên nhân viên:";
+            // 
+            // cbx_TrangThai
+            // 
+            cbx_TrangThai.FormattingEnabled = true;
+            cbx_TrangThai.Items.AddRange(new object[] { "Đang làm việc", "Đã nghỉ việc" });
+            cbx_TrangThai.Location = new Point(190, 290);
+            cbx_TrangThai.Name = "cbx_TrangThai";
+            cbx_TrangThai.Size = new Size(331, 28);
+            cbx_TrangThai.TabIndex = 25;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(65, 293);
+            label11.Name = "label11";
+            label11.Size = new Size(78, 20);
+            label11.TabIndex = 26;
+            label11.Text = "Trạng thái:";
             // 
             // Form_NhanVien
             // 
@@ -432,5 +454,7 @@
         private Label label1;
         private TextBox txt_EmailNV;
         private Label label10;
+        private Label label11;
+        private ComboBox cbx_TrangThai;
     }
 }

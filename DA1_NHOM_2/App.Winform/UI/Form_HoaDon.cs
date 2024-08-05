@@ -54,6 +54,7 @@ namespace App.Winform.UI
             dtg_DSHoaDon.Columns[0].HeaderText = "STT";
 
             dtg_DSHoaDon.Columns[1].Name = "mahoadon";
+            dtg_DSHoaDon.Columns[1].Visible = false;
             dtg_DSHoaDon.Columns[1].HeaderText = "Mã HĐ";
 
             dtg_DSHoaDon.Columns[2].Name = "tenkhachhang";
@@ -82,7 +83,7 @@ namespace App.Winform.UI
             int stt = 1;
             foreach (HoaDon item in data)
             {
-                string tenKH = "";
+                string tenKH = "Khách vãng lai";
                 if (item.KhachHang != null)
                 {
                     tenKH = item.KhachHang.TenKhachHang;
@@ -96,11 +97,14 @@ namespace App.Winform.UI
 
             dtg_DSHoaDonCT.Columns[0].Name = "stt";
             dtg_DSHoaDonCT.Columns[0].HeaderText = "STT";
+            dtg_DSHoaDonCT.Columns[0].Width = 40;
 
             dtg_DSHoaDonCT.Columns[1].Name = "macthd";
+            dtg_DSHoaDonCT.Columns[1].Visible = false;
             dtg_DSHoaDonCT.Columns[1].HeaderText = "Mã CTHD";
 
             dtg_DSHoaDonCT.Columns[2].Name = "mahd";
+            dtg_DSHoaDonCT.Columns[2].Visible = false;
             dtg_DSHoaDonCT.Columns[2].HeaderText = "Mã HD";
 
             dtg_DSHoaDonCT.Columns[3].Name = "tensp";
@@ -126,19 +130,18 @@ namespace App.Winform.UI
             dtg_DSHoaDonCT.Rows.Clear();
             int rowIndex = e.RowIndex;
 
-            if (e.RowIndex < 0 || dtg_DSHoaDon.Rows[rowIndex].Cells[0].Value == null || dtg_DSHoaDon.RowCount > 1)
+            if (e.RowIndex < 0 || dtg_DSHoaDon.Rows[rowIndex].Cells[0].Value == null /*|| dtg_DSHoaDon.RowCount > 1*/)
             {
                 return;
             }
-            else
+
+            Guid mahd = Guid.Parse(dtg_DSHoaDon.Rows[rowIndex].Cells[1].Value.ToString());
+            int stt = 1;
+            foreach (ChiTietHoaDon item in ctsv.GetAllCTHoaDon(mahd))
             {
-                Guid mahd = Guid.Parse(dtg_DSHoaDon.Rows[rowIndex].Cells[1].Value.ToString());
-                int stt = 1;
-                foreach (ChiTietHoaDon item in ctsv.GetAllCTHoaDon(mahd))
-                {
-                    dtg_DSHoaDonCT.Rows.Add(stt++, item.MaChiTietHoaDon, item.MaHoaDon, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
-                }
+                dtg_DSHoaDonCT.Rows.Add(stt++, item.MaChiTietHoaDon, item.MaHoaDon, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, AddThousandSeparators(item.DonGia));
             }
+
         }
 
         private void tbx_Search_TextChanged(object sender, EventArgs e)

@@ -59,6 +59,7 @@
             pictureBox4 = new PictureBox();
             label8 = new Label();
             groupBox1 = new GroupBox();
+            cbx_LoaiSP = new ComboBox();
             cbx_TrangThai = new ComboBox();
             label17 = new Label();
             cbx_MauSac = new ComboBox();
@@ -69,7 +70,6 @@
             label5 = new Label();
             txt_CanNang = new TextBox();
             label14 = new Label();
-            txt_LoaiSp = new TextBox();
             cbx_HangSX = new ComboBox();
             label13 = new Label();
             txt_SoLuong = new TextBox();
@@ -306,6 +306,7 @@
             dtgView.RowHeadersWidth = 51;
             dtgView.Size = new Size(1545, 327);
             dtgView.TabIndex = 0;
+            dtgView.CellClick += dtgView_CellClick;
             // 
             // grb_ChucNang
             // 
@@ -470,6 +471,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(cbx_LoaiSP);
             groupBox1.Controls.Add(cbx_TrangThai);
             groupBox1.Controls.Add(label17);
             groupBox1.Controls.Add(cbx_MauSac);
@@ -480,7 +482,6 @@
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(txt_CanNang);
             groupBox1.Controls.Add(label14);
-            groupBox1.Controls.Add(txt_LoaiSp);
             groupBox1.Controls.Add(cbx_HangSX);
             groupBox1.Controls.Add(label13);
             groupBox1.Controls.Add(txt_SoLuong);
@@ -499,6 +500,15 @@
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin sản phẩm";
+            // 
+            // cbx_LoaiSP
+            // 
+            cbx_LoaiSP.FormattingEnabled = true;
+            cbx_LoaiSP.Items.AddRange(new object[] { "Chuôi", "Ngọn" });
+            cbx_LoaiSP.Location = new Point(174, 147);
+            cbx_LoaiSP.Name = "cbx_LoaiSP";
+            cbx_LoaiSP.Size = new Size(249, 28);
+            cbx_LoaiSP.TabIndex = 33;
             // 
             // cbx_TrangThai
             // 
@@ -584,6 +594,7 @@
             txt_CanNang.Name = "txt_CanNang";
             txt_CanNang.Size = new Size(249, 30);
             txt_CanNang.TabIndex = 24;
+            txt_CanNang.KeyPress += txt_KeyPress;
             // 
             // label14
             // 
@@ -594,14 +605,6 @@
             label14.Size = new Size(88, 23);
             label14.TabIndex = 23;
             label14.Text = "Cân nặng:";
-            // 
-            // txt_LoaiSp
-            // 
-            txt_LoaiSp.Font = new Font("Segoe UI", 10F);
-            txt_LoaiSp.Location = new Point(174, 145);
-            txt_LoaiSp.Name = "txt_LoaiSp";
-            txt_LoaiSp.Size = new Size(249, 30);
-            txt_LoaiSp.TabIndex = 22;
             // 
             // cbx_HangSX
             // 
@@ -630,6 +633,7 @@
             txt_SoLuong.Size = new Size(249, 30);
             txt_SoLuong.TabIndex = 18;
             txt_SoLuong.TextChanged += txt_SoLuong_TextChanged;
+            txt_SoLuong.KeyPress += txt_KeyPress;
             // 
             // label1
             // 
@@ -682,6 +686,7 @@
             txt_ChieuDai.Name = "txt_ChieuDai";
             txt_ChieuDai.Size = new Size(249, 30);
             txt_ChieuDai.TabIndex = 7;
+            txt_ChieuDai.KeyPress += txt_KeyPress;
             // 
             // label4
             // 
@@ -1033,7 +1038,6 @@
         private Label label5;
         private TextBox txt_CanNang;
         private Label label14;
-        private TextBox txt_LoaiSp;
         private ComboBox cbx_HangSX;
         private Label label13;
         private TextBox txt_SoLuong;
@@ -1068,5 +1072,6 @@
         private Label label26;
         private Label label25;
         private Button btn_Reset;
+        private ComboBox cbx_LoaiSP;
     }
 }

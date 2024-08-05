@@ -42,7 +42,7 @@ namespace App.Winform.UI
         public void LoadGird(string search)
         {
             dtgView.Rows.Clear();
-            dtgView.ColumnCount = 11;
+            dtgView.ColumnCount = 9;
             dtgView.Columns[0].Name = "STT";
             dtgView.Columns[0].Width = 40;
             dtgView.Columns[1].Name = "Mã Nhân Viên";
@@ -53,9 +53,7 @@ namespace App.Winform.UI
             dtgView.Columns[5].Name = "Email";
             dtgView.Columns[6].Name = "Tài khoản";
             dtgView.Columns[7].Name = "Mật khẩu";
-            dtgView.Columns[8].Name = "Ngày bắt đầu";
-            dtgView.Columns[9].Name = "Ngày kết thúc";
-            dtgView.Columns[10].Name = "Trạng thái";
+            dtgView.Columns[8].Name = "Trạng thái";
 
             _listNV = _service.GetAll(search);
             foreach (var nv in _service.GetAll(txt_Search.Text))
@@ -66,7 +64,7 @@ namespace App.Winform.UI
                 {
                     matkhau = nv.MatKhau;
                 }
-                dtgView.Rows.Add(stt, nv.MaNhanVien, nv.TenNhanVien, nv.ChucVu, nv.SoDienThoai, nv.Email, nv.TaiKhoan, matkhau,nv.NgayBatDau.ToShortDateString(), nv.NgayKetThuc, nv.TrangThai);
+                dtgView.Rows.Add(stt, nv.MaNhanVien, nv.TenNhanVien, nv.ChucVu, nv.SoDienThoai, nv.Email, nv.TaiKhoan, matkhau, nv.TrangThai);
             }
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
@@ -136,7 +134,6 @@ namespace App.Winform.UI
                     Email = txt_EmailNV.Text,
                     TaiKhoan = txt_TaiKhoan.Text,
                     MatKhau = txt_MatKhau.Text,
-                    NgayBatDau = DateTime.Now,
                     TrangThai = "Đang làm việc"
                 };
 
@@ -212,7 +209,8 @@ namespace App.Winform.UI
                     SoDienThoai = txt_SdtNv.Text,
                     Email = txt_EmailNV.Text,
                     TaiKhoan = txt_TaiKhoan.Text,
-                    MatKhau = txt_MatKhau.Text
+                    MatKhau = txt_MatKhau.Text,
+                    TrangThai = cbx_TrangThai.Text
                 };
 
                 string result = _service.Update(nv);
@@ -275,6 +273,7 @@ namespace App.Winform.UI
             txt_EmailNV.Text = obj.Email;
             txt_SdtNv.Text = obj.SoDienThoai;
             txt_TaiKhoan.Text = obj.TaiKhoan;
+            cbx_TrangThai.SelectedItem = obj.TrangThai;
 
             string matkhau = "";
             if(obj.MaNhanVien == _nv.MaNhanVien)

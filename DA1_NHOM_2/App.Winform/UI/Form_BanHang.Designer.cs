@@ -507,9 +507,9 @@
             lb_TenKH.AutoSize = true;
             lb_TenKH.Location = new Point(1092, 129);
             lb_TenKH.Name = "lb_TenKH";
-            lb_TenKH.Size = new Size(18, 20);
+            lb_TenKH.Size = new Size(105, 20);
             lb_TenKH.TabIndex = 7;
-            lb_TenKH.Text = "...";
+            lb_TenKH.Text = "Khách vãng lai";
             // 
             // lb_gh3
             // 
@@ -522,7 +522,7 @@
             // 
             // tbx_SDTkh
             // 
-            tbx_SDTkh.Location = new Point(1092, 74);
+            tbx_SDTkh.Location = new Point(1086, 74);
             tbx_SDTkh.Name = "tbx_SDTkh";
             tbx_SDTkh.Size = new Size(193, 27);
             tbx_SDTkh.TabIndex = 5;
@@ -553,7 +553,7 @@
             pn_BtnCapNhat.BackColor = Color.FromArgb(255, 255, 192);
             pn_BtnCapNhat.Controls.Add(label10);
             pn_BtnCapNhat.Controls.Add(panel6);
-            pn_BtnCapNhat.Location = new Point(809, 291);
+            pn_BtnCapNhat.Location = new Point(547, 290);
             pn_BtnCapNhat.Name = "pn_BtnCapNhat";
             pn_BtnCapNhat.Size = new Size(174, 46);
             pn_BtnCapNhat.TabIndex = 2;
@@ -562,11 +562,11 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(73, 13);
+            label10.Location = new Point(53, 13);
             label10.Name = "label10";
-            label10.Size = new Size(68, 20);
+            label10.Size = new Size(104, 20);
             label10.TabIndex = 4;
-            label10.Text = "Cập nhật";
+            label10.Text = "Cập nhật form";
             label10.Click += pn_BtnCapNhat_Click;
             // 
             // panel6
@@ -585,20 +585,20 @@
             pn_BtnTaoHoaDon.BackColor = Color.FromArgb(255, 255, 192);
             pn_BtnTaoHoaDon.Controls.Add(label9);
             pn_BtnTaoHoaDon.Controls.Add(panel8);
-            pn_BtnTaoHoaDon.Location = new Point(554, 291);
+            pn_BtnTaoHoaDon.Location = new Point(1050, 293);
             pn_BtnTaoHoaDon.Name = "pn_BtnTaoHoaDon";
-            pn_BtnTaoHoaDon.Size = new Size(174, 46);
+            pn_BtnTaoHoaDon.Size = new Size(198, 46);
             pn_BtnTaoHoaDon.TabIndex = 2;
             pn_BtnTaoHoaDon.Click += pn_BtnTaoHoaDon_Click;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(50, 13);
+            label9.Location = new Point(53, 13);
             label9.Name = "label9";
-            label9.Size = new Size(121, 20);
+            label9.Size = new Size(138, 20);
             label9.TabIndex = 3;
-            label9.Text = "Tạo hóa đơn chờ";
+            label9.Text = "Tạo/ Cập nhật HDC";
             label9.Click += pn_BtnTaoHoaDon_Click;
             // 
             // panel8

@@ -27,9 +27,9 @@ namespace App.Winform.UI
     public partial class Form_BanHang : Form
     {
         BanHang_Services _bhsv;
-        HoaDon_Services hdsv;
-        KhachHang_Services khsv;
-        ChiTietHD_Services ctsv;
+        HoaDon_Services _hdsv;
+        KhachHang_Services _khsv;
+        ChiTietHD_Services _ctsv;
 
         NhanVien nvien;
         KhachHang kHang;
@@ -40,9 +40,9 @@ namespace App.Winform.UI
             InitializeComponent();
 
             _bhsv = new BanHang_Services();
-            hdsv = new HoaDon_Services();
-            ctsv = new ChiTietHD_Services();
-            khsv = new KhachHang_Services();
+            _hdsv = new HoaDon_Services();
+            _ctsv = new ChiTietHD_Services();
+            _khsv = new KhachHang_Services();
 
             GetCtrl();
 
@@ -310,11 +310,13 @@ namespace App.Winform.UI
         {
             //Xóa dữ liệu trước khi thêm
             dtg_GioHang.Rows.Clear();
+            int tonggia = 0;
 
             foreach (var item in data)
             {
                 int sttGH = dtg_GioHang.Rows.Count;
-                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, _bhsv.AddThousandSeparators(item.DonGia));
+                tonggia = item.SoLuong * item.DonGia;
+                dtg_GioHang.Rows.Add(item.ChiTietSanPham.Id, sttGH++, item.ChiTietSanPham.SanPham.TenSanPham, item.SoLuong, _bhsv.AddThousandSeparators(item.DonGia), tonggia);
             }
         }
 
@@ -382,7 +384,7 @@ namespace App.Winform.UI
 
 
             //Tạo cột cho giỏ hàng
-            dtg_GioHang.ColumnCount = 5;
+            dtg_GioHang.ColumnCount = 6;
 
             dtg_GioHang.Columns[0].Name = "Id";
             dtg_GioHang.Columns[0].Visible = false;
@@ -402,6 +404,9 @@ namespace App.Winform.UI
 
             dtg_GioHang.Columns[4].Name = "dongia";
             dtg_GioHang.Columns[4].HeaderText = "Đơn giá";
+
+            dtg_GioHang.Columns[5].Name = "tonggia";
+            dtg_GioHang.Columns[5].HeaderText = "Tổng giá sản phẩm";
             dtg_GioHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
 
@@ -434,7 +439,7 @@ namespace App.Winform.UI
 
             dtg_HoaDonCho.Rows.Clear();
             //Thêm dữ liệu vào hóa đơn chờ 
-            foreach (var item in hdsv.GetAllHoaDon())
+            foreach (var item in _hdsv.GetAllHoaDon())
             {
                 string tenkh = "Không có";
                 if (item.KhachHang != null)
@@ -461,14 +466,21 @@ namespace App.Winform.UI
         {
 
             int rowIndex = e.RowIndex;
+            int colIndex = e.ColumnIndex;
             if (dtg_DSsanpham.SelectedRows.Count > 1 || e.RowIndex < 0)
+            {
+                return;
+            }
+
+            // Kiểm tra nếu click vào header của cột hoặc dòng
+            if (rowIndex < 0 || colIndex < 0)
             {
                 return;
             }
             else
             {
 
-                if (dtg_DSsanpham.Rows[rowIndex].Selected)
+                if (dtg_DSsanpham[colIndex, rowIndex].Value != null)
                 {
                     if (dtg_DSsanpham.Rows[rowIndex].Cells[0].Value == null)
                     {
@@ -494,6 +506,7 @@ namespace App.Winform.UI
                                 if (list[i].Cells[0].Value != null && list[i].Cells[0].Value.ToString() == id)
                                 {
                                     list[i].Cells[3].Value = Convert.ToInt32(list[i].Cells[3].Value) + 1;
+                                    list[i].Cells[5].Value = _bhsv.AddThousandSeparators(Convert.ToInt32(list[i].Cells[3].Value) * Convert.ToInt32(list[i].Cells[4].Value.ToString().Replace(",","")));
                                     check = false;
                                 }
 
@@ -501,13 +514,18 @@ namespace App.Winform.UI
                             if (check)
                             {
                                 int sttGH = dtg_GioHang.Rows.Count;
-                                dtg_GioHang.Rows.Add(id, sttGH++, name, soluong, _bhsv.AddThousandSeparators(Convert.ToInt32(dongia)));
+                                int tonggia = Convert.ToInt32(dongia) * soluong;
+                                dtg_GioHang.Rows.Add(id, sttGH++, name, soluong, _bhsv.AddThousandSeparators(Convert.ToInt32(dongia)), _bhsv.AddThousandSeparators(tonggia));
                             }
 
                             lb_TongTien.Text = _bhsv.AddThousandSeparators(TinhTongTien());
 
                         }
                     }
+                }
+                else
+                {
+                    return;
                 }
             }
 
@@ -541,12 +559,12 @@ namespace App.Winform.UI
                 string nameKH_search = dtg_HoaDonCho.Rows[rowIndex].Cells[1].Value.ToString();
 
                 //Load lại sản phẩm trong giỏ hàng của hóa đơn đó 
-                LoadGioHang(ctsv.GetAllCTHoaDon(idUpdate));
+                LoadGioHang(_ctsv.GetAllCTHoaDon(idUpdate));
 
                 //Lấy dữ liệu khách hàng từ tên khách hàng
-                kHang = khsv.Search_KH_By_Name(nameKH_search);
+                kHang = _khsv.Search_KH_By_Name(nameKH_search);
                 string sdtKH = "";
-                string nameKH = "...";
+                string nameKH = "Khách vãng lai";
                 string tichluy = "...";
                 if (kHang != null)
                 {
@@ -602,9 +620,16 @@ namespace App.Winform.UI
             int SauKhiGiamGia = 0;
             foreach (DataGridViewRow item in dtg_GioHang.Rows)
             {
-                if (item.Cells[3].Value != null && item.Cells[4].Value != null)
+                //if (item.Cells[3].Value != null && item.Cells[4].Value != null)
+                //{
+                //    int soluong = Convert.ToInt32(item.Cells[3].Value);
+                //    int dongia = Convert.ToInt32(item.Cells[4].Value.ToString().Replace(",", ""));
+                //    kq = kq + (soluong * dongia);
+                //}
+
+                if (item.Cells[5].Value != null)
                 {
-                    kq = kq + (Convert.ToInt32(item.Cells[4].Value.ToString().Replace(",", "")) * Convert.ToInt32(item.Cells[3].Value));
+                    kq = kq + Convert.ToInt32(item.Cells[5].Value.ToString().Replace(",",""));
                 }
 
             }
@@ -676,7 +701,7 @@ namespace App.Winform.UI
 
         //Hàm tìm kiếm khách hàng
         //Lấy mã khách hàng để tạo hóa đơn  
-        Guid? maKH;
+        //Guid? maKH;
         public void SearchCustomer()
         {
             kHang = _bhsv.GetKhachHang(tbx_SDTkh.Text);
@@ -685,11 +710,10 @@ namespace App.Winform.UI
             {
                 lb_TenKH.Text = kHang.TenKhachHang;
                 lb_TichLuy.Text = kHang.TichLuy.ToString();
-                maKH = kHang.MaKhachHang;
             }
             else
             {
-                maKH = null;
+                lb_TenKH.Text = "Khách vãng lai";
                 return;
             }
         }
@@ -741,7 +765,7 @@ namespace App.Winform.UI
             {
 
                 bool check = true;
-                foreach (var item in hdsv.GetAllHoaDon())
+                foreach (var item in _hdsv.GetAllHoaDon())
                 {
                     if (item.MaHoaDon == idUpdate)
                     {
@@ -764,7 +788,7 @@ namespace App.Winform.UI
                         kHang.TichLuy = tichluymoi;
 
 
-                        khsv.Update(kHang);
+                        _khsv.Update(kHang);
                     }
 
                     //Xoa du lieu input
@@ -778,9 +802,13 @@ namespace App.Winform.UI
                     hd.TienKhachTra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
                     hd.GiamGia = Convert.ToInt32(tbx_Giamgia.Text);
                     hd.TongTien = TinhTongTien();
+                    if(kHang != null)
+                    {
+                        hd.KhachHang = kHang;
+                    }
                     hd.TrangThai = "Đã thanh toán";
                     //Thanh toán hóa đơn chờ
-                    hdsv.CapNhatHoaDon(hd);
+                    _hdsv.CapNhatHoaDon(hd);
                     UpdateHDChiTiet();
                     MessageBox.Show("Thanh toán thành công");
 
@@ -794,7 +822,7 @@ namespace App.Winform.UI
                         kHang.TichLuy = tichluymoi;
 
 
-                        khsv.Update(kHang);
+                        _khsv.Update(kHang);
                     }
 
                     //In hoa don cho khach
@@ -812,7 +840,13 @@ namespace App.Winform.UI
         //Hàm tạo hóa đơn
         public void TaoHoaDon(string trangthai)
         {
-            Guid? makhachhang = maKH;
+            Guid? makhachhang = null;
+
+            if (kHang != null)
+            {
+                makhachhang = kHang.MaKhachHang;
+            }
+            
             Guid manhanvien = nvien.MaNhanVien;
             DateTime ngaymua = DateTime.Now;
 
@@ -827,10 +861,15 @@ namespace App.Winform.UI
                 return;
             }
             {
-                HoaDon hdonUpdate = hdsv.GetHD(idUpdate);
+                HoaDon hdonUpdate = _hdsv.GetHD(idUpdate);
                 if (hdonUpdate != null)
                 {
+                    if(kHang != null)
+                    {
+                        hdonUpdate.KhachHang = kHang;
+                    }
                     UpdateHDChiTiet();
+                    _bhsv.UpdateSoLuongSP(hdonUpdate.MaHoaDon);
                 }
                 else
                 {
@@ -845,7 +884,7 @@ namespace App.Winform.UI
                         GiamGia = giamgia,
                         TrangThai = trangthai
                     };
-                    hdsv.TaoHoaDon(hd);
+                    _hdsv.TaoHoaDon(hd);
                     AddHDChiTiet(hd.MaHoaDon);
 
                     //Update số lượng sản phẩm 
@@ -1045,7 +1084,7 @@ namespace App.Winform.UI
                     ctHoaDon.SoLuong = Convert.ToInt32(item.Cells[3].Value);
                     ctHoaDon.DonGia = Convert.ToInt32(item.Cells[4].Value.ToString().Replace(",", ""));
 
-                    ctsv.TaoChiTietHoaDon(ctHoaDon);
+                    _ctsv.TaoChiTietHoaDon(ctHoaDon);
                 }
             }
         }
@@ -1054,7 +1093,7 @@ namespace App.Winform.UI
         public void UpdateHDChiTiet()
         {
 
-            foreach (var item in ctsv.GetAllCTHoaDon(idUpdate).ToList())
+            foreach (var item in _ctsv.GetAllCTHoaDon(idUpdate).ToList())
             {
                 bool foundInCart = false;
                 foreach (DataGridViewRow row in dtg_GioHang.Rows)
@@ -1065,7 +1104,7 @@ namespace App.Winform.UI
                         {
                             // Cập nhật số lượng
                             item.SoLuong = Convert.ToInt32(row.Cells[3].Value);
-                            ctsv.UpdateCTHoaDon(item);
+                            _ctsv.UpdateCTHoaDon(item);
                             foundInCart = true;
                             break;
                         }
@@ -1075,7 +1114,7 @@ namespace App.Winform.UI
                 // Xóa nếu không còn tồn tại trong giỏ hàng
                 if (!foundInCart)
                 {
-                    ctsv.DeleteSPChiTietHoaDon(item);
+                    _ctsv.DeleteSPChiTietHoaDon(item);
                 }
             }
 
@@ -1085,7 +1124,7 @@ namespace App.Winform.UI
                 if (row.Cells[0].Value != null)
                 {
                     bool foundInOrder = false;
-                    foreach (var item in ctsv.GetAllCTHoaDon(idUpdate))
+                    foreach (var item in _ctsv.GetAllCTHoaDon(idUpdate))
                     {
                         if (item.MaChiTietSanPham == Guid.Parse(row.Cells[0].Value.ToString()))
                         {
@@ -1102,7 +1141,7 @@ namespace App.Winform.UI
                         ctHoaDon.SoLuong = Convert.ToInt32(row.Cells[3].Value);
                         ctHoaDon.DonGia = Convert.ToInt32(row.Cells[4].Value.ToString().Replace(",", ""));
 
-                        ctsv.TaoChiTietHoaDon(ctHoaDon);
+                        _ctsv.TaoChiTietHoaDon(ctHoaDon);
                     }
                 }
             }
@@ -1157,10 +1196,14 @@ namespace App.Winform.UI
         //Hủy hóa đơn
         private void pn_HuyHD_Click(object sender, EventArgs e)
         {
-            HoaDon hdonUpdate = hdsv.GetHD(idUpdate);
+            HoaDon hdonUpdate = _hdsv.GetHD(idUpdate);
             hdonUpdate.TrangThai = "Đã hủy";
 
-            hdsv.CapNhatHoaDon(hdonUpdate);
+            _hdsv.CapNhatHoaDon(hdonUpdate);
+
+            dtg_GioHang.Rows.Clear();
+            LoadGrid(_bhsv.GetAllSanPham());
+            MessageBox.Show("Đã hủy hóa đơn");
         }
 
         //Nut xoa sp

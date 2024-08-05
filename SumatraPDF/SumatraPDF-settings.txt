@@ -78,7 +78,7 @@ TreeFontName = automatic
 SmoothScroll = false
 ShowStartPage = true
 CheckForUpdates = true
-WindowState = 1
+WindowState = 2
 WindowPos = 566 0 788 1020
 UseTabs = true
 UseSysColors = false
@@ -86,7 +86,7 @@ CustomScreenDPI = 0
 
 FileStates [
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110733.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806024641.pdf
 		Favorites [
 		]
 		IsPinned = false
@@ -98,7 +98,7 @@ FileStates [
 		PageNo = 1
 		Zoom = fit page
 		Rotation = 0
-		WindowState = 1
+		WindowState = 2
 		WindowPos = 566 0 788 1020
 		ShowToc = false
 		SidebarDx = 0
@@ -106,7 +106,7 @@ FileStates [
 		ReparseIdx = 0
 	]
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110516.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806021721.pdf
 		Favorites [
 		]
 		IsPinned = false
@@ -118,7 +118,7 @@ FileStates [
 		PageNo = 1
 		Zoom = fit page
 		Rotation = 0
-		WindowState = 1
+		WindowState = 2
 		WindowPos = 566 0 788 1020
 		ShowToc = false
 		SidebarDx = 0
@@ -126,7 +126,7 @@ FileStates [
 		ReparseIdx = 0
 	]
 	[
-		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724105314.pdf
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806021111.pdf
 		Favorites [
 		]
 		IsPinned = false
@@ -138,7 +138,107 @@ FileStates [
 		PageNo = 1
 		Zoom = fit page
 		Rotation = 0
-		WindowState = 1
+		WindowState = 2
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806020852.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 5
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 2
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806020919.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 1
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 2
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240805101309.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 1
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 2
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240802104916.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 1
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 2
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240802104706.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 2
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 2
 		WindowPos = 566 0 788 1020
 		ShowToc = false
 		SidebarDx = 0
@@ -151,7 +251,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -171,7 +271,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -191,7 +291,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 4
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -211,7 +311,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 5
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -231,7 +331,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -251,7 +351,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -271,7 +371,67 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724105314.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 0
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110516.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 0
+		UseDefaultState = false
+		DisplayMode = continuous
+		ScrollPos = -1 -1
+		PageNo = 1
+		Zoom = fit page
+		Rotation = 0
+		WindowState = 1
+		WindowPos = 566 0 788 1020
+		ShowToc = false
+		SidebarDx = 0
+		DisplayR2L = false
+		ReparseIdx = 0
+	]
+	[
+		FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110733.pdf
+		Favorites [
+		]
+		IsPinned = false
+		IsMissing = false
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -291,7 +451,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -311,7 +471,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 4
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -331,7 +491,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 5
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -351,7 +511,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -371,7 +531,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -391,7 +551,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -411,7 +571,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -431,7 +591,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 1
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -451,7 +611,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -471,7 +631,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -491,7 +651,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 4
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -511,7 +671,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 5
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -531,7 +691,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 6
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -551,7 +711,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 7
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -571,7 +731,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 8
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -591,7 +751,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 9
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -611,7 +771,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 10
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -631,7 +791,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 11
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -651,7 +811,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 12
+		OpenCount = 3
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -671,7 +831,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 13
+		OpenCount = 3
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -691,7 +851,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 13
+		OpenCount = 3
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -711,7 +871,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 1
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -731,7 +891,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -751,7 +911,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -771,7 +931,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 4
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -791,7 +951,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 5
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -811,7 +971,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 6
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -831,7 +991,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 7
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -851,7 +1011,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 8
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -871,7 +1031,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 9
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -891,7 +1051,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 10
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -911,7 +1071,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 11
+		OpenCount = 2
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -931,7 +1091,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 2
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -951,7 +1111,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 3
+		OpenCount = 0
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -971,7 +1131,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 4
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -991,7 +1151,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 4
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -1011,7 +1171,7 @@ FileStates [
 		]
 		IsPinned = false
 		IsMissing = false
-		OpenCount = 5
+		OpenCount = 1
 		UseDefaultState = false
 		DisplayMode = continuous
 		ScrollPos = -1 -1
@@ -1370,7 +1530,7 @@ SessionData [
 	[
 		TabStates [
 			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724105314.pdf
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806020852.pdf
 				DisplayMode = continuous
 				PageNo = 1
 				Zoom = fit page
@@ -1379,7 +1539,7 @@ SessionData [
 				ShowToc = false
 			]
 			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110516.pdf
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806021111.pdf
 				DisplayMode = continuous
 				PageNo = 1
 				Zoom = fit page
@@ -1388,7 +1548,16 @@ SessionData [
 				ShowToc = false
 			]
 			[
-				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240724110733.pdf
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806021721.pdf
+				DisplayMode = continuous
+				PageNo = 1
+				Zoom = fit page
+				Rotation = 0
+				ScrollPos = -1 -1
+				ShowToc = false
+			]
+			[
+				FilePath = E:\PRO131_NEW\DA1_NHOM_2\App.Winform\bin\Debug\net8.0-windows\HoaDon_20240806024641.pdf
 				DisplayMode = continuous
 				PageNo = 1
 				Zoom = fit page
@@ -1397,13 +1566,13 @@ SessionData [
 				ShowToc = false
 			]
 		]
-		TabIndex = 4
-		WindowState = 1
+		TabIndex = 5
+		WindowState = 2
 		WindowPos = 566 0 788 1020
 		SidebarDx = 0
 	]
 ]
 TimeOfLastUpdateCheck = 0 0
-OpenCountWeek = 707
+OpenCountWeek = 709
 
 # Settings below are not recognized by the current version

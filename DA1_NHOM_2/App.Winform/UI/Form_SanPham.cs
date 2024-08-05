@@ -159,7 +159,7 @@ namespace App.Winform.UI
         {
             txt_SoLuong.Text = "";
             txt_TenSanPham.Text = "";
-            txt_LoaiSp.Text = "";
+            cbx_LoaiSP.Text = "";
             txt_ChieuDai.Text = "";
             txt_CanNang.Text = "";
             txt_GiaBan.Text = "";
@@ -228,7 +228,7 @@ namespace App.Winform.UI
         {
             // Kiểm tra dữ liệu nhập vào
             if (string.IsNullOrWhiteSpace(txt_SoLuong.Text) || string.IsNullOrWhiteSpace(txt_TenSanPham.Text) ||
-                string.IsNullOrWhiteSpace(txt_LoaiSp.Text) || string.IsNullOrWhiteSpace(txt_ChieuDai.Text) ||
+                string.IsNullOrWhiteSpace(cbx_LoaiSP.Text) || string.IsNullOrWhiteSpace(txt_ChieuDai.Text) ||
                 string.IsNullOrWhiteSpace(txt_CanNang.Text) || string.IsNullOrWhiteSpace(txt_GiaBan.Text) ||
                 string.IsNullOrWhiteSpace(cbx_ChatLieu.Text) || string.IsNullOrWhiteSpace(cbx_LoaiRen.Text) ||
                 string.IsNullOrWhiteSpace(cbx_MauSac.Text) || string.IsNullOrWhiteSpace(cbx_HangSX.Text)
@@ -306,7 +306,7 @@ namespace App.Winform.UI
                 var sp = new SanPham();
                 sp.MaSanPham = Guid.NewGuid();
                 sp.TenSanPham = txt_TenSanPham.Text;
-                sp.LoaiSanPham = txt_LoaiSp.Text;
+                sp.LoaiSanPham = cbx_LoaiSP.Text;
 
                 //
                 var ctsp = new ChiTietSanPham();
@@ -420,7 +420,7 @@ namespace App.Winform.UI
 
             // Kiểm tra dữ liệu nhập vào và các điều kiện khác
             if (string.IsNullOrWhiteSpace(txt_SoLuong.Text) || string.IsNullOrWhiteSpace(txt_TenSanPham.Text) ||
-                string.IsNullOrWhiteSpace(txt_LoaiSp.Text) || string.IsNullOrWhiteSpace(txt_ChieuDai.Text) ||
+                string.IsNullOrWhiteSpace(cbx_LoaiSP.Text) || string.IsNullOrWhiteSpace(txt_ChieuDai.Text) ||
                 string.IsNullOrWhiteSpace(txt_CanNang.Text) || string.IsNullOrWhiteSpace(txt_GiaBan.Text) ||
                 string.IsNullOrWhiteSpace(cbx_ChatLieu.Text) || string.IsNullOrWhiteSpace(cbx_LoaiRen.Text) ||
                 string.IsNullOrWhiteSpace(cbx_MauSac.Text) || string.IsNullOrWhiteSpace(cbx_HangSX.Text))
@@ -579,7 +579,7 @@ namespace App.Winform.UI
             txt_GiaBan.Text = obj.GiaBan.ToString();
             txt_ChieuDai.Text = obj.ChieuDai.ToString();
             txt_CanNang.Text = obj.CanNang.ToString();
-            txt_LoaiSp.Text = obj.SanPham.LoaiSanPham.ToString();
+            cbx_LoaiSP.SelectedItem = obj.SanPham.LoaiSanPham.ToString();
             cbx_TrangThai.SelectedItem = obj.TrangThai.ToString();
 
             // Kiểm tra xem dữ liệu VARBINARY có tồn tại không
@@ -621,7 +621,7 @@ namespace App.Winform.UI
                 _idMS = Guid.Parse(dtg_DSMau.Rows[index].Cells[0].Value.ToString());
 
                 txt_MauSac_2.Text = dtg_DSMau.Rows[index].Cells[2].Value.ToString();
-            }       
+            }
         }
 
         private void dtgView_CellClick_ChatLieu(object sender, DataGridViewCellEventArgs e)
@@ -904,17 +904,17 @@ namespace App.Winform.UI
         //
         private void txt_SoLuong_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void cbx_TrangThai_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         public void CheckStatus(string input)
         {
-            
+
 
         }
 
@@ -960,7 +960,7 @@ namespace App.Winform.UI
 
             if (!string.IsNullOrWhiteSpace(txt_LoaiRen_2.Text))
             {
-                if(!_service.DeleteThanhPhan<LoaiRen>(_idLR)) check = false;
+                if (!_service.DeleteThanhPhan<LoaiRen>(_idLR)) check = false;
             }
 
             if (!string.IsNullOrWhiteSpace(txt_HangSanXuat_2.Text))
@@ -968,7 +968,7 @@ namespace App.Winform.UI
                 if (!_service.DeleteThanhPhan<HangSanXuat>(_idHS)) check = false;
             }
 
-            if(check)
+            if (check)
             {
                 MessageBox.Show("Xóa thành công");
                 ResetInput();
@@ -994,6 +994,46 @@ namespace App.Winform.UI
             txt_MauSac_2.Text = null;
             txt_HangSanXuat_2.Text = null;
             txt_LoaiRen_2.Text = null;
+        }
+
+        private void txt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            System.Windows.Forms.TextBox textBox = sender as System.Windows.Forms.TextBox;
+
+            if(textBox != txt_SoLuong)
+            {
+                // Kiểm tra nếu ký tự không phải là số (0-9) và không phải là dấu chấm (.)
+                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+                {
+                    e.Handled = true;
+                }
+
+                // Kiểm tra nếu đã có dấu chấm trong TextBox
+                if (e.KeyChar == '.' && textBox.Text.IndexOf('.') > -1)
+                {
+                    e.Handled = true;
+                }
+
+                // Không cho phép dấu chấm ở đầu chuỗi
+                if (e.KeyChar == '.' && textBox.SelectionStart == 0)
+                {
+                    e.Handled = true;
+                }
+
+                // Không cho phép dấu âm
+                if (e.KeyChar == '-' && textBox.SelectionStart != 0)
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            
         }
     }
 
