@@ -901,12 +901,6 @@ namespace App.Winform.UI
             return filterSP;
         }
 
-        //
-        private void txt_SoLuong_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void cbx_TrangThai_SelectedIndexChanged(object sender, EventArgs e)
         {
 

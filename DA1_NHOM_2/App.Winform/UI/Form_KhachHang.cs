@@ -81,24 +81,25 @@ namespace App.Winform.UI
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void pn_Btn_Them_Click(object sender, EventArgs e)
+        private bool Validate()
         {
+            bool check = true;
             // Kiểm tra không cho phép để trống thông tin
             if (string.IsNullOrEmpty(txt_TenKH.Text) || string.IsNullOrEmpty(txt_SĐT.Text))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin.");
-                return;
+                check = false;
             }
             if (string.IsNullOrWhiteSpace(txt_TenKH.Text) || txt_TenKH.Text.Length > 50)
             {
                 MessageBox.Show("Vui lòng nhập tên khách hàng không quá 50 ký tự.");
-                return;
+                check = false;
             }
             // Kiểm tra tên khách hàng không được rỗng
             if (string.IsNullOrWhiteSpace(txt_TenKH.Text))
             {
                 MessageBox.Show("Vui lòng nhập tên khách hàng.");
-                return;
+                check = false;
             }
 
             // Kiểm tra số điện thoại phải bắt đầu bằng số 0
@@ -106,48 +107,67 @@ namespace App.Winform.UI
 
             // Kiểm tra số điện thoại chỉ chứa số và có đúng 10 chữ số
             string phoneNumber = txt_SĐT.Text.Trim();
+            string email = txt_Email.Text.ToLower().Trim();
+
             Regex regex = new Regex(@"^\d{10}$");
+            string pattern = @"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$";
+            Regex regexemail = new Regex(pattern);
+
+            if (!regexemail.IsMatch(email))
+            {
+                MessageBox.Show("Email không hợp lệ");
+                check = false;
+            }
             if (!regex.IsMatch(phoneNumber))
             {
                 MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại chỉ chứa số và có đúng 10 chữ số.");
-                return;
+                check = false;
             }
             foreach (var existingKH in _listKH)
             {
                 if (existingKH.SoDienThoai == phoneNumber)
                 {
                     MessageBox.Show("Số điện thoại này đã tồn tại cho một khách hàng khác. Vui lòng nhập số điện thoại khác.");
-                    return;
+                    check = false;
                 }
             }
             // Kiểm tra số điện thoại phải bắt đầu từ số 0
             if (!phoneNumber.StartsWith("0"))
             {
                 MessageBox.Show("Số điện thoại phải bắt đầu bằng số 0.");
-                return;
+                check = false;
             }
             if (!phoneNumber.StartsWith("0"))
             {
                 MessageBox.Show("Số điện thoại phải bắt đầu bằng số 0.");
-                return;
+                check = false;
             }
+            
 
-            var kh = new KhachHang();
-            kh.MaKhachHang = Guid.NewGuid();
-            kh.Email = txt_Email.Text;
-            kh.TenKhachHang = txt_TenKH.Text;
-            kh.SoDienThoai = phoneNumber;
-            kh.TichLuy = 0;
+            return check;
+        }
 
-            var option = MessageBox.Show("Xác nhận muốn thêm khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (option == DialogResult.Yes)
+        private void pn_Btn_Them_Click(object sender, EventArgs e)
+        {
+            if (Validate())
             {
-                MessageBox.Show(_service.Add(kh));
-                LoadGird(null);
-            }
-            else
-            {
-                return;
+                var kh = new KhachHang();
+                kh.MaKhachHang = Guid.NewGuid();
+                kh.Email = txt_Email.Text.Trim().ToLower();
+                kh.TenKhachHang = txt_TenKH.Text.Trim();
+                kh.SoDienThoai = txt_SĐT.Text.Trim();
+                kh.TichLuy = 0;
+
+                var option = MessageBox.Show("Xác nhận muốn thêm khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (option == DialogResult.Yes)
+                {
+                    MessageBox.Show(_service.Add(kh));
+                    LoadGird(null);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 
@@ -161,51 +181,36 @@ namespace App.Winform.UI
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txt_TenKH.Text) || txt_TenKH.Text.Length > 50)
+            if (Validate())
             {
-                MessageBox.Show("Vui lòng nhập tên khách hàng không quá 50 ký tự.");
-                return;
-            }
-            // Tạo đối tượng khách hàng mới để lưu thông tin sửa đổi
-            var kh = new KhachHang();
-            kh.MaKhachHang = _idwhenclick;
-         
-            kh.TenKhachHang = txt_TenKH.Text;
-            kh.Email = txt_Email.Text;
-            kh.SoDienThoai = txt_SĐT.Text;
-            //kh.TichLuy = diemtichluy;
 
-            if (!Regex.IsMatch(kh.TenKhachHang, "^[a-zA-Z ]+$"))
-            {
-                MessageBox.Show("Tên khách hàng chỉ được nhập chữ và dấu cách.");
-                return;
-            }
-            
-            // Kiểm tra số điện thoại có đúng 10 chữ số hay không
-            if (kh.SoDienThoai.Length != 10)
-            {
-                MessageBox.Show("Số điện thoại phải có đúng 10 chữ số.");
-                return;
-            }
-            // Kiểm tra số điện thoại đã tồn tại trong danh sách khách hàng khác hay không
-            foreach (var existingKH in _listKH)
-            {
-                if (existingKH.SoDienThoai == kh.SoDienThoai && existingKH.MaKhachHang != kh.MaKhachHang)
+
+                // Tạo đối tượng khách hàng mới để lưu thông tin sửa đổi
+                var kh = new KhachHang();
+                kh.MaKhachHang = _idwhenclick;
+
+                kh.TenKhachHang = txt_TenKH.Text;
+                kh.Email = txt_Email.Text;
+                kh.SoDienThoai = txt_SĐT.Text;
+                //kh.TichLuy = diemtichluy;
+
+                if (!Regex.IsMatch(kh.TenKhachHang, "^[a-zA-Z ]+$"))
                 {
-                    MessageBox.Show("Số điện thoại này đã tồn tại cho một khách hàng khác. Vui lòng nhập số điện thoại khác.");
+                    MessageBox.Show("Tên khách hàng chỉ được nhập chữ và dấu cách.");
                     return;
                 }
-            }
 
-            var option = MessageBox.Show("Xác nhận muốn update khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (option == DialogResult.Yes)
-            {
-                MessageBox.Show(_service.Update(kh));
-                LoadGird(null);
-            }
-            else
-            {
-                return;
+
+                var option = MessageBox.Show("Xác nhận muốn update khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (option == DialogResult.Yes)
+                {
+                    MessageBox.Show(_service.Update(kh));
+                    LoadGird(null);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 
@@ -291,9 +296,13 @@ namespace App.Winform.UI
             LoadGird(null);
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
 
+        private void txt_SĐT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
