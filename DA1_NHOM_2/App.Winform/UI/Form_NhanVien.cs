@@ -78,22 +78,23 @@ namespace App.Winform.UI
             txt_MatKhau.Text = "";
         }
 
-        private void pn_Btn_Them_Click(object sender, EventArgs e)
+        public bool Validate()
         {
+            bool check = true;
             if (Cmb_ChucVu.SelectedItem == null)
             {
                 MessageBox.Show("Vui lòng chọn chức vụ.");
-                return;
+                check = false;
             }
             if (string.IsNullOrEmpty(txt_TenNV.Text) ||
                 string.IsNullOrEmpty(txt_TaiKhoan.Text) ||
-                string.IsNullOrEmpty(txt_MatKhau.Text)  ||
-                string.IsNullOrEmpty(txt_EmailNV.Text)  ||
+                string.IsNullOrEmpty(txt_MatKhau.Text) ||
+                string.IsNullOrEmpty(txt_EmailNV.Text) ||
                 string.IsNullOrEmpty(txt_SdtNv.Text))
 
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.");
-                return;
+                check = false;
             }
 
 
@@ -101,47 +102,83 @@ namespace App.Winform.UI
             if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
             {
                 MessageBox.Show("Tên nhân viên không được chứa số.");
-                return;
+                check = false;
             }
 
             // Kiểm tra độ dài của tên nhân viên
             if (txt_TenNV.Text.Length > 50)
             {
                 MessageBox.Show("Tên nhân viên chỉ được nhập tối đa 50 ký tự.");
-                return;
+                check = false;
             }
 
             if (txt_TaiKhoan.Text.Length > 20 || txt_MatKhau.Text.Length > 20)
             {
                 MessageBox.Show("Tài khoản và mật khẩu chỉ được nhập tối đa 20 ký tự.");
-                return;
+                check = false;
             }
             if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
             {
                 MessageBox.Show("Tên nhân viên không được chứa số.");
-                return;
+                check = false;
             }
+            string phoneNumber = txt_SdtNv.Text.Trim();
+            string email = txt_EmailNV.Text.ToLower().Trim();
+
+            string pattern = @"^(0|\+84)[3|5|7|8|9]\d{8}$";
+            Regex regex = new Regex(pattern);
+
+            string pattern2 = @"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$";
+            Regex regexemail = new Regex(pattern2);
+
+            if (!regexemail.IsMatch(email))
+            {
+                MessageBox.Show("Email không hợp lệ");
+                check = false;
+            }
+            if (!regex.IsMatch(phoneNumber))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại chỉ chứa số và có đúng 10 chữ số.");
+                check = false;
+            }
+            foreach (var existingKH in _service.GetAll(null))
+            {
+                if (existingKH.SoDienThoai == phoneNumber)
+                {
+                    MessageBox.Show("Số điện thoại này đã tồn tại cho một khách hàng khác. Vui lòng nhập số điện thoại khác.");
+                    check = false;
+                }
+            }
+            return check;
+        }
+
+        private void pn_Btn_Them_Click(object sender, EventArgs e)
+        {
+            
             string selectedValue = Cmb_ChucVu.SelectedItem.ToString();
             var option = MessageBox.Show("Xác nhận muốn thêm nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
             if (option == DialogResult.Yes)
             {
-                var nv = new NhanVien
+                if (Validate())
                 {
-                    MaNhanVien = Guid.NewGuid(),
-                    TenNhanVien = txt_TenNV.Text,
-                    ChucVu = selectedValue,
-                    SoDienThoai = txt_SdtNv.Text,
-                    Email = txt_EmailNV.Text,
-                    TaiKhoan = txt_TaiKhoan.Text,
-                    MatKhau = txt_MatKhau.Text,
-                    TrangThai = "Đang làm việc"
-                };
+                    var nv = new NhanVien
+                    {
+                        MaNhanVien = Guid.NewGuid(),
+                        TenNhanVien = txt_TenNV.Text,
+                        ChucVu = selectedValue,
+                        SoDienThoai = txt_SdtNv.Text,
+                        Email = txt_EmailNV.Text,
+                        TaiKhoan = txt_TaiKhoan.Text,
+                        MatKhau = txt_MatKhau.Text,
+                        TrangThai = "Đang làm việc"
+                    };
 
-                string result = _service.Add(nv);
-                MessageBox.Show(result);
-                LoadGird(null);
+                    string result = _service.Add(nv);
+                    MessageBox.Show(result);
+                    LoadGird(null);
 
-                ResetInput();
+                    ResetInput();
+                }
             }
         }
 
@@ -153,47 +190,6 @@ namespace App.Winform.UI
                 MessageBox.Show("Vui lòng chọn một Nhân Viên để sửa.");
                 return;
             }
-            if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
-            {
-                MessageBox.Show("Tên nhân viên không được chứa số.");
-                return;
-            }
-
-            // Kiểm tra tên nhân viên có chứa số không
-            if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
-            {
-                MessageBox.Show("Tên nhân viên không được chứa số.");
-                return;
-            }
-
-            // Kiểm tra độ dài của tên nhân viên
-            if (txt_TenNV.Text.Length > 50)
-            {
-                MessageBox.Show("Tên nhân viên chỉ được nhập tối đa 50 ký tự.");
-                return;
-            }
-
-            if (Cmb_ChucVu.SelectedItem == null)
-            {
-                MessageBox.Show("Vui lòng chọn chức vụ.");
-                return;
-            }
-            if (txt_TaiKhoan.Text.Length > 20 || txt_MatKhau.Text.Length > 20)
-            {
-                MessageBox.Show("Tài khoản và mật khẩu chỉ được nhập tối đa 20 ký tự.");
-                return;
-            }
-
-
-            if (string.IsNullOrEmpty(txt_TenNV.Text) ||
-                string.IsNullOrEmpty(txt_TaiKhoan.Text) ||
-                string.IsNullOrEmpty(txt_MatKhau.Text) ||
-                string.IsNullOrEmpty(txt_EmailNV.Text) ||
-                string.IsNullOrEmpty(txt_SdtNv.Text))
-            {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.");
-                return;
-            }
 
             // Lấy giá trị của ComboBox Chức vụ đã chọn
             string selectedValue = Cmb_ChucVu.SelectedItem.ToString();
@@ -201,25 +197,28 @@ namespace App.Winform.UI
             var option = MessageBox.Show("Xác nhận muốn sửa nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
             if (option == DialogResult.Yes)
             {
-                var nv = new NhanVien
+                if(Validate())
                 {
-                    MaNhanVien = _idwhenclick,
-                    TenNhanVien = txt_TenNV.Text,
-                    ChucVu = selectedValue, // Gán giá trị từ ComboBox Chức vụ
-                    SoDienThoai = txt_SdtNv.Text,
-                    Email = txt_EmailNV.Text,
-                    TaiKhoan = txt_TaiKhoan.Text,
-                    MatKhau = txt_MatKhau.Text,
-                    TrangThai = cbx_TrangThai.Text
-                };
+                    var nv = new NhanVien
+                    {
+                        MaNhanVien = _idwhenclick,
+                        TenNhanVien = txt_TenNV.Text,
+                        ChucVu = selectedValue, // Gán giá trị từ ComboBox Chức vụ
+                        SoDienThoai = txt_SdtNv.Text,
+                        Email = txt_EmailNV.Text,
+                        TaiKhoan = txt_TaiKhoan.Text,
+                        MatKhau = txt_MatKhau.Text,
+                        TrangThai = cbx_TrangThai.Text
+                    };
 
-                string result = _service.Update(nv);
-                MessageBox.Show(result);
+                    string result = _service.Update(nv);
+                    MessageBox.Show(result);
 
-                // Cập nhật lại danh sách nhân viên trên giao diện
-                LoadGird(null);
+                    // Cập nhật lại danh sách nhân viên trên giao diện
+                    LoadGird(null);
 
-                ResetInput();
+                    ResetInput();
+                }    
             }
         }
 
