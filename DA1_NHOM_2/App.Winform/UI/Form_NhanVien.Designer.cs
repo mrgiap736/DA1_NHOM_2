@@ -47,6 +47,8 @@
             grb_DanhSach = new GroupBox();
             dtgView = new DataGridView();
             grb_ThongTin = new GroupBox();
+            label11 = new Label();
+            cbx_TrangThai = new ComboBox();
             txt_EmailNV = new TextBox();
             label10 = new Label();
             txt_SdtNv = new TextBox();
@@ -59,8 +61,6 @@
             label3 = new Label();
             txt_TenNV = new TextBox();
             label2 = new Label();
-            cbx_TrangThai = new ComboBox();
-            label11 = new Label();
             pn_Form_NhanVien.SuspendLayout();
             groupBox1.SuspendLayout();
             pn_Btn_Xoa.SuspendLayout();
@@ -278,6 +278,24 @@
             grb_ThongTin.TabStop = false;
             grb_ThongTin.Text = "Thông tin nhân viên";
             // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(65, 293);
+            label11.Name = "label11";
+            label11.Size = new Size(78, 20);
+            label11.TabIndex = 26;
+            label11.Text = "Trạng thái:";
+            // 
+            // cbx_TrangThai
+            // 
+            cbx_TrangThai.FormattingEnabled = true;
+            cbx_TrangThai.Items.AddRange(new object[] { "Đang làm việc", "Đã nghỉ việc" });
+            cbx_TrangThai.Location = new Point(190, 290);
+            cbx_TrangThai.Name = "cbx_TrangThai";
+            cbx_TrangThai.Size = new Size(331, 28);
+            cbx_TrangThai.TabIndex = 25;
+            // 
             // txt_EmailNV
             // 
             txt_EmailNV.Location = new Point(190, 155);
@@ -314,7 +332,7 @@
             // 
             Cmb_ChucVu.BackColor = SystemColors.ButtonHighlight;
             Cmb_ChucVu.ForeColor = Color.Black;
-            Cmb_ChucVu.Items.AddRange(new object[] { "Admin", "Nhân Viên" });
+            Cmb_ChucVu.Items.AddRange(new object[] { "Admin", "Nhân viên" });
             Cmb_ChucVu.Location = new Point(190, 67);
             Cmb_ChucVu.Name = "Cmb_ChucVu";
             Cmb_ChucVu.Size = new Size(331, 28);
@@ -377,24 +395,6 @@
             label2.Size = new Size(102, 20);
             label2.TabIndex = 13;
             label2.Text = "Tên nhân viên:";
-            // 
-            // cbx_TrangThai
-            // 
-            cbx_TrangThai.FormattingEnabled = true;
-            cbx_TrangThai.Items.AddRange(new object[] { "Đang làm việc", "Đã nghỉ việc" });
-            cbx_TrangThai.Location = new Point(190, 290);
-            cbx_TrangThai.Name = "cbx_TrangThai";
-            cbx_TrangThai.Size = new Size(331, 28);
-            cbx_TrangThai.TabIndex = 25;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(65, 293);
-            label11.Name = "label11";
-            label11.Size = new Size(78, 20);
-            label11.TabIndex = 26;
-            label11.Text = "Trạng thái:";
             // 
             // Form_NhanVien
             // 

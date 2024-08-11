@@ -48,5 +48,14 @@ namespace App.Services.Services
 			return hdrp.FilByTT(tt);
 		}
 
+        //Hàm chuyển số ngăn cách phần nghìn 
+        public string AddThousandSeparators(int number)
+        {
+            // Chuyển đổi số sang chuỗi và sử dụng phương thức Format để thêm dấu chấm ngăn cách
+            string formattedNumber = string.Format("{0:N0}", number);
+
+            return formattedNumber;
+        }
+
     }
 }

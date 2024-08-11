@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Twilio.Types;
 
 namespace App.Winform.UI
 {
@@ -60,7 +61,7 @@ namespace App.Winform.UI
             {
                 int stt = _listNV.IndexOf(nv) + 1;
                 string matkhau = "******";
-                if(nv.MatKhau == _nv.MatKhau)
+                if (nv.MatKhau == _nv.MatKhau)
                 {
                     matkhau = nv.MatKhau;
                 }
@@ -78,69 +79,10 @@ namespace App.Winform.UI
             txt_MatKhau.Text = "";
         }
 
-        public bool Validate()
+        public bool CheckExistPhone(string phoneNumber)
         {
             bool check = true;
-            if (Cmb_ChucVu.SelectedItem == null)
-            {
-                MessageBox.Show("Vui lòng chọn chức vụ.");
-                check = false;
-            }
-            if (string.IsNullOrEmpty(txt_TenNV.Text) ||
-                string.IsNullOrEmpty(txt_TaiKhoan.Text) ||
-                string.IsNullOrEmpty(txt_MatKhau.Text) ||
-                string.IsNullOrEmpty(txt_EmailNV.Text) ||
-                string.IsNullOrEmpty(txt_SdtNv.Text))
 
-            {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.");
-                check = false;
-            }
-
-
-            // Kiểm tra tên nhân viên có chứa số không
-            if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
-            {
-                MessageBox.Show("Tên nhân viên không được chứa số.");
-                check = false;
-            }
-
-            // Kiểm tra độ dài của tên nhân viên
-            if (txt_TenNV.Text.Length > 50)
-            {
-                MessageBox.Show("Tên nhân viên chỉ được nhập tối đa 50 ký tự.");
-                check = false;
-            }
-
-            if (txt_TaiKhoan.Text.Length > 20 || txt_MatKhau.Text.Length > 20)
-            {
-                MessageBox.Show("Tài khoản và mật khẩu chỉ được nhập tối đa 20 ký tự.");
-                check = false;
-            }
-            if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
-            {
-                MessageBox.Show("Tên nhân viên không được chứa số.");
-                check = false;
-            }
-            string phoneNumber = txt_SdtNv.Text.Trim();
-            string email = txt_EmailNV.Text.ToLower().Trim();
-
-            string pattern = @"^(0|\+84)[3|5|7|8|9]\d{8}$";
-            Regex regex = new Regex(pattern);
-
-            string pattern2 = @"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$";
-            Regex regexemail = new Regex(pattern2);
-
-            if (!regexemail.IsMatch(email))
-            {
-                MessageBox.Show("Email không hợp lệ");
-                check = false;
-            }
-            if (!regex.IsMatch(phoneNumber))
-            {
-                MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại chỉ chứa số và có đúng 10 chữ số.");
-                check = false;
-            }
             foreach (var existingKH in _service.GetAll(null))
             {
                 if (existingKH.SoDienThoai == phoneNumber)
@@ -149,17 +91,114 @@ namespace App.Winform.UI
                     check = false;
                 }
             }
+
+            return check;
+        }
+
+        public bool CheckExistEmail(string email)
+        {
+            bool check = true;
+
+            foreach (var existingKH in _service.GetAll(null))
+            {
+                if (existingKH.Email == email)
+                {
+                    MessageBox.Show("Email này đã tồn tại cho một khách hàng khác. Vui lòng nhập email khác.");
+                    check = false;
+                }
+            }
+
+            return check;
+        }
+
+
+        public bool CheckExistAccount(string account)
+        {
+            bool check = true;
+
+            foreach (var existingKH in _service.GetAll(null))
+            {
+                if (existingKH.TaiKhoan == account)
+                {
+                    MessageBox.Show("Tài khoản này đã tồn tại cho một khách hàng khác. Vui lòng nhập tài khoản khác.");
+                    check = false;
+                }
+            }
+
+            return check;
+        }
+
+        public bool Validate()
+        {
+            bool check = true;
+
+            if (string.IsNullOrEmpty(txt_TenNV.Text) ||
+                string.IsNullOrEmpty(txt_TaiKhoan.Text) ||
+                string.IsNullOrEmpty(txt_MatKhau.Text) ||
+                string.IsNullOrEmpty(txt_EmailNV.Text) ||
+                string.IsNullOrEmpty(txt_SdtNv.Text) ||
+                Cmb_ChucVu.SelectedItem == null)
+
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin nhân viên.");
+                check = false;
+            }
+            else
+            {
+                // Kiểm tra tên nhân viên có chứa số không
+                if (Regex.IsMatch(txt_TenNV.Text, @"\d"))
+                {
+                    MessageBox.Show("Tên nhân viên không được chứa số.");
+                    check = false;
+                }
+
+                // Kiểm tra độ dài của tên nhân viên
+                if (txt_TenNV.Text.Length > 50)
+                {
+                    MessageBox.Show("Tên nhân viên chỉ được nhập tối đa 50 ký tự.");
+                    check = false;
+                }
+
+                if (txt_TaiKhoan.Text.Length > 20 || txt_MatKhau.Text.Length > 20)
+                {
+                    MessageBox.Show("Tài khoản và mật khẩu chỉ được nhập tối đa 20 ký tự.");
+                    check = false;
+                }
+
+                string phoneNumber = txt_SdtNv.Text.Trim();
+                string email = txt_EmailNV.Text.ToLower().Trim();
+
+                string pattern = @"^(0|\+84)[3|5|7|8|9]\d{8}$";
+                Regex regex = new Regex(pattern);
+
+                string pattern2 = @"^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$";
+                Regex regexemail = new Regex(pattern2);
+
+                if (!regexemail.IsMatch(email))
+                {
+                    MessageBox.Show("Email không hợp lệ");
+                    check = false;
+                }
+                if (!regex.IsMatch(phoneNumber))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại chỉ chứa số và có đúng 10 chữ số.");
+                    check = false;
+                }
+            }
+
+
+
             return check;
         }
 
         private void pn_Btn_Them_Click(object sender, EventArgs e)
         {
-            
+
             string selectedValue = Cmb_ChucVu.SelectedItem.ToString();
             var option = MessageBox.Show("Xác nhận muốn thêm nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
             if (option == DialogResult.Yes)
             {
-                if (Validate())
+                if (Validate() && CheckExistPhone(txt_SdtNv.Text) && CheckExistEmail(txt_EmailNV.Text) && CheckExistAccount(txt_TaiKhoan.Text))
                 {
                     var nv = new NhanVien
                     {
@@ -185,40 +224,69 @@ namespace App.Winform.UI
 
         private void pn_Btn_Sua_Click(object sender, EventArgs e)
         {
+            NhanVien nv = null;
             if (_idwhenclick == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
                 MessageBox.Show("Vui lòng chọn một Nhân Viên để sửa.");
                 return;
             }
-
-            // Lấy giá trị của ComboBox Chức vụ đã chọn
-            string selectedValue = Cmb_ChucVu.SelectedItem.ToString();
-
-            var option = MessageBox.Show("Xác nhận muốn sửa nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (option == DialogResult.Yes)
+            else
             {
-                if(Validate())
+                List<NhanVien> lst = _service.GetAll(null);
+
+                nv = lst.FirstOrDefault(x => x.MaNhanVien == _idwhenclick);
+            }
+
+            if (nv != null)
+            {
+
+                // Lấy giá trị của ComboBox Chức vụ đã chọn
+                string selectedValue = Cmb_ChucVu.SelectedItem.ToString();
+
+                var option = MessageBox.Show("Xác nhận muốn sửa nhân viên?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (option == DialogResult.Yes)
                 {
-                    var nv = new NhanVien
+                    txt_MatKhau.Text = "Không được sửa";
+                    if (Validate())
                     {
-                        MaNhanVien = _idwhenclick,
-                        TenNhanVien = txt_TenNV.Text,
-                        ChucVu = selectedValue, // Gán giá trị từ ComboBox Chức vụ
-                        SoDienThoai = txt_SdtNv.Text,
-                        Email = txt_EmailNV.Text,
-                        TaiKhoan = txt_TaiKhoan.Text,
-                        MatKhau = txt_MatKhau.Text,
-                        TrangThai = cbx_TrangThai.Text
-                    };
+                        nv.TenNhanVien = txt_TenNV.Text;
+                        nv.ChucVu = selectedValue; // Gán giá trị từ ComboBox Chức vụ
 
-                    string result = _service.Update(nv);
-                    MessageBox.Show(result);
+                        if (nv.SoDienThoai != txt_SdtNv.Text)
+                        {
+                            if(CheckExistPhone(txt_SdtNv.Text))
+                            {
+                                nv.SoDienThoai = txt_SdtNv.Text;
+                            }                        
+                        }
 
-                    // Cập nhật lại danh sách nhân viên trên giao diện
-                    LoadGird(null);
+                        if (nv.Email != txt_EmailNV.Text.Trim())
+                        {
+                            if (CheckExistEmail(txt_EmailNV.Text))
+                            {
+                                nv.Email = txt_EmailNV.Text;
+                            }
+                        }
 
-                    ResetInput();
-                }    
+                        if (nv.TaiKhoan != txt_TaiKhoan.Text.Trim())
+                        {
+                            if(CheckExistAccount(txt_TaiKhoan.Text))
+                            {
+                                nv.TaiKhoan = txt_TaiKhoan.Text;
+                            }              
+                        }
+                        
+                        nv.TrangThai = cbx_TrangThai.Text;
+
+                        string result = _service.Update(nv);
+                        MessageBox.Show(result);
+
+                        // Cập nhật lại danh sách nhân viên trên giao diện
+                        LoadGird(null);
+
+                        ResetInput();
+                    }
+                }
             }
         }
 
@@ -275,7 +343,7 @@ namespace App.Winform.UI
             cbx_TrangThai.SelectedItem = obj.TrangThai;
 
             string matkhau = "";
-            if(obj.MaNhanVien == _nv.MaNhanVien)
+            if (obj.MaNhanVien == _nv.MaNhanVien)
             {
                 matkhau = obj.MatKhau;
             }

@@ -778,19 +778,6 @@ namespace App.Winform.UI
 
                     TaoHoaDon("Đã thanh toán");
 
-                    if (kHang != null)
-                    {
-                        //cập nhật tích lũy cho khách hàng
-                        int? tichluymoi;
-
-
-                        tichluymoi = kHang.TichLuy + 1;
-                        kHang.TichLuy = tichluymoi;
-
-
-                        _khsv.Update(kHang);
-                    }
-
                     //Xoa du lieu input
                     ClearInput();
 
@@ -811,19 +798,6 @@ namespace App.Winform.UI
                     _hdsv.CapNhatHoaDon(hd);
                     UpdateHDChiTiet();
                     MessageBox.Show("Thanh toán thành công");
-
-                    if (kHang != null)
-                    {
-                        //cập nhật tích lũy cho khách hàng
-                        int? tichluymoi;
-
-
-                        tichluymoi = kHang.TichLuy + 1;
-                        kHang.TichLuy = tichluymoi;
-
-
-                        _khsv.Update(kHang);
-                    }
 
                     //In hoa don cho khach
                     InHoaDon(idUpdate);

@@ -33,10 +33,19 @@ namespace App.Services.Services
 			var clone = _repos.GetAll().FirstOrDefault(x => x.MaNhanVien == nv.MaNhanVien);
 			clone.TenNhanVien = nv.TenNhanVien;
 			clone.ChucVu= nv.ChucVu;
-			clone.Email = nv.Email;
-			clone.SoDienThoai = nv.SoDienThoai;
-			clone.TaiKhoan = nv.TaiKhoan;
-			clone.MatKhau = nv.MatKhau;
+			if (nv.Email != null)
+			{
+				clone.Email = nv.Email;
+			}
+			if (nv.SoDienThoai != null)
+			{
+                clone.SoDienThoai = nv.SoDienThoai;
+            }
+			if (nv.TaiKhoan != null)
+			{
+                clone.TaiKhoan = nv.TaiKhoan;
+            }	
+
 			if (_repos.UpdateNV(clone) == true)
 			{
 				return "Update nhân viên thành công";

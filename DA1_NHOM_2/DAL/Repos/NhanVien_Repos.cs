@@ -20,7 +20,7 @@ namespace App.Data.Repos
 
         public bool AddNV(NhanVien nv)
         {
-            context.Add(nv);
+            context.NhanVien.Add(nv);
             context.SaveChanges();
             return true;
         }
@@ -32,14 +32,14 @@ namespace App.Data.Repos
 
         public bool RemoveNV(NhanVien nv)
         {
-            context.Remove(nv);
+            context.NhanVien.Remove(nv);
             context.SaveChanges();
             return true;
         }
 
         public bool UpdateNV(NhanVien nv)
         {
-            context.Update(nv);
+            context.NhanVien.Update(nv);
             context.SaveChanges();
             return true;
         }
