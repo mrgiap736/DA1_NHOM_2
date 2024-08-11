@@ -82,8 +82,6 @@
             dtg_GioHang = new DataGridView();
             grb_Thanhtoan = new GroupBox();
             pn_HuyHD = new Panel();
-            label12 = new Label();
-            label11 = new Label();
             pn_buttonThanhToan = new Panel();
             pn_iconThanhtoan = new Panel();
             lb_Thanhtoan = new Label();
@@ -97,8 +95,6 @@
             lb_tt4 = new Label();
             tbx_TienKhachTra = new TextBox();
             lb_tt3 = new Label();
-            tbx_Giamgia = new TextBox();
-            lb_tt2 = new Label();
             grb_DSsanpham = new GroupBox();
             tbx_Search = new TextBox();
             lb_Search = new Label();
@@ -693,8 +689,6 @@
             // grb_Thanhtoan
             // 
             grb_Thanhtoan.Controls.Add(pn_HuyHD);
-            grb_Thanhtoan.Controls.Add(label12);
-            grb_Thanhtoan.Controls.Add(label11);
             grb_Thanhtoan.Controls.Add(pn_buttonThanhToan);
             grb_Thanhtoan.Controls.Add(tbx_GhiChu);
             grb_Thanhtoan.Controls.Add(lb_TongTien);
@@ -706,8 +700,6 @@
             grb_Thanhtoan.Controls.Add(lb_tt4);
             grb_Thanhtoan.Controls.Add(tbx_TienKhachTra);
             grb_Thanhtoan.Controls.Add(lb_tt3);
-            grb_Thanhtoan.Controls.Add(tbx_Giamgia);
-            grb_Thanhtoan.Controls.Add(lb_tt2);
             grb_Thanhtoan.Location = new Point(1019, 8);
             grb_Thanhtoan.Name = "grb_Thanhtoan";
             grb_Thanhtoan.Size = new Size(667, 510);
@@ -720,37 +712,18 @@
             pn_HuyHD.BackColor = Color.Transparent;
             pn_HuyHD.BackgroundImage = (Image)resources.GetObject("pn_HuyHD.BackgroundImage");
             pn_HuyHD.BackgroundImageLayout = ImageLayout.Zoom;
-            pn_HuyHD.Location = new Point(437, 418);
+            pn_HuyHD.Location = new Point(437, 404);
             pn_HuyHD.Name = "pn_HuyHD";
             pn_HuyHD.Size = new Size(49, 44);
             pn_HuyHD.TabIndex = 0;
             pn_HuyHD.Click += pn_HuyHD_Click;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(402, 146);
-            label12.Name = "label12";
-            label12.Size = new Size(182, 20);
-            label12.TabIndex = 16;
-            label12.Text = "(Tối đa 70% tổng giá tiền)";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 9F);
-            label11.Location = new Point(254, 146);
-            label11.Name = "label11";
-            label11.Size = new Size(45, 20);
-            label11.TabIndex = 15;
-            label11.Text = "Điểm";
             // 
             // pn_buttonThanhToan
             // 
             pn_buttonThanhToan.BackColor = Color.Yellow;
             pn_buttonThanhToan.Controls.Add(pn_iconThanhtoan);
             pn_buttonThanhToan.Controls.Add(lb_Thanhtoan);
-            pn_buttonThanhToan.Location = new Point(229, 414);
+            pn_buttonThanhToan.Location = new Point(229, 400);
             pn_buttonThanhToan.Name = "pn_buttonThanhToan";
             pn_buttonThanhToan.Size = new Size(171, 50);
             pn_buttonThanhToan.TabIndex = 14;
@@ -780,7 +753,7 @@
             // 
             // tbx_GhiChu
             // 
-            tbx_GhiChu.Location = new Point(176, 282);
+            tbx_GhiChu.Location = new Point(176, 268);
             tbx_GhiChu.Multiline = true;
             tbx_GhiChu.Name = "tbx_GhiChu";
             tbx_GhiChu.Size = new Size(398, 109);
@@ -789,7 +762,7 @@
             // lb_TongTien
             // 
             lb_TongTien.AutoSize = true;
-            lb_TongTien.Location = new Point(176, 246);
+            lb_TongTien.Location = new Point(176, 232);
             lb_TongTien.Name = "lb_TongTien";
             lb_TongTien.Size = new Size(17, 20);
             lb_TongTien.TabIndex = 12;
@@ -798,7 +771,7 @@
             // lb_tt6
             // 
             lb_tt6.AutoSize = true;
-            lb_tt6.Location = new Point(36, 246);
+            lb_tt6.Location = new Point(36, 232);
             lb_tt6.Name = "lb_tt6";
             lb_tt6.Size = new Size(75, 20);
             lb_tt6.TabIndex = 11;
@@ -807,7 +780,7 @@
             // lb_tt8
             // 
             lb_tt8.AutoSize = true;
-            lb_tt8.Location = new Point(37, 282);
+            lb_tt8.Location = new Point(37, 268);
             lb_tt8.Name = "lb_tt8";
             lb_tt8.Size = new Size(61, 20);
             lb_tt8.TabIndex = 10;
@@ -816,7 +789,7 @@
             // lb_tt7
             // 
             lb_tt7.AutoSize = true;
-            lb_tt7.Location = new Point(534, 246);
+            lb_tt7.Location = new Point(534, 232);
             lb_tt7.Name = "lb_tt7";
             lb_tt7.Size = new Size(40, 20);
             lb_tt7.TabIndex = 9;
@@ -825,7 +798,7 @@
             // lb_tt5
             // 
             lb_tt5.AutoSize = true;
-            lb_tt5.Location = new Point(534, 206);
+            lb_tt5.Location = new Point(534, 192);
             lb_tt5.Name = "lb_tt5";
             lb_tt5.Size = new Size(40, 20);
             lb_tt5.TabIndex = 8;
@@ -834,7 +807,7 @@
             // lb_TienThua
             // 
             lb_TienThua.AutoSize = true;
-            lb_TienThua.Location = new Point(176, 206);
+            lb_TienThua.Location = new Point(176, 192);
             lb_TienThua.Name = "lb_TienThua";
             lb_TienThua.Size = new Size(17, 20);
             lb_TienThua.TabIndex = 7;
@@ -843,7 +816,7 @@
             // lb_tt4
             // 
             lb_tt4.AutoSize = true;
-            lb_tt4.Location = new Point(36, 206);
+            lb_tt4.Location = new Point(36, 192);
             lb_tt4.Name = "lb_tt4";
             lb_tt4.Size = new Size(74, 20);
             lb_tt4.TabIndex = 6;
@@ -867,25 +840,6 @@
             lb_tt3.Size = new Size(112, 20);
             lb_tt3.TabIndex = 4;
             lb_tt3.Text = "Tiền khách đưa:";
-            // 
-            // tbx_Giamgia
-            // 
-            tbx_Giamgia.Location = new Point(176, 143);
-            tbx_Giamgia.Name = "tbx_Giamgia";
-            tbx_Giamgia.Size = new Size(74, 27);
-            tbx_Giamgia.TabIndex = 3;
-            tbx_Giamgia.Text = "0";
-            tbx_Giamgia.TextChanged += tbx_Giamgia_TextChanged;
-            tbx_Giamgia.KeyPress += tbx_Giamgia_KeyPress;
-            // 
-            // lb_tt2
-            // 
-            lb_tt2.AutoSize = true;
-            lb_tt2.Location = new Point(36, 146);
-            lb_tt2.Name = "lb_tt2";
-            lb_tt2.Size = new Size(72, 20);
-            lb_tt2.TabIndex = 2;
-            lb_tt2.Text = "Giảm giá:";
             // 
             // grb_DSsanpham
             // 
@@ -1055,8 +1009,6 @@
         private GroupBox grb_Thanhtoan;
         private TextBox tbx_TienKhachTra;
         private Label lb_tt3;
-        private TextBox tbx_Giamgia;
-        private Label lb_tt2;
         private Label lb_TongTien;
         private Label lb_tt6;
         private Label lb_tt8;
@@ -1103,11 +1055,9 @@
 		private Label label9;
 		private Label label8;
 		private Label label4;
-		private Label label11;
         private Panel pn_DangXuat;
         private Label label3;
         private Panel panel12;
-        private Label label12;
         private Panel pn_ThongKe;
         private Label label13;
         private Panel panel13;

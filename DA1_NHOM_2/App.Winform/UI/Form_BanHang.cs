@@ -240,10 +240,8 @@ namespace App.Winform.UI
 
 
             tbx_TienKhachTra.Click += tbx_Click;
-            tbx_Giamgia.Click += tbx_Click;
 
             tbx_TienKhachTra.LostFocus += tbx_LostFocus;
-            tbx_Giamgia.LostFocus += tbx_LostFocus;
 
             foreach (DataGridViewColumn column in dtg_GioHang.Columns)
             {
@@ -261,7 +259,6 @@ namespace App.Winform.UI
 
             tbx_Search.Text = "";
             tbx_TienKhachTra.Text = "0";
-            tbx_Giamgia.Text = "0";
             tbx_GhiChu.Text = "";
             tbx_SDTkh.Text = "";
             dtg_GioHang.Rows.Clear();
@@ -553,7 +550,6 @@ namespace App.Winform.UI
                 idUpdate = Guid.Parse(dtg_HoaDonCho.Rows[rowIndex].Cells[0].Value.ToString());
 
                 tbx_TienKhachTra.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[4].Value.ToString();
-                tbx_Giamgia.Text = dtg_HoaDonCho.Rows[rowIndex].Cells[5].Value.ToString();
                 lb_TongTien.Text = _bhsv.AddThousandSeparators(Convert.ToInt32(dtg_HoaDonCho.Rows[rowIndex].Cells[3].Value));
 
                 string nameKH_search = dtg_HoaDonCho.Rows[rowIndex].Cells[1].Value.ToString();
@@ -634,16 +630,6 @@ namespace App.Winform.UI
 
             }
 
-            if (int.TryParse(tbx_Giamgia.Text, out int giamgia))
-            {
-                SauKhiGiamGia = kq - (10000 * giamgia);
-
-                if (SauKhiGiamGia < (kq / 100 * 70))
-                {
-                    SauKhiGiamGia = kq / 100 * 30;
-                    tbx_Giamgia.Text = $"{kq / 100 * 70 / 10000}";
-                }
-            }
 
 
             return SauKhiGiamGia;
@@ -787,7 +773,6 @@ namespace App.Winform.UI
                     HoaDon hd = new HoaDon();
                     hd.MaHoaDon = idUpdate;
                     hd.TienKhachTra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
-                    hd.GiamGia = Convert.ToInt32(tbx_Giamgia.Text);
                     hd.TongTien = TinhTongTien();
                     if(kHang != null)
                     {
@@ -828,7 +813,6 @@ namespace App.Winform.UI
 
             int tienkhachtra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
 
-            int giamgia = Convert.ToInt32(tbx_Giamgia.Text);
 
             if (!ValidateTaoHD(tienkhachtra.ToString(), tongtien, "Chưa thanh toán"))
             {
@@ -855,7 +839,7 @@ namespace App.Winform.UI
                         NgayMua = ngaymua,
                         TongTien = tongtien,
                         TienKhachTra = tienkhachtra,
-                        GiamGia = giamgia,
+                        GiamGia = 0,
                         TrangThai = trangthai
                     };
                     _hdsv.TaoHoaDon(hd);
@@ -982,7 +966,7 @@ namespace App.Winform.UI
                 paymentTable.AddCell(discountLabelCell);
 
                 // Thêm giá trị tbx_Giamgia.Text với căn chỉnh bên phải
-                PdfPCell discountValueCell = new PdfPCell(new Phrase($"{_bhsv.AddThousandSeparators(Convert.ToInt32(tbx_Giamgia.Text) * 10000)} VND", contentFont));
+                PdfPCell discountValueCell = new PdfPCell(new Phrase($"0 VND", contentFont));
                 discountValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 discountValueCell.Border = PdfPCell.NO_BORDER;
                 paymentTable.AddCell(discountValueCell);

@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Twilio.Types;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace App.Winform.UI
@@ -154,8 +155,7 @@ namespace App.Winform.UI
 
         }
 
-
-        private void pn_LamMoi_Click(object sender, EventArgs e)
+        public void ResetInputSP()
         {
             txt_SoLuong.Text = "";
             txt_TenSanPham.Text = "";
@@ -176,8 +176,13 @@ namespace App.Winform.UI
             cbx_FillLoaiRen.Text = "Tất cả";
             cbx_FillHangSX.Text = "Tất cả";
 
+            checkbox_suaten.Checked = false;
             ptb_Anh.Image = null;
+        }
 
+        private void pn_LamMoi_Click(object sender, EventArgs e)
+        {
+            ResetInputSP();
             LoadGird(ApplyFilters());
             LoadComboBox();
         }
@@ -222,6 +227,47 @@ namespace App.Winform.UI
                 cbx_ChatLieu.Items.Add(item.Name);
                 cbx_FillChatLieu.Items.Add(item.Name);
             }
+        }
+
+        private bool CheckExistProduct(ChiTietSanPham ctsp)
+        {
+            bool check = true;
+
+            List<ChiTietSanPham> lst = _service.GetAll();
+
+            foreach (var item in lst)
+            {
+                if (
+                    item.MaSanPham == ctsp.MaSanPham &&
+                    item.ChieuDai == ctsp.ChieuDai &&
+                    item.CanNang == ctsp.CanNang &&
+                    item.MaLoaiRen == ctsp.MaLoaiRen &&
+                    item.MaMauSac == ctsp.MaMauSac &&
+                    item.MaChatLieu == ctsp.MaChatLieu &&
+                    item.MaHangSanXuat == ctsp.MaHangSanXuat
+                  )
+                {
+                    check = false;
+                }
+            }
+
+            return check;
+        }
+        private bool CheckExistName(string namesp)
+        {
+            bool check = true;
+
+
+            foreach (var existingSP in _service.GetAllSP())
+            {
+                if (existingSP.TenSanPham == namesp)
+                {
+                    MessageBox.Show("Tên sản phẩm này đã tồn tại. Vui lòng nhập tên khác.");
+                    check = false;
+                }
+            }
+
+            return check;
         }
 
         private void pn_ThemSP_Click(object sender, EventArgs e)
@@ -275,14 +321,18 @@ namespace App.Winform.UI
                 {
                     try
                     {
-                        ptb_Anh.Image.Save(ms, ptb_Anh.Image.RawFormat);
+                        // Tạo một bản sao của hình ảnh để lưu
+                        using (Bitmap bitmap = new Bitmap(ptb_Anh.Image))
+                        {
+                            bitmap.Save(ms, ptb_Anh.Image.RawFormat);
+                        }
                         ptb_Anh.BackgroundImage = null;
+                        imageData = ms.ToArray();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi khi lưu ảnh ");
+                        MessageBox.Show("Lỗi khi lưu ảnh: " + ex.Message);
                     }
-                    imageData = ms.ToArray();
                 }
             }
 
@@ -341,6 +391,7 @@ namespace App.Winform.UI
 
                     // Tải lại danh sách sản phẩm sau khi thêm thành công
                     LoadGird(ApplyFilters());
+                    ResetInput();
                 }
                 else
                 {
@@ -367,37 +418,28 @@ namespace App.Winform.UI
                 ctsp.HinhAnh = imageData;
 
 
-                bool checkExistCTSP = true;
-
-                foreach (var item in lstCTSP)
+                // Hiển thị hộp thoại xác nhận
+                var option = MessageBox.Show("Xác nhận muốn thêm sản phẩm?", "Xác nhận",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (option == DialogResult.Yes)
                 {
-                    if (item == ctsp)
-                    {
-                        checkExistCTSP = false;
-                    }
-                }
-
-                if (checkExistCTSP)
-                {
-                    // Hiển thị hộp thoại xác nhận
-                    var option = MessageBox.Show("Xác nhận muốn thêm sản phẩm?", "Xác nhận",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (option == DialogResult.Yes)
+                    if (CheckExistProduct(ctsp))
                     {
                         // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
                         MessageBox.Show(_service.AddCTSP(ctsp));
 
                         // Tải lại danh sách sản phẩm sau khi thêm thành công
                         LoadGird(ApplyFilters());
+                        ResetInput();
                     }
                     else
                     {
+                        MessageBox.Show("Sản phẩm đã tồn tại trong kho");
                         return;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Sản phẩm đã tồn tại trong kho");
                     return;
                 }
 
@@ -411,11 +453,18 @@ namespace App.Winform.UI
 
         private void pn_UpdateSP_Click(object sender, EventArgs e)
         {
+            ChiTietSanPham ctsp = null;
             // Kiểm tra đã chọn sản phẩm để cập nhật chưa  //cần sửa
             if (_idwhenclick == null)
             {
                 MessageBox.Show("Vui lòng chọn sản phẩm muốn cập nhật.", "Yêu cầu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+            else
+            {
+                List<ChiTietSanPham> lst = _service.GetAll();
+
+                ctsp = lst.FirstOrDefault(x => x.Id == _idwhenclick);
             }
 
             // Kiểm tra dữ liệu nhập vào và các điều kiện khác
@@ -458,64 +507,67 @@ namespace App.Winform.UI
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
-
-
                     try
                     {
-                        ptb_Anh.Image.Save(ms, ptb_Anh.Image.RawFormat);
+                        // Tạo một bản sao của hình ảnh để lưu
+                        using (Bitmap bitmap = new Bitmap(ptb_Anh.Image))
+                        {
+                            bitmap.Save(ms, ptb_Anh.Image.RawFormat);
+                        }
                         ptb_Anh.BackgroundImage = null;
+                        imageData = ms.ToArray();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi khi lưu ảnh ");
+                        MessageBox.Show("Lỗi khi lưu ảnh: " + ex.Message);
                     }
+                }
+            }
 
-                    imageData = ms.ToArray();
+            if (ctsp != null)
+            {
+                if (checkbox_suaten.Checked)
+                {
+                    if (CheckExistName(txt_TenSanPham.Text))
+                    {
+                        _service.UpdateNameSP(ctsp.MaSanPham, txt_TenSanPham.Text.Trim());
+                    }
+                }
+                ctsp.MaHangSanXuat = _service.GetIdHangSX(cbx_HangSX.Text);
+                ctsp.MaMauSac = _service.GetIdMauSac(cbx_MauSac.Text);
+                ctsp.MaChatLieu = _service.GetIdChatLieu(cbx_ChatLieu.Text);
+                ctsp.MaLoaiRen = _service.GetIdLoaiRen(cbx_LoaiRen.Text);
+                ctsp.SoLuong = Convert.ToInt32(txt_SoLuong.Text);
+                ctsp.ChieuDai = Convert.ToDouble(txt_ChieuDai.Text);
+                ctsp.CanNang = Convert.ToDouble(txt_CanNang.Text);
+                ctsp.TrangThai = cbx_TrangThai.Text;
+                ctsp.GiaBan = giaBan;
+
+
+                // Chỉ gán dữ liệu hình ảnh nếu có dữ liệu hình ảnh mới
+                if (imageData != null)
+                {
+                    ctsp.HinhAnh = imageData;
+                }
+
+                // Hiển thị hộp thoại xác nhận
+                var option = MessageBox.Show("Xác nhận muốn cập nhật sản phẩm?", "Xác nhận",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (option == DialogResult.Yes)
+                {
+
+                    // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
+                    MessageBox.Show(_service.Update(ctsp));
+                    // Tải lại danh sách sản phẩm sau khi thêm thành công
+                    LoadGird(ApplyFilters());
+                    ResetInput();
 
 
                 }
-            }
-            else
-            {
-                // Nếu không chọn ảnh mới, giữ nguyên ảnh cũ từ dữ liệu sản phẩm
-                // Thay vì gán giá trị null cho imageData, hãy lấy dữ liệu ảnh từ cơ sở dữ liệu hoặc dịch vụ của bạn
-                // Ví dụ: imageData = _service.GetImageData(_idwhenclick);
-                // hoặc imageData = GetImageDataFromDatabase(_idwhenclick);
-            }
-
-            var ctsp = new ChiTietSanPham();
-            ctsp.Id = _idwhenclick; //Mã sản phẩm chưa sửa được
-
-            ctsp.MaHangSanXuat = _service.GetIdHangSX(cbx_HangSX.Text);
-            ctsp.MaMauSac = _service.GetIdMauSac(cbx_MauSac.Text);
-            ctsp.MaChatLieu = _service.GetIdChatLieu(cbx_ChatLieu.Text);
-            ctsp.MaLoaiRen = _service.GetIdLoaiRen(cbx_LoaiRen.Text);
-            ctsp.SoLuong = Convert.ToInt32(txt_SoLuong.Text);
-            ctsp.ChieuDai = Convert.ToDouble(txt_ChieuDai.Text);
-            ctsp.CanNang = Convert.ToDouble(txt_CanNang.Text);
-            ctsp.TrangThai = cbx_TrangThai.Text;
-            ctsp.GiaBan = giaBan;
-
-            // Chỉ gán dữ liệu hình ảnh nếu có dữ liệu hình ảnh mới
-            if (imageData != null)
-            {
-                ctsp.HinhAnh = imageData;
-            }
-
-
-            // Hiển thị hộp thoại xác nhận
-            var option = MessageBox.Show("Xác nhận muốn cập nhật sản phẩm?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (option == DialogResult.Yes)
-            {
-                // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
-                MessageBox.Show(_service.Update(ctsp));
-                // Tải lại danh sách sản phẩm sau khi thêm thành công
-                LoadGird(ApplyFilters());
-            }
-            else
-            {
-                return;
+                else
+                {
+                    return;
+                }
             }
         }
 
@@ -994,7 +1046,7 @@ namespace App.Winform.UI
         {
             System.Windows.Forms.TextBox textBox = sender as System.Windows.Forms.TextBox;
 
-            if(textBox != txt_SoLuong)
+            if (textBox != txt_SoLuong)
             {
                 // Kiểm tra nếu ký tự không phải là số (0-9) và không phải là dấu chấm (.)
                 if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
@@ -1027,7 +1079,7 @@ namespace App.Winform.UI
                     e.Handled = true;
                 }
             }
-            
+
         }
     }
 

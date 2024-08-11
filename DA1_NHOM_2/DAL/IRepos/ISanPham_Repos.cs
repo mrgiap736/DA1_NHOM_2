@@ -11,6 +11,7 @@ namespace App.Data.IRepos
     {
         public List<ChiTietSanPham> GetAll();
 		public List<SanPham> GetAllSP();
+		public bool UpdateSP(SanPham sp);
 		public bool AddSP(SanPham sp);
 		public bool AddCTSP(ChiTietSanPham ctsp);
 		public bool UpdateCTSP(ChiTietSanPham sp);

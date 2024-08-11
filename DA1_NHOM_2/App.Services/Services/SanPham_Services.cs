@@ -37,6 +37,29 @@ namespace App.Services.Services
             }
         }
 
+        public string UpdateNameSP(Guid id, string name)
+        {
+            List<SanPham> lst = GetAllSP();
+
+            SanPham sp = lst.FirstOrDefault(x => x.MaSanPham == id);
+
+            if (sp != null)
+            {
+                sp.TenSanPham = name;
+
+                if(_repos.UpdateSP(sp))
+                {
+                    return "Cập nhật sản phẩm thành công";
+                }
+                else
+                {
+                    return "Cập nhật sản phẩm thất bại";
+                }
+            }
+
+            return "Không có sản phẩm nào được chọn";
+        }
+
         public string Update(ChiTietSanPham ctsp)
         {
             var clone = _repos.GetAll().FirstOrDefault(x => x.Id == ctsp.Id); //Chưa sửa được mã sp
