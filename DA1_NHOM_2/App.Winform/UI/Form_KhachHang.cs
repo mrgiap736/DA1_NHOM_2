@@ -25,7 +25,7 @@ namespace App.Winform.UI
             _service = new KhachHang_Services();
             _hdsv = new HoaDon_Services();
             PhanQuyen_NhanVien(nv);
-            LoadGird(null);
+            LoadGrid(null);
         }
 
         private void PhanQuyen_NhanVien(NhanVien nv)
@@ -61,7 +61,7 @@ namespace App.Winform.UI
             }
             return ctrls;
         }
-        public void LoadGird(string search)
+        public void LoadGrid(string search)
         {
             dtgView.Rows.Clear();
             dtgView.ColumnCount = 6;
@@ -73,8 +73,6 @@ namespace App.Winform.UI
             dtgView.Columns[3].Name = "Số Điện Thoại";
             dtgView.Columns[4].Name = "Email";
             dtgView.Columns[5].Name = "Tổng giá trị mua hàng";
-
-
 
 
             _listKH = _service.GetAll(search);
@@ -97,6 +95,46 @@ namespace App.Winform.UI
             dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+        public void ResetInput()
+        {
+            txt_SĐT.Text = "";
+            txt_Email.Text = "";
+            txt_TenKH.Text = "";
+            txtSearch.Text = "";
+        }
+
+        public bool CheckExistPhone(string phoneNumber)
+        {
+            bool check = true;
+
+            foreach (var existingKH in _service.GetAll(null))
+            {
+                if (existingKH.SoDienThoai == phoneNumber)
+                {
+                    MessageBox.Show("Số điện thoại này đã tồn tại cho một khách hàng khác. Vui lòng nhập số điện thoại khác.");
+                    check = false;
+                }
+            }
+
+            return check;
+        }
+
+        public bool CheckExistEmail(string email)
+        {
+            bool check = true;
+
+            foreach (var existingKH in _service.GetAll(null))
+            {
+                if (existingKH.Email == email)
+                {
+                    MessageBox.Show("Email này đã tồn tại cho một khách hàng khác. Vui lòng nhập email khác.");
+                    check = false;
+                }
+            }
+
+            return check;
+        }
+
         private bool Validate()
         {
             bool check = true;
@@ -108,8 +146,6 @@ namespace App.Winform.UI
             }
             else
             {
-
-
                 // Kiểm tra tên khách hàng không được rỗng
                 if (string.IsNullOrWhiteSpace(txt_TenKH.Text))
                 {
@@ -154,17 +190,6 @@ namespace App.Winform.UI
                         MessageBox.Show("Số điện thoại phải bắt đầu bằng số 0.");
                         check = false;
                     }
-                    else
-                    {
-                        foreach (var existingKH in _listKH)
-                        {
-                            if (existingKH.SoDienThoai == phoneNumber)
-                            {
-                                MessageBox.Show("Số điện thoại này đã tồn tại cho một khách hàng khác. Vui lòng nhập số điện thoại khác.");
-                                check = false;
-                            }
-                        }
-                    }
                 }
             }
 
@@ -175,28 +200,33 @@ namespace App.Winform.UI
         {
             if (Validate())
             {
-                var kh = new KhachHang();
-                kh.MaKhachHang = Guid.NewGuid();
-                kh.Email = txt_Email.Text.Trim().ToLower();
-                kh.TenKhachHang = txt_TenKH.Text.Trim();
-                kh.SoDienThoai = txt_SĐT.Text.Trim();
-                kh.TichLuy = 0;
+                if(CheckExistEmail(txt_Email.Text.Trim().ToLower()) && CheckExistPhone(txt_SĐT.Text.Trim()))
+                {
+                    var kh = new KhachHang();
+                    kh.MaKhachHang = Guid.NewGuid();
+                    kh.Email = txt_Email.Text.Trim().ToLower();
+                    kh.TenKhachHang = txt_TenKH.Text.Trim();
+                    kh.SoDienThoai = txt_SĐT.Text.Trim();
+                    kh.TichLuy = 0;
 
-                var option = MessageBox.Show("Xác nhận muốn thêm khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
-                if (option == DialogResult.Yes)
-                {
-                    MessageBox.Show(_service.Add(kh));
-                    LoadGird(null);
-                }
-                else
-                {
-                    return;
-                }
+                    var option = MessageBox.Show("Xác nhận muốn thêm khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
+                    if (option == DialogResult.Yes)
+                    {
+                        MessageBox.Show(_service.Add(kh));
+                        LoadGrid(null);
+                        ResetInput();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }           
             }
         }
 
         private void pn_Btn_Sua_Click(object sender, EventArgs e)
         {
+            KhachHang kh = null;
 
             // Kiểm tra xem đã chọn một khách hàng từ danh sách hay chưa
             if (_idwhenclick == Guid.Parse("00000000-0000-0000-0000-000000000000"))
@@ -204,36 +234,54 @@ namespace App.Winform.UI
                 MessageBox.Show("Vui lòng chọn một khách hàng để sửa.");
                 return;
             }
-
-            if (Validate())
+            else
             {
+                List<KhachHang> lst = _service.GetAll(null);
 
+                kh = lst.FirstOrDefault(x => x.MaKhachHang == _idwhenclick);
+            }
 
-                // Tạo đối tượng khách hàng mới để lưu thông tin sửa đổi
-                var kh = new KhachHang();
-                kh.MaKhachHang = _idwhenclick;
-
-                kh.TenKhachHang = txt_TenKH.Text;
-                kh.Email = txt_Email.Text;
-                kh.SoDienThoai = txt_SĐT.Text;
-                //kh.TichLuy = diemtichluy;
-
-                if (!Regex.IsMatch(kh.TenKhachHang, "^[a-zA-Z ]+$"))
+            if (kh != null)
+            {
+                if (Validate())
                 {
-                    MessageBox.Show("Tên khách hàng chỉ được nhập chữ và dấu cách.");
-                    return;
-                }
+                    kh.TenKhachHang = txt_TenKH.Text;
+
+                    if (kh.Email != txt_Email.Text)
+                    {
+                        if (CheckExistEmail(txt_Email.Text)) 
+                        {
+                            kh.Email = txt_Email.Text;
+                        }
+                    }
+
+                    if (kh.SoDienThoai != txt_SĐT.Text)
+                    {
+                        if (CheckExistPhone(txt_SĐT.Text))
+                        {
+                            kh.SoDienThoai = txt_SĐT.Text;
+                        }
+                    }
 
 
-                var option = MessageBox.Show("Xác nhận muốn update khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
-                if (option == DialogResult.Yes)
-                {
-                    MessageBox.Show(_service.Update(kh));
-                    LoadGird(null);
-                }
-                else
-                {
-                    return;
+                    if (!Regex.IsMatch(kh.TenKhachHang, "^[a-zA-Z ]+$"))
+                    {
+                        MessageBox.Show("Tên khách hàng chỉ được nhập chữ và dấu cách.");
+                        return;
+                    }
+
+
+                    var option = MessageBox.Show("Xác nhận muốn update khách hàng?", "Xác nhận", MessageBoxButtons.YesNo);
+                    if (option == DialogResult.Yes)
+                    {
+                        MessageBox.Show(_service.Update(kh));
+                        LoadGrid(null);
+                        ResetInput();
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -241,8 +289,9 @@ namespace App.Winform.UI
 
         private void pn_Btn_LamMoi_Click(object sender, EventArgs e)
         {
-            txt_TenKH.Text = "";
-            txt_SĐT.Text = "";
+            LoadGrid(null);
+            ResetInput();
+
         }
 
         private void pn_Btn_Xoa_Click(object sender, EventArgs e)
@@ -270,7 +319,7 @@ namespace App.Winform.UI
                 kh.MaKhachHang = _idwhenclick;
 
                 MessageBox.Show(_service.Remove(kh));
-                LoadGird(null);
+                LoadGrid(null);
             }
             else
             {
@@ -318,7 +367,7 @@ namespace App.Winform.UI
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            LoadGird(null);
+            LoadGrid(null);
         }
 
 

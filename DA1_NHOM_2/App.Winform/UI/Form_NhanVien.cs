@@ -83,11 +83,11 @@ namespace App.Winform.UI
         {
             bool check = true;
 
-            foreach (var existingKH in _service.GetAll(null))
+            foreach (var existingNV in _service.GetAll(null))
             {
-                if (existingKH.SoDienThoai == phoneNumber)
+                if (existingNV.SoDienThoai == phoneNumber)
                 {
-                    MessageBox.Show("Số điện thoại này đã tồn tại cho một khách hàng khác. Vui lòng nhập số điện thoại khác.");
+                    MessageBox.Show("Số điện thoại này đã tồn tại cho một nhân viên khác. Vui lòng nhập số điện thoại khác.");
                     check = false;
                 }
             }
@@ -99,11 +99,11 @@ namespace App.Winform.UI
         {
             bool check = true;
 
-            foreach (var existingKH in _service.GetAll(null))
+            foreach (var existingNV in _service.GetAll(null))
             {
-                if (existingKH.Email == email)
+                if (existingNV.Email == email)
                 {
-                    MessageBox.Show("Email này đã tồn tại cho một khách hàng khác. Vui lòng nhập email khác.");
+                    MessageBox.Show("Email này đã tồn tại cho một nhân viên khác. Vui lòng nhập email khác.");
                     check = false;
                 }
             }
@@ -120,7 +120,7 @@ namespace App.Winform.UI
             {
                 if (existingKH.TaiKhoan == account)
                 {
-                    MessageBox.Show("Tài khoản này đã tồn tại cho một khách hàng khác. Vui lòng nhập tài khoản khác.");
+                    MessageBox.Show("Tài khoản này đã tồn tại cho một nhân viên khác. Vui lòng nhập tài khoản khác.");
                     check = false;
                 }
             }
