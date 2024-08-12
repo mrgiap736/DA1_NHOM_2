@@ -557,7 +557,7 @@ namespace App.Winform.UI
                 {
 
                     // Thêm sản phẩm vào cơ sở dữ liệu và xử lý kết quả
-                    MessageBox.Show(_service.Update(ctsp));
+                    MessageBox.Show(_service.Update(ctsp).ToString());
                     // Tải lại danh sách sản phẩm sau khi thêm thành công
                     LoadGird(ApplyFilters());
                     ResetInput();
@@ -597,7 +597,7 @@ namespace App.Winform.UI
             var option = MessageBox.Show("Xác nhận muốn xoá sản phẩm?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (option == DialogResult.Yes)
             {
-                MessageBox.Show(_service.Remove(ctsp));
+                MessageBox.Show(_service.Remove(ctsp).ToString());
                 LoadGird(ApplyFilters());
             }
             else

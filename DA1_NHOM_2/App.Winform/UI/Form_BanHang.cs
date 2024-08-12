@@ -266,6 +266,8 @@ namespace App.Winform.UI
             lb_TenKH.Text = "...";
             lb_TichLuy.Text = "...";
             lb_TongTien.Text = "0";
+
+            idUpdate = Guid.Parse("00000000-0000-0000-0000-000000000000");
         }
 
         //Load du lieu cho 2 combobox
@@ -451,6 +453,9 @@ namespace App.Winform.UI
 
             }
 
+
+            this.Refresh();
+
         }
 
 
@@ -613,7 +618,6 @@ namespace App.Winform.UI
         {
 
             int kq = 0;
-            int SauKhiGiamGia = 0;
             foreach (DataGridViewRow item in dtg_GioHang.Rows)
             {
                 //if (item.Cells[3].Value != null && item.Cells[4].Value != null)
@@ -632,7 +636,7 @@ namespace App.Winform.UI
 
 
 
-            return SauKhiGiamGia;
+            return kq;
 
         }
 
@@ -716,7 +720,12 @@ namespace App.Winform.UI
                     MessageBox.Show("Không có sản phẩm nào được chọn !");
                     check = false;
                 }
-                else if (Convert.ToInt32(tienkhachtra) == 0)
+                else if (tienkhachtra == "")
+                {
+                    MessageBox.Show("Chưa nhập số tiền khách trả !");
+                    check = false;
+                }
+                else if(Convert.ToInt32(tienkhachtra) == 0)
                 {
                     MessageBox.Show("Chưa nhập số tiền khách trả !");
                     check = false;
@@ -811,6 +820,10 @@ namespace App.Winform.UI
 
             int tongtien = TinhTongTien();
 
+            if(tbx_TienKhachTra.Text == "")
+            {
+                tbx_TienKhachTra.Text = "0";
+            }
             int tienkhachtra = Convert.ToInt32(tbx_TienKhachTra.Text.Replace(",", ""));
 
 
@@ -827,7 +840,19 @@ namespace App.Winform.UI
                         hdonUpdate.KhachHang = kHang;
                     }
                     UpdateHDChiTiet();
-                    _bhsv.UpdateSoLuongSP(hdonUpdate.MaHoaDon);
+
+                    List<ChiTietHoaDon> lstCTHD = _ctsv.GetAllCTHoaDon(hdonUpdate.MaHoaDon);
+
+                    foreach (var item in lstCTHD)
+                    {
+                        int soluongSP = item.ChiTietSanPham.SoLuong;
+                        int soluongtru = item.SoLuong;
+
+                        //Cập nhật số lượng mới 
+                        item.ChiTietSanPham.SoLuong = soluongSP - soluongtru;
+
+                        _bhsv.UpdateCTSP(item.ChiTietSanPham);
+                    }
                 }
                 else
                 {
@@ -846,7 +871,18 @@ namespace App.Winform.UI
                     AddHDChiTiet(hd.MaHoaDon);
 
                     //Update số lượng sản phẩm 
-                    _bhsv.UpdateSoLuongSP(hd.MaHoaDon);
+                    List<ChiTietHoaDon> lstCTHD = _ctsv.GetAllCTHoaDon(hd.MaHoaDon);
+
+                    foreach (var item in lstCTHD)
+                    {
+                        int soluongSP = item.ChiTietSanPham.SoLuong;
+                        int soluongtru = item.SoLuong;
+
+                        //Cập nhật số lượng mới 
+                        item.ChiTietSanPham.SoLuong = soluongSP - soluongtru;
+
+                        _bhsv.UpdateCTSP(item.ChiTietSanPham);
+                    }
 
                     //In hoa don cho khach
                     if (trangthai == "Đã thanh toán")
@@ -1154,13 +1190,29 @@ namespace App.Winform.UI
         //Hủy hóa đơn
         private void pn_HuyHD_Click(object sender, EventArgs e)
         {
+            if(idUpdate == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+                MessageBox.Show("Chưa chọn hóa đơn cần hủy");
+                return;
+            }
+
             HoaDon hdonUpdate = _hdsv.GetHD(idUpdate);
             hdonUpdate.TrangThai = "Đã hủy";
+
+            List<ChiTietHoaDon> lst = _ctsv.GetAllCTHoaDon(idUpdate);
+
+            foreach (var item in lst)
+            {
+                item.ChiTietSanPham.SoLuong += item.SoLuong;
+
+                _bhsv.UpdateCTSP(item.ChiTietSanPham);
+            }
 
             _hdsv.CapNhatHoaDon(hdonUpdate);
 
             dtg_GioHang.Rows.Clear();
             LoadGrid(_bhsv.GetAllSanPham());
+            ClearInput();
             MessageBox.Show("Đã hủy hóa đơn");
         }
 
@@ -1201,7 +1253,7 @@ namespace App.Winform.UI
 
 
         //Nút thanh toán
-        Guid idUpdate;
+        Guid idUpdate = Guid.Parse("00000000-0000-0000-0000-000000000000");
         private void pn_buttonThanhToan_Click(object sender, EventArgs e)
         {
             ThanhToan();

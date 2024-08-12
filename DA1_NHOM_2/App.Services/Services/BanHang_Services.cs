@@ -55,23 +55,11 @@ namespace App.Services.Services
         }
 
         //Hàm update số lượng sản phẩm (được gọi sau khi thanh toán)
-        public void UpdateSoLuongSP(Guid mahd)
+        public void UpdateCTSP(ChiTietSanPham ctsp)
         {
-            List<ChiTietHoaDon> lstCTHD = cthdrp.GetAll(mahd);
-
-            foreach (var item in lstCTHD)
-            {
-                int soluongSP = item.ChiTietSanPham.SoLuong;
-                int soluongtru = item.SoLuong;
-
-                //Cập nhật số lượng mới 
-                item.ChiTietSanPham.SoLuong = soluongSP - soluongtru;
-
-                _spsv.Update(item.ChiTietSanPham);
-            }
+            _spsv.Update(ctsp);
         }
 
-        
         //Hàm chuyển số ngăn cách phần nghìn 
         public string AddThousandSeparators(int number)
         {
@@ -80,6 +68,8 @@ namespace App.Services.Services
 
             return formattedNumber;
         }
+
+       
 
     }
 }
